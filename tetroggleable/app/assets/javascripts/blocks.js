@@ -151,3 +151,23 @@ function SBlock() {
   this.gridX = 4;
   this.gridY = -2;
 }
+
+function getRandomBlock() {
+
+  var result = Math.floor( Math.random() * 7 );
+  var block;
+
+  switch(result) {
+
+    case 0: block = new LBlock(); break;
+    case 1: block = new OBlock(); break;
+    case 2: block = new ZBlock(); break;
+    case 3: block = new TBlock(); break;
+    case 4: block = new JBlock(); break;
+    case 5: block = new SBlock(); break;
+    case 6: block = new IBlock(); break;
+  }
+
+  block.color = Math.floor(Math.random() * 8);
+  return block;
+}
