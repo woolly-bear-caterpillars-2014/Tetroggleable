@@ -5,19 +5,21 @@ var SIZE = 32;
 var canvas;
 var context;
 var lineScore;
-var currentPiece;
+var currentBlock;
 
 
 $(document).ready(function(){
 
-
 	canvas = document.getElementById('gameCanvas');
 	context = canvas.getContext('2d');
 	lineScore = $('#lines');
-	
-	function initGame()
-{	
-	
+	// startGame();
+	// drawBoard();
+
+})
+
+
+function startGame() {	
 	var r, c;
 	currentLines = 0;
 	isGameOver = false;
@@ -34,7 +36,7 @@ $(document).ready(function(){
 			}
 		}	
 
-	currentPiece = getRandomPiece();
+	currentBlock = getRandomBlock();
 	
 
 	
@@ -43,7 +45,28 @@ $(document).ready(function(){
 							
 	window.requestAnimationFrame = requestAnimFrame;
 	
-	requestAnimationFrame(update);
+	// requestAnimationFrame(update);
 	}
-})
+
+
+function drawBoard() {
+	// context.drawImage(bgImg, 0, 0, 320, 640, 0, 0, 320, 640);
+	context.rect(0, 0, 320, 640);
+	context.fillStyle="blue";
+	context.fill();
+	context.lineWidth = "2";
+	context.strokeStyle = "yellow";
+	context.stroke();
+	
+	for(var row = 0; row < ROWS; row++) {
+		for(var col = 0; col < COLS; col++) {
+			if(gameData[row][col] != 0) {
+				// context.drawImage(blockImg, (gameData[row][col] - 1) * SIZE, 0, SIZE, SIZE, col * SIZE, row * SIZE, SIZE, SIZE); -->
+				context.rect(col * SIZE, row * SIZE, SIZE, SIZE);
+				context.fillStyle="red";
+				context.fill();
+			}
+		}
+	}
+}
 
