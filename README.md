@@ -1,14 +1,16 @@
-
 ##Tetroggleable
 ###=============
 
+Our project is a game that involves the base gameplay of Tetris, while combining the elements of boggle and scrabble to clear words and gain ponts. We have decided to make this game to test the javascript and logic skills we have gained through our experience as budding junior developers.
+
+
 ####Team Members
 
--Alan Florendo
--Edward Kim
--John Berry
--Kim Brewer
--Stephen Estrada
+[Alan Florendo](https://github.com/alanflorendo)
+[Edward Kim](https://github.com/eddiekimosabe)
+[John Berry](https://github.com/jpberry0623)
+[Kim Brewer](https://github.com/kabrewer07)
+[Stephen Estrada](https://github.com/stcrestrada)
 
 
 ####User Stories
@@ -18,7 +20,7 @@
 
 * Be able to start game play
 * move tetris object right and left and down on the board
-* rotate the tetris objects witht he up key
+* rotate the tetris objects with the up key
 * instantly drop the tetris objects with the spacebar
 * clear completed rows of tetris tiles
 * be able to clear fallen tiles by boggling the words composed of adjacent tiles
@@ -31,7 +33,7 @@
 * be able to see others high scores
 
 
+[Styleguide:](https://github.com/airbnb/javascript)
 
-
-Trello: https://trello.com/b/dcPl2IMM/tetrisbogglescrabble
+[Trello Board](https://trello.com/b/dcPl2IMM/tetrisbogglescrabble)
 
