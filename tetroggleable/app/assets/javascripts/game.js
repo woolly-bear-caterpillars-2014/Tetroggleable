@@ -29,7 +29,7 @@ $(document).ready(function(){
 			}
 		}
 
-	currentBlock = getRandomPiece();
+	currentBlock = getRandomBlock();
 
 	var requestAnimFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
 			window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
@@ -48,13 +48,13 @@ function getKeyCode(e) {
 	if(isGameOver != true) {
 		switch(e.keyCode) {
 			case 37: {
-				if( checkMove(currentBlock.gridX - 1, currentBlock.gridY, currentBlock.currentRotation) )
+				if( validateMove(currentBlock.gridX - 1, currentBlock.gridY, currentBlock.currentRotation) )
 					currentBlock.gridX--;
 			}
 			break;
 
 			case 39: {
-				if( checkMove(currentBlock.gridX + 1, currentBlock.gridY, currentBlock.currentRotation) )
+				if( validateMove(currentBlock.gridX + 1, currentBlock.gridY, currentBlock.currentRotation) )
 					currentBlock.gridX++;
 			}
 			break;
@@ -64,13 +64,13 @@ function getKeyCode(e) {
 				if(newRotation < 0)
 					newRotation = currentBlock.rotations.length - 1;
 
-				if( checkMove(currentBlock.gridX, currentBlock.gridY, newRotation) )
+				if( validateMove(currentBlock.gridX, currentBlock.gridY, newRotation) )
 					currentBlock.currentRotation = newRotation;
 			}
 			break;
 
 			case 40: {
-				if( checkMove(currentBlock.gridX, currentBlock.gridY + 1, currentBlock.currentRotation) )
+				if( validateMove(currentBlock.gridX, currentBlock.gridY + 1, currentBlock.currentRotation) )
 					currentBlock.gridY++;
 			}
 			break;
