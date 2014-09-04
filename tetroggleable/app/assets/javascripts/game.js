@@ -4,9 +4,9 @@ var SIZE = 32;
 
 var canvas;
 var context;
+var currentBlock;
 var lineScore;
 var currentBlock;
-
 
 $(document).ready(function(){
 
@@ -21,33 +21,28 @@ $(document).ready(function(){
 
 
 function startGame() {	
-	var r, c;
+	var row, col;
 	currentLines = 0;
 	isGameOver = false;
-	
+
 	gameData = new Array();
-		
-		for(r = 0; r < ROWS; r++)
-		{
-			gameData[r] = new Array();
-			for(c = 0; c < COLS; c++)
-			{
+
+		for(row= 0; row < ROWS; row++) {
+			gameData[row] = new Array();
+			for(col = 0; col < COLS; col++) {
 				// gameData[r].push(0);
-				gameData[r][c] = 0;
+				gameData[row][col] = 0;
 			}
-		}	
+		}
 
 	currentBlock = getRandomBlock();
-	
-
-	
 	var requestAnimFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
 			window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-							
+
 	window.requestAnimationFrame = requestAnimFrame;
 	
 	// requestAnimationFrame(update);
-	}
+}
 
 
 function drawBoard() {
@@ -92,5 +87,46 @@ function drawBlock(block) {
 		drawY += 1;
 	}
 
+}
+
+function getKeyCode(e) {
+	// if(!e) { var e = window.event; }
+
+	e.preventDefault();
+
+	if(isGameOver != true) {
+		switch(e.keyCode) {
+			case 37: {
+				if( validateMove(currentBlock.gridX - 1, currentBlock.gridY, currentBlock.currentRotation) )
+					currentBlock.gridX--;
+			}
+			break;
+
+			case 39: {
+				if( validateMove(currentBlock.gridX + 1, currentBlock.gridY, currentBlock.currentRotation) )
+					currentBlock.gridX++;
+			}
+			break;
+
+			case 38: {
+				var newRotation = currentBlock.currentRotation - 1;
+				if(newRotation < 0)
+					newRotation = currentBlock.rotations.length - 1;
+
+				if( validateMove(currentBlock.gridX, currentBlock.gridY, newRotation) )
+					currentBlock.currentRotation = newRotation;
+			}
+			break;
+
+			case 40: {
+				if( validateMove(currentBlock.gridX, currentBlock.gridY + 1, currentBlock.currentRotation) )
+					currentBlock.gridY++;
+			}
+			break;
+		}
+	}
+	else {
+		startGame();
+	}
 }
 
