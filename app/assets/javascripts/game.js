@@ -32,6 +32,9 @@ function startGame() {
 	var row, col;
 	currentLines = 0;
 	isGameOver = false;
+	currentLevel = 1;
+	currentSpeed = SPEEDS[currentLevel - 1];
+	$("#levels").text(1)
 
 	gameData = new Array();
 
