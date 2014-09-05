@@ -63,6 +63,7 @@ function drawBoard() {
 				context.fill();
 			}
 		}
+<<<<<<< HEAD
 	}
 }
 
@@ -86,6 +87,31 @@ function drawBlock(block) {
 		drawX = block.gridx;
 		drawY += 1;
 	}
+=======
+	}
+}
+
+function drawBlock(block) {
+	var drawX = block.gridX;
+	var drawY = block.gridY;
+	var rotation = block.currentRotation;
+	
+	for(var row = 0, len = block.rotations[rotation].length; row < len; row++) {
+		for(var col = 0, len2 = block.rotations[rotation][row].length; col < len2; col++) {
+			if(block.rotations[rotation][row][col] == 1 && drawY >= 0) {
+				// context.drawImage(blockImg, block.color * SIZE, 0, SIZE, SIZE, drawX * SIZE, drawY * SIZE, SIZE, SIZE);
+				context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
+				context.fillStyle="green";
+				context.fill();
+			}
+			
+			drawX += 1;
+		}
+		
+		drawX = block.gridx;
+		drawY += 1;
+	}
+>>>>>>> master
 
 }
 
@@ -129,4 +155,43 @@ function getKeyCode(e) {
 		startGame();
 	}
 }
+
+	function checkForCompleteLines()
+{
+	var lineFound = false;
+	var fullRow = true;
+	var row = ROWS - 1;
+	var col = COLS - 1;
+	
+	while(row >= 0)
+	{
+		while(col >= 0)
+		{
+			if(gameData[row][col] == 0)
+			{
+				fullRow = false;
+				col = -1;
+			}
+			col--;
+		}
+		
+		if(fullRow == true)
+		{
+			zeroRow(row);
+			row++;
+			lineFound = true;
+			currentLines++;
+		}
+		
+		fullRow = true;
+		col = COLS - 1;
+		row--;
+	}
+	
+	if(lineFound)
+	{
+		lineSpan.innerHTML = currentLines.toString();
+	}
+}
+
 
