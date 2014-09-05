@@ -355,9 +355,6 @@ function loadDictionary() {
 
   $.get( "/assets/dictionary.txt", function( text ) {
     dicts = text.split( "\n" );
-    // for( var i = 0; i < dicts.length; i++) {
-    // 	dict[dicts] = true;
-    // }
   } );
 };
 
