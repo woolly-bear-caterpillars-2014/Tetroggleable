@@ -139,8 +139,7 @@ function getKeyCode(e) {
 	}
 }
 
-function validateMove(xpos, ypos, newRotation)
-{
+function validateMove(xpos, ypos, newRotation) {
 	var result = true;
 	var newx = xpos;
 	var newy = ypos;
@@ -211,19 +210,15 @@ function checkForCompleteLines() {
 	var row = ROWS - 1;
 	var col = COLS - 1;
 
-	while(row >= 0)
-	{
-		while(col >= 0)
-		{
-			if(gameData[row][col] == 0)
-			{
+	while(row >= 0) {
+		while(col >= 0) {
+			if(gameData[row][col] == 0) {
 				fullRow = false;
 				col = -1;
 			}
 			col--;
 		}
-		if(fullRow == true)
-		{
+		if(fullRow == true) {
 			zeroRow(row);
 			row++;
 			lineFound = true;
@@ -233,8 +228,25 @@ function checkForCompleteLines() {
 		col = COLS - 1;
 		row--;
 	}
-	if(lineFound)
-	{
+	if(lineFound) {
 		lineSpan.innerHTML = currentLines.toString();
+	}
+}
+
+function clearCompletedRow(row) {
+	var row = row;
+	var col = 0;
+
+	while(row >= 0) {
+		while(col < COLS) {
+			if(row > 0)
+				gameData[row][col] = gameData[row-1][col];
+			else
+				gameData[row][col] = 0;
+
+			col++;
+		}
+		col = 0;
+		row --;
 	}
 }
