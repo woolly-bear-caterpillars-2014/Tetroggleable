@@ -4,12 +4,11 @@ var SIZE = 32;
 
 var canvas;
 var context;
-var lineScore;
 var currentBlock;
-var isGameOver;
-var previousTime;
 var currentTime;
-
+var isGameOver;
+var lineScore;
+var previousTime;
 
 $(window).load(function(){
 
@@ -55,7 +54,7 @@ function drawBoard() {
 	// context.drawImage(bgImg, 0, 0, 320, 640, 0, 0, 320, 640);
 	context.beginPath();
 	context.rect(0, 0, 320, 640);
-	context.fillStyle="blue";
+	context.fillStyle="black";
 	context.fill();
 	// context.beginPath();
 	// context.lineWidth = "2";
@@ -221,9 +220,8 @@ function checkForCompleteLines() {
 			}
 			col--;
 		}
-		
-		if(fullRow == true)
-		{
+
+		if(fullRow == true) {
 			console.log("fullRow == true, line 225");
 			clearCompletedRow(row);
 
@@ -240,33 +238,24 @@ function checkForCompleteLines() {
 	}
 }
 
-
-function landBlock(block)
-{
+function landBlock(block) {
 	var xpos = block.gridX;
 	var ypos = block.gridY;
 	var rotation = block.currentRotation;
-	
-	for(var row = 0, len = block.rotations[rotation].length; row < len; row++)
-	{
-		for(var col = 0, len2 = block.rotations[rotation][row].length; col < len2; col++)
-		{
-			if(block.rotations[rotation][row][col] == 1 && ypos >= 0)
-			{
+
+	for(var row = 0, len = block.rotations[rotation].length; row < len; row++) {
+		for(var col = 0, len2 = block.rotations[rotation][row].length; col < len2; col++) {
+			if(block.rotations[rotation][row][col] == 1 && ypos >= 0) {
 				gameData[ypos][xpos] = (block.color + 1);
 			}
-			
 			xpos += 1;
 		}
-		
 		xpos = block.gridX;
 		ypos += 1;
 	}
-
 	checkForCompleteLines();
-	
-	if(block.gridY < 0)
-	{
+
+	if(block.gridY < 0) {
 		isGameOver = true;
 	}
 }
