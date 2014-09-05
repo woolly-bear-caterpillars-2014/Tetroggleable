@@ -196,6 +196,13 @@ function letBlockFall() {
 	}
 }
 
+function rotate(block){
+  rotation = block.rotation;
+  console.log(block.rotation);
+  block.rotation = rotation[0].map(function (_, c) { return rotation.map(function (r) { return r[c]; }); });
+  console.log(block.rotation);
+}
+
 function validateMove(xpos, ypos, newRotation) {
 	var result = true;
 	var newx = xpos;
