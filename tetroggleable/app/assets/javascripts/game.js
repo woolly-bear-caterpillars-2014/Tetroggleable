@@ -4,12 +4,11 @@ var SIZE = 32;
 
 var canvas;
 var context;
-var lineScore;
 var currentBlock;
-var isGameOver;
-var previousTime;
 var currentTime;
-
+var isGameOver;
+var lineScore;
+var previousTime;
 
 $(window).load(function(){
 
@@ -53,19 +52,22 @@ function startGame() {
 
 function drawBoard() {
 	// context.drawImage(bgImg, 0, 0, 320, 640, 0, 0, 320, 640);
+	context.beginPath();
 	context.rect(0, 0, 320, 640);
-	context.fillStyle="blue";
+	context.fillStyle="black";
 	context.fill();
-	context.lineWidth = "2";
-	context.strokeStyle = "yellow";
-	context.stroke();
+	// context.beginPath();
+	// context.lineWidth = "2";
+	// context.strokeStyle = "yellow";
+	// context.stroke();
 
 	for(var row = 0; row < ROWS; row++) {
 		for(var col = 0; col < COLS; col++) {
 			if(gameData[row][col] != 0) {
 				// context.drawImage(blockImg, (gameData[row][col] - 1) * SIZE, 0, SIZE, SIZE, col * SIZE, row * SIZE, SIZE, SIZE); -->
+				context.beginPath();
 				context.rect(col * SIZE, row * SIZE, SIZE, SIZE);
-				context.fillStyle="red";
+				context.fillStyle="green";
 				context.fill();
 			}
 		}
@@ -96,11 +98,11 @@ function drawBlock(block) {
 		drawX = block.gridX;
 		drawY += 1;
 	}
+
 }
 
 function getKeyCode(e) {
 	// if(!e) { var e = window.event; }
-	console.log(e);
 	e.preventDefault();
 
 	if(isGameOver != true) {
@@ -199,7 +201,7 @@ function updateGame() {
     requestAnimationFrame(updateGame);
   }
   else {
-    context.fillText("GAME OVER");
+    context.fillText("GAME OVER", 10 , 10);
     context.fillStyle = "white";
 	}
 }
@@ -218,8 +220,11 @@ function checkForCompleteLines() {
 			}
 			col--;
 		}
+
 		if(fullRow == true) {
-			zeroRow(row);
+			console.log("fullRow == true, line 225");
+			clearCompletedRow(row);
+
 			row++;
 			lineFound = true;
 			currentLines++;
@@ -229,7 +234,30 @@ function checkForCompleteLines() {
 		row--;
 	}
 	if(lineFound) {
-		lineSpan.innerHTML = currentLines.toString();
+		$("#lines").text(currentLines.toString());
+	}
+}
+
+
+function landBlock(block) {
+	var xpos = block.gridX;
+	var ypos = block.gridY;
+	var rotation = block.currentRotation;
+
+	for(var row = 0, len = block.rotations[rotation].length; row < len; row++) {
+		for(var col = 0, len2 = block.rotations[rotation][row].length; col < len2; col++) {
+			if(block.rotations[rotation][row][col] == 1 && ypos >= 0) {
+				gameData[ypos][xpos] = (block.color + 1);
+			}
+			xpos += 1;
+		}
+		xpos = block.gridX;
+		ypos += 1;
+	}
+	checkForCompleteLines();
+
+	if(block.gridY < 0) {
+		isGameOver = true;
 	}
 }
 
