@@ -1,6 +1,7 @@
 var ROWS = 20;
 var COLS = 10;
 var SIZE = 32;
+var SPEEDS = [500, 450, 400, 350, 300, 250, 200, 150, 100, 50, 25, 10, 5, 1];
 
 var canvas;
 var context;
@@ -9,6 +10,8 @@ var currentTime;
 var isGameOver;
 var lineScore;
 var previousTime;
+var currentLevel = 1;
+var currentSpeed = SPEEDS[currentLevel-1];
 
 $(window).load(function(){
 
@@ -192,7 +195,7 @@ function validateMove(xpos, ypos, newRotation) {
 function updateGame() {
   currentTime = new Date().getTime();
 
-  if (currentTime - previousTime > 500) {
+  if (currentTime - previousTime > currentSpeed) {
     // drop currentBlock every half-second
     if (validateMove(currentBlock.gridX, currentBlock.gridY + 1, currentBlock.currentRotation)) {
       currentBlock.gridY += 1;
@@ -241,6 +244,7 @@ function checkForCompleteLines() {
 			row++;
 			lineFound = true;
 			currentLines++;
+			advanceLevelIfNeeded();
 		}
 		fullRow = true;
 		col = COLS - 1;
@@ -290,4 +294,12 @@ function clearCompletedRow(row) {
 		col = 0;
 		row --;
 	}
+}
+
+function advanceLevelIfNeeded() {
+	if (currentLines % 10 === 0 && currentLevel < SPEEDS.length){
+		currentLevel += 1;
+		currentSpeed = SPEEDS[currentLevel - 1];
+		$("#levels").text(currentLevel.toString());
+	};
 }
