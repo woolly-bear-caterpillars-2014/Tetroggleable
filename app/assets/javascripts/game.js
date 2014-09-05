@@ -108,6 +108,11 @@ function getKeyCode(e) {
 
 	if(isGameOver != true) {
 		switch(e.keyCode) {
+			case 32: {
+				letBlockFall();
+			}
+			break;
+
 			case 37: {
 				if( validateMove(currentBlock.gridX - 1, currentBlock.gridY, currentBlock.currentRotation) )
 					currentBlock.gridX--;
@@ -139,6 +144,13 @@ function getKeyCode(e) {
 	}
 	else {
 		startGame();
+	}
+}
+
+function letBlockFall() {
+	for (var i=0; i<20; i++) {
+		if (validateMove(currentBlock.gridX, currentBlock.gridY + 1, currentBlock.currentRotation))
+			currentBlock.gridY++;
 	}
 }
 
