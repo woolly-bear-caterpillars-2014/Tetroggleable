@@ -25,7 +25,7 @@ $(document).ready(function(){
 })
 
 
-function startGame() {	
+function startGame() {
 	var row, col;
 	currentLines = 0;
 	isGameOver = false;
@@ -45,7 +45,7 @@ function startGame() {
 			window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
 	window.requestAnimationFrame = requestAnimFrame;
-	
+
 	requestAnimationFrame(updateGame);
 }
 
@@ -58,7 +58,7 @@ function drawBoard() {
 	context.lineWidth = "2";
 	context.strokeStyle = "yellow";
 	context.stroke();
-	
+
 	for(var row = 0; row < ROWS; row++) {
 		for(var col = 0; col < COLS; col++) {
 			if(gameData[row][col] != 0) {
@@ -89,14 +89,13 @@ function drawBlock(block) {
 				context.fill();
 
 			}
-			
+
 			drawX += 1;
 		}
-		
+
 		drawX = block.gridX;
 		drawY += 1;
 	}
-
 }
 
 function getKeyCode(e) {
@@ -145,7 +144,7 @@ function validateMove(xpos, ypos, newRotation)
 	var result = true;
 	var newx = xpos;
 	var newy = ypos;
-	
+
 	for(var row = 0, length1 = currentBlock.rotations[newRotation].length; row < length1; row++) {
 		for(var col = 0, length2 = currentBlock.rotations[newRotation][row].length; col < length2; col++) {
 			if(newx < 0 || newx >= COLS) {
@@ -153,26 +152,26 @@ function validateMove(xpos, ypos, newRotation)
 				col = length2;
 				row = length1;
 			}
-			
+
 			if(gameData[newy] != undefined && gameData[newy][newx] != 0
 				&& currentBlock.rotations[newRotation][row] != undefined && currentBlock.rotations[newRotation][row][col] != 0) {
 				result = false;
 				col = length2;
 				row = length1;
 			}
-			
+
 			newx += 1;
 		}
-		
+
 		newx = xpos;
 		newy += 1;
-		
+
 		if(newy > ROWS) {
 			row = length1;
 			result = false;
 		}
 	}
-	
+
 	return result;
 }
 
@@ -183,7 +182,7 @@ function updateGame() {
     // drop currentBlock every half-second
     if (validateMove(currentBlock.gridX, currentBlock.gridY + 1, currentBlock.currentRotation)) {
       currentBlock.gridY += 1;
-    } 
+    }
     else {
       landBlock(currentBlock);
       currentBlock = getRandomBlock();
@@ -199,9 +198,47 @@ function updateGame() {
 
   if (isGameOver == false) {
     requestAnimationFrame(updateGame);
-  } 
+  }
   else {
     context.fillText("GAME OVER");
     context.fillStyle = "white";
 	}
 }
+	function checkForCompleteLines()
+{
+	var lineFound = false;
+	var fullRow = true;
+	var row = ROWS - 1;
+	var col = COLS - 1;
+
+	while(row >= 0)
+	{
+		while(col >= 0)
+		{
+			if(gameData[row][col] == 0)
+			{
+				fullRow = false;
+				col = -1;
+			}
+			col--;
+		}
+
+		if(fullRow == true)
+		{
+			zeroRow(row);
+			row++;
+			lineFound = true;
+			currentLines++;
+		}
+
+		fullRow = true;
+		col = COLS - 1;
+		row--;
+	}
+
+	if(lineFound)
+	{
+		lineSpan.innerHTML = currentLines.toString();
+	}
+}
+
