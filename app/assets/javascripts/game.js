@@ -55,6 +55,33 @@ function startGame() {
 	requestAnimationFrame(updateGame);
 }
 
+function drawTile(drawX, drawY) {
+	context.strokeStyle = "#000";
+  context.beginPath();
+ 	context.fillStyle = "#3c0";
+ 	context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
+ 	context.fill();
+ 	context.stroke();
+}
+
+function drawLetter(drawX, drawY) {
+	letterPosX = drawX * SIZE + 7;
+	letterPosY = drawY * SIZE + 27;
+
+	context.fillStyle = "#000";
+ 	context.font = '20pt Arial';
+ 	context.fillText("A", letterPosX, letterPosY, SIZE);
+}
+
+function drawNumber(drawX, drawY) {
+	numberPosX = drawX * SIZE + 2;
+	numberPosY = drawY * SIZE + 10;
+
+	context.fillStyle = "#fff";
+ 	context.font = '6pt Arial';
+ 	context.fillText("1", numberPosX, numberPosY, SIZE);
+}
+
 
 function drawBoard() {
 	// context.drawImage(bgImg, 0, 0, 320, 640, 0, 0, 320, 640);
@@ -75,6 +102,7 @@ function drawBoard() {
 				context.rect(col * SIZE, row * SIZE, SIZE, SIZE);
 				context.fillStyle="green";
 				context.fill();
+
 			}
 		}
 	}
@@ -92,10 +120,19 @@ function drawBlock(block) {
 			if(block.rotations[rotation][row][col] == 1 && drawY >= 0) {
 				// context.drawImage(blockImg, block.color * SIZE, 0, SIZE, SIZE, drawX * SIZE, drawY * SIZE, SIZE, SIZE);
 				// context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
-				context.beginPath();
-				context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
-				context.fillStyle="green";
-				context.fill();
+				// context.beginPath();
+				// context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
+				// context.fillStyle="green";
+				// context.fill();
+				// context.stroke();
+				// context.fillStyle ="black";
+				// // context.font = 'bold 20pt Calibri';
+				// context.fillText("A", 0, 0);
+				// context.fillStyle="white"context.font = "18pt Arial";
+
+				drawTile(drawX, drawY);
+				drawLetter(drawX, drawY);
+				drawNumber(drawX, drawY);
 
 			}
 			drawX += 1;
