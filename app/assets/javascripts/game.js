@@ -299,7 +299,7 @@ function clearCompletedRow(row) {
 }
 
 function advanceLevelIfNeeded() {
-	if (currentLines % 2 === 0 && currentLevel < SPEEDS.length){
+	if (currentLines % 10 === 0 && currentLevel < SPEEDS.length){
 		currentLevel += 1;
 		currentSpeed = SPEEDS[currentLevel - 1];
 		$("#levels").text(currentLevel.toString());
