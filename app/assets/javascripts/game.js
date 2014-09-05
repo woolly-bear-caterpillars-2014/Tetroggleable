@@ -180,8 +180,10 @@ function getKeyCode(e) {
 				if(newRotation < 0)
 					newRotation = currentBlock.rotations.length - 1;
 
-				if( validateMove(currentBlock.gridX, currentBlock.gridY, newRotation) )
+				if( validateMove(currentBlock.gridX, currentBlock.gridY, newRotation) ) {
 					currentBlock.currentRotation = newRotation;
+					console.log(currentBlock.rotations[newRotation]);
+				}
 			}
 			break;
 

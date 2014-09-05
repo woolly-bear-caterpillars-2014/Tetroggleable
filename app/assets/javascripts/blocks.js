@@ -51,6 +51,11 @@ function JBlock() {
         [ [1, 0, 0],
           [1, 1, 1] ];
 
+  this.rotation =
+        [ [0, 1],
+          [0, 1],
+          [1, 1] ];
+
   this.rotations = [ this.rotation1, this.rotation2, this.rotation3, this.rotation4 ];
   this.currentRotation = 0;
 
@@ -62,6 +67,10 @@ function JBlock() {
 function OBlock() {
 
   this.rotation1 =
+        [ [1, 1],
+          [1, 1] ];
+
+  this.rotation =
         [ [1, 1],
           [1, 1] ];
 
@@ -81,6 +90,12 @@ function IBlock() {
           [1],
           [1] ];
 
+  this.rotation =
+        [ [1],
+          [1],
+          [1],
+          [1] ];
+
   this.rotation2 = [ [1,1,1,1] ];
 
   this.rotations = [ this.rotation1, this.rotation2 ];
@@ -94,6 +109,10 @@ function IBlock() {
 function TBlock() {
 
   this.rotation1 =
+        [ [1, 1, 1],
+          [0, 1, 0] ];
+
+  this.rotation =
         [ [1, 1, 1],
           [0, 1, 0] ];
 
@@ -130,6 +149,10 @@ function ZBlock() {
           [1, 1],
           [1, 0] ];
 
+  this.rotation =
+        [ [1, 1, 0],
+          [0, 1, 1] ];
+
   this.rotations = [ this.rotation1, this.rotation2 ];
   this.currentRotation = 0;
 
@@ -141,6 +164,10 @@ function ZBlock() {
 function SBlock() {
 
   this.rotation1 =
+        [ [0, 1, 1],
+          [1, 1, 0] ];
+
+  this.rotation =
         [ [0, 1, 1],
           [1, 1, 0] ];
 
@@ -157,23 +184,9 @@ function SBlock() {
   this.gridY = -2;
 }
 
-Array.prototype.rotate = (function() {
-    // save references to array functions to make lookup faster
-    var push = Array.prototype.push,
-        splice = Array.prototype.splice;
-
-    return function(count) {
-        var len = this.length >>> 0, // convert to uint
-            count = count >> 0; // convert to int
-
-        // convert count to value in range [0, len[
-        count = ((count % len) + len) % len;
-
-        // use splice.call() instead of this.splice() to make function generic
-        push.apply(this, splice.call(this, 0, count));
-        return this;
-    };
-})();
+function Tile () {
+  
+}
 
 function getRandomBlock() {
 
@@ -189,6 +202,15 @@ function getRandomBlock() {
     case 4: block = new JBlock(); break;
     case 5: block = new SBlock(); break;
     case 6: block = new IBlock(); break;
+  }
+
+  for(var row = 0, len = block.rotation.length; row < len; row++) {
+    for(var col = 0, len2 = block.rotation[row].length; col < len2; col++) {
+      if(block.rotations[rotation][row][col] == 1) {
+        block.rotation[row][col] = new 
+        console.log(block.rotation[row][col])
+      }
+    }
   }
 
   block.color = Math.floor(Math.random() * 8);
