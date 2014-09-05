@@ -130,3 +130,38 @@ function getKeyCode(e) {
 	}
 }
 
+function validateMove(xpos, ypos, newRotation)
+{
+	var result = true;
+	var newx = xpos;
+	var newy = ypos;
+	
+	for(var row = 0, length1 = currentBlock.rotations[newRotation].length; row < length1; row++) {
+		for(var col = 0, length2 = currentBlock.rotations[newRotation][row].length; col < length2; col++) {
+			if(newx < 0 || newx >= COLS) {
+				result = false;
+				col = length2;
+				row = length1;
+			}
+			
+			if(gameData[newy] != undefined && gameData[newy][newx] != 0
+				&& currentBlock.rotations[newRotation][row] != undefined && currentBlock.rotations[newRotation][row][col] != 0) {
+				result = false;
+				col = length2;
+				row = length1;
+			}
+			
+			newx += 1;
+		}
+		
+		newx = xpos;
+		newy += 1;
+		
+		if(newy > ROWS) {
+			row = len;
+			result = false;
+		}
+	}
+	
+	return result;
+}
