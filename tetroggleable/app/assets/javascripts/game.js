@@ -238,7 +238,6 @@ function checkForCompleteLines() {
 	}
 }
 
-
 function landBlock(block) {
 	var xpos = block.gridX;
 	var ypos = block.gridY;
@@ -271,6 +270,7 @@ function clearCompletedRow(row) {
 				gameData[row][col] = gameData[row-1][col];
 			else
 				gameData[row][col] = 0;
+
 
 			col++;
 		}
