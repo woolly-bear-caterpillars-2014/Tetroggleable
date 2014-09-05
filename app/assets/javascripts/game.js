@@ -25,6 +25,7 @@ $(window).load(function(){
 	// drawBoard();
 	// block = getRandomBlock()
 	// drawBlock(block);
+	loadDictionary();
 })
 
 
@@ -302,3 +303,13 @@ function advanceLevelIfNeeded() {
 		$("#levels").text(currentLevel.toString());
 	};
 }
+
+function loadDictionary() {
+  var dict = {};
+  $.get( "/assets/dictionary.txt", function( text ) {
+    var words = text.split( "\n" );
+    for( var i = 0; i < words.length; i++) {
+      dict[ words[i] ] = true;
+    }
+  } );
+};
