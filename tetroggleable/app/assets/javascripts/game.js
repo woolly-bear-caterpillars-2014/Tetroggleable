@@ -11,7 +11,7 @@ var previousTime;
 var currentTime;
 
 
-$(document).ready(function(){
+$(window).load(function(){
 
 	canvas = document.getElementById('gameCanvas');
 	context = canvas.getContext('2d');
@@ -19,6 +19,7 @@ $(document).ready(function(){
 	previousTime = 0;
 	currentTime = 0;
 	startGame();
+	$(document).keydown(getKeyCode);
 	// drawBoard();
 	// block = getRandomBlock()
 	// drawBlock(block);
@@ -89,7 +90,6 @@ function drawBlock(block) {
 				context.fill();
 
 			}
-
 			drawX += 1;
 		}
 
@@ -100,7 +100,7 @@ function drawBlock(block) {
 
 function getKeyCode(e) {
 	// if(!e) { var e = window.event; }
-
+	console.log(e);
 	e.preventDefault();
 
 	if(isGameOver != true) {
@@ -204,8 +204,8 @@ function updateGame() {
     context.fillStyle = "white";
 	}
 }
-	function checkForCompleteLines()
-{
+
+function checkForCompleteLines() {
 	var lineFound = false;
 	var fullRow = true;
 	var row = ROWS - 1;
@@ -222,7 +222,6 @@ function updateGame() {
 			}
 			col--;
 		}
-
 		if(fullRow == true)
 		{
 			zeroRow(row);
@@ -230,15 +229,12 @@ function updateGame() {
 			lineFound = true;
 			currentLines++;
 		}
-
 		fullRow = true;
 		col = COLS - 1;
 		row--;
 	}
-
 	if(lineFound)
 	{
 		lineSpan.innerHTML = currentLines.toString();
 	}
 }
-
