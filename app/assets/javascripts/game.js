@@ -98,11 +98,14 @@ function drawBoard() {
 		for(var col = 0; col < COLS; col++) {
 			if(gameData[row][col] != 0) {
 				// context.drawImage(blockImg, (gameData[row][col] - 1) * SIZE, 0, SIZE, SIZE, col * SIZE, row * SIZE, SIZE, SIZE); -->
-				context.beginPath();
-				context.rect(col * SIZE, row * SIZE, SIZE, SIZE);
-				context.fillStyle="green";
-				context.fill();
-
+				// context.beginPath();
+				// context.rect(col * SIZE, row * SIZE, SIZE, SIZE);
+				// context.fillStyle="green";
+				// context.fill();
+				tile = gameData[row][col]
+				drawTile(col, row);
+				drawLetter(col, row, tile.letter);
+				drawNumber(col, row, tile.score);
 			}
 		}
 	}
@@ -302,7 +305,8 @@ function landBlock(block) {
 	for(var row = 0, len = block.rotations[rotation].length; row < len; row++) {
 		for(var col = 0, len2 = block.rotations[rotation][row].length; col < len2; col++) {
 			if(block.rotations[rotation][row][col] != 0 && ypos >= 0) {
-				gameData[ypos][xpos] = (block.color + 1);
+				tile = block.rotations[rotation][row][col]
+				gameData[ypos][xpos] = tile;
 			}
 			xpos += 1;
 		}

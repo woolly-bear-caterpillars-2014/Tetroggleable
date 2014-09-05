@@ -196,14 +196,6 @@ function getRandomBlock() {
     case 6: block = new IBlock(generateTiles()); break;
   }
 
-  // for(var row = 0, len = block.rotation.length; row < len; row++) {
-  //   for(var col = 0, len2 = block.rotation[row].length; col < len2; col++) {
-  //     if(block.rotation[row][col] == 1) {
-  //       block.rotation[row][col] = new Tile();
-  //     }
-  //   }
-  // }
-console.log(block)
   block.color = Math.floor(Math.random() * 8);
 
   return block;
