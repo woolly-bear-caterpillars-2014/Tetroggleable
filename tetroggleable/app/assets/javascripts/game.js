@@ -53,7 +53,7 @@ function startGame() {
 function drawBoard() {
 	// context.drawImage(bgImg, 0, 0, 320, 640, 0, 0, 320, 640);
 	context.beginPath();
-	context.rect(0, 0, 320, 640);
+	context.rect(0, 0, 32 0, 640);
 	context.fillStyle="black";
 	context.fill();
 	// context.beginPath();
@@ -69,6 +69,7 @@ function drawBoard() {
 				context.rect(col * SIZE, row * SIZE, SIZE, SIZE);
 				context.fillStyle="green";
 				context.fill();
+				context.fillText("Z", SIZE, SIZE);
 			}
 		}
 	}
