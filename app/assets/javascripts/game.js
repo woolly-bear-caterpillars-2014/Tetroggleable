@@ -301,7 +301,7 @@ function landBlock(block) {
 
 	for(var row = 0, len = block.rotations[rotation].length; row < len; row++) {
 		for(var col = 0, len2 = block.rotations[rotation][row].length; col < len2; col++) {
-			if(block.rotations[rotation][row][col] == 1 && ypos >= 0) {
+			if(block.rotations[rotation][row][col] != 0 && ypos >= 0) {
 				gameData[ypos][xpos] = (block.color + 1);
 			}
 			xpos += 1;
