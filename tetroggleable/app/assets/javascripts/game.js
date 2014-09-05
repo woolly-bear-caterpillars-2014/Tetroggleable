@@ -205,3 +205,42 @@ function updateGame() {
     context.fillStyle = "white";
 	}
 }
+
+function checkForCompleteLines() {
+	var lineFound = false;
+	var fullRow = true;
+	var row = ROWS - 1;
+	var col = COLS - 1;
+	
+	while(row >= 0)
+	{
+		while(col >= 0)
+		{
+			if(gameData[row][col] == 0)
+			{
+				fullRow = false;
+				col = -1;
+			}
+			col--;
+		}
+		
+		if(fullRow == true)
+		{
+			zeroRow(row);
+			row++;
+			lineFound = true;
+			currentLines++;
+		}
+		
+		fullRow = true;
+		col = COLS - 1;
+		row--;
+	}
+	
+	if(lineFound)
+	{
+		lineSpan.innerHTML = currentLines.toString();
+	}
+}
+
+
