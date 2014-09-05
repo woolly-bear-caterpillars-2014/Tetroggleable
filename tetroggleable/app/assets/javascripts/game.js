@@ -11,7 +11,7 @@ var previousTime;
 var currentTime;
 
 
-$(document).ready(function(){
+$(window).load(function(){
 
 	canvas = document.getElementById('gameCanvas');
 	context = canvas.getContext('2d');
@@ -19,6 +19,7 @@ $(document).ready(function(){
 	previousTime = 0;
 	currentTime = 0;
 	startGame();
+	$(document).keydown(getKeyCode);
 	// drawBoard();
 	// block = getRandomBlock()
 	// drawBlock(block);
@@ -101,7 +102,7 @@ function drawBlock(block) {
 
 function getKeyCode(e) {
 	// if(!e) { var e = window.event; }
-
+	console.log(e);
 	e.preventDefault();
 
 	if(isGameOver != true) {
