@@ -337,6 +337,7 @@ function clearCompletedRow(row) {
 		col = 0;
 		row --;
 	}
+	updateScore('line')
 }
 
 function advanceLevelIfNeeded() {
@@ -345,4 +346,13 @@ function advanceLevelIfNeeded() {
 		currentSpeed = SPEEDS[currentLevel - 1];
 		$("#levels").text(currentLevel.toString());
 	};
+}
+
+function updateScore(type) {
+	if (type === 'line') {
+		var totalScore = parseInt($("#overall_score").text()) + 10;
+		$("#overall_score").text(totalScore);
+		var lines = parseInt($("#lines").text()) + 1;
+		$("#lines").text(lines);
+	}
 }
