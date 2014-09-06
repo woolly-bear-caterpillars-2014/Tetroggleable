@@ -386,6 +386,7 @@ function loadDictionary() {
 
 function findWord() {
 	letters = $("#boggle_letters").val();
+	$("#boggle_letters").val("");
 	var currentLetters = letters.split( "" );
 	if( currentLetters.length >= 2 ) {
 		word = currentLetters.join("");
