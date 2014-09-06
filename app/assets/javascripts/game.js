@@ -12,7 +12,6 @@ var lineScore;
 var previousTime;
 var currentLevel = 1;
 var currentSpeed = SPEEDS[currentLevel-1];
-var dicts;
 
 $(window).load(function(){
 
@@ -22,18 +21,11 @@ $(window).load(function(){
 	previousTime = 0;
 	currentTime = 0;
 	startGame();
-	$(document).keydown(function(event){
-		k = event.keyCode
-		if(k==32||k==37||k==38||k==39||k==40)
-		getKeyCode(event);
-		if(k==13)
-			findWord();
-	})
+	$(document).keydown(getKeyCode);
 	// drawBoard();
 	// block = getRandomBlock()
 	// drawBlock(block);
-	loadDictionary();
-});
+})
 
 
 function startGame() {
@@ -61,7 +53,7 @@ function startGame() {
 	window.requestAnimationFrame = requestAnimFrame;
 
 	requestAnimationFrame(updateGame);
-};
+}
 
 function drawTile(drawX, drawY) {
 	context.strokeStyle = "#000";
@@ -70,25 +62,25 @@ function drawTile(drawX, drawY) {
  	context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
  	context.fill();
  	context.stroke();
-};
+}
 
-function drawLetter(drawX, drawY) {
+function drawLetter(drawX, drawY, letter) {
 	letterPosX = drawX * SIZE + 7;
 	letterPosY = drawY * SIZE + 27;
 
 	context.fillStyle = "#000";
  	context.font = '20pt Arial';
- 	context.fillText("A", letterPosX, letterPosY, SIZE);
-};
+ 	context.fillText(letter, letterPosX, letterPosY, SIZE);
+}
 
-function drawNumber(drawX, drawY) {
+function drawNumber(drawX, drawY, score) {
 	numberPosX = drawX * SIZE + 2;
 	numberPosY = drawY * SIZE + 10;
 
 	context.fillStyle = "#fff";
  	context.font = '6pt Arial';
- 	context.fillText("1", numberPosX, numberPosY, SIZE);
-};
+ 	context.fillText(score, numberPosX, numberPosY, SIZE);
+}
 
 
 function drawBoard() {
@@ -106,15 +98,18 @@ function drawBoard() {
 		for(var col = 0; col < COLS; col++) {
 			if(gameData[row][col] != 0) {
 				// context.drawImage(blockImg, (gameData[row][col] - 1) * SIZE, 0, SIZE, SIZE, col * SIZE, row * SIZE, SIZE, SIZE); -->
-				context.beginPath();
-				context.rect(col * SIZE, row * SIZE, SIZE, SIZE);
-				context.fillStyle="green";
-				context.fill();
-
+				// context.beginPath();
+				// context.rect(col * SIZE, row * SIZE, SIZE, SIZE);
+				// context.fillStyle="green";
+				// context.fill();
+				tile = gameData[row][col]
+				drawTile(col, row);
+				drawLetter(col, row, tile.letter);
+				drawNumber(col, row, tile.score);
 			}
 		}
 	}
-};
+}
 
 function drawBlock(block) {
 	var drawX = block.gridX;
@@ -125,7 +120,7 @@ function drawBlock(block) {
 
 	for(var row = 0, len = block.rotations[rotation].length; row < len; row++) {
 		for(var col = 0, len2 = block.rotations[rotation][row].length; col < len2; col++) {
-			if(block.rotations[rotation][row][col] == 1 && drawY >= 0) {
+			if(block.rotations[rotation][row][col] != 0 && drawY >= 0) {
 				// context.drawImage(blockImg, block.color * SIZE, 0, SIZE, SIZE, drawX * SIZE, drawY * SIZE, SIZE, SIZE);
 				// context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
 				// context.beginPath();
@@ -137,10 +132,10 @@ function drawBlock(block) {
 				// // context.font = 'bold 20pt Calibri';
 				// context.fillText("A", 0, 0);
 				// context.fillStyle="white"context.font = "18pt Arial";
-
+				tile = block.rotations[rotation][row][col]
 				drawTile(drawX, drawY);
-				drawLetter(drawX, drawY);
-				drawNumber(drawX, drawY);
+				drawLetter(drawX, drawY, tile.letter);
+				drawNumber(drawX, drawY, tile.score);
 
 			}
 			drawX += 1;
@@ -150,7 +145,7 @@ function drawBlock(block) {
 		drawY += 1;
 	}
 
-};
+}
 
 function getKeyCode(e) {
 	// if(!e) { var e = window.event; }
@@ -195,14 +190,14 @@ function getKeyCode(e) {
 	else {
 		startGame();
 	}
-};
+}
 
 function letBlockFall() {
 	for (var i=0; i<20; i++) {
 		if (validateMove(currentBlock.gridX, currentBlock.gridY + 1, currentBlock.currentRotation))
 			currentBlock.gridY++;
 	}
-};
+}
 
 function validateMove(xpos, ypos, newRotation) {
 	var result = true;
@@ -237,7 +232,7 @@ function validateMove(xpos, ypos, newRotation) {
 	}
 
 	return result;
-};
+}
 
 function updateGame() {
   currentTime = new Date().getTime();
@@ -267,7 +262,7 @@ function updateGame() {
     context.fillText("GAME OVER", 10 , 10);
     context.fillStyle = "white";
 	}
-};
+}
 
 function checkForCompleteLines() {
 	var lineFound = false;
@@ -300,7 +295,7 @@ function checkForCompleteLines() {
 	if(lineFound) {
 		$("#lines").text(currentLines.toString());
 	}
-};
+}
 
 function landBlock(block) {
 	var xpos = block.gridX;
@@ -309,8 +304,9 @@ function landBlock(block) {
 
 	for(var row = 0, len = block.rotations[rotation].length; row < len; row++) {
 		for(var col = 0, len2 = block.rotations[rotation][row].length; col < len2; col++) {
-			if(block.rotations[rotation][row][col] == 1 && ypos >= 0) {
-				gameData[ypos][xpos] = (block.color + 1);
+			if(block.rotations[rotation][row][col] != 0 && ypos >= 0) {
+				tile = block.rotations[rotation][row][col]
+				gameData[ypos][xpos] = tile;
 			}
 			xpos += 1;
 		}
@@ -322,7 +318,7 @@ function landBlock(block) {
 	if(block.gridY < 0) {
 		isGameOver = true;
 	}
-};
+}
 
 function clearCompletedRow(row) {
 	var row = row;
@@ -341,7 +337,8 @@ function clearCompletedRow(row) {
 		col = 0;
 		row --;
 	}
-};
+	updateScore('line')
+}
 
 function advanceLevelIfNeeded() {
 	if (currentLines % 10 === 0 && currentLevel < SPEEDS.length){
@@ -349,25 +346,13 @@ function advanceLevelIfNeeded() {
 		currentSpeed = SPEEDS[currentLevel - 1];
 		$("#levels").text(currentLevel.toString());
 	};
-};
-
-function loadDictionary() {
-
-  $.get( "/assets/dictionary.txt", function( text ) {
-    dicts = text.split( "\n" );
-    //
-  } );
-};
-
-function findWord() {
-	letters = $("#boggle_letters").val();
-	var currentLetters = letters.split( "" );
-	if( currentLetters.length >= 2 ) {
-		word = currentLetters.join("");
-		if( dicts.indexOf(word)  != -1 ) {
-			console.log("MATCHED!")
-			return word
-		}
-	}
 }
 
+function updateScore(type) {
+	if (type === 'line') {
+		var totalScore = parseInt($("#overall_score").text()) + 10;
+		$("#overall_score").text(totalScore);
+		var lines = parseInt($("#lines").text()) + 1;
+		$("#lines").text(lines);
+	}
+}
