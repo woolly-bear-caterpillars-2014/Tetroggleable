@@ -390,8 +390,21 @@ function findWord() {
 	var currentLetters = letters.split( "" );
 	if( currentLetters.length >= 3 ) {
 		word = currentLetters.join("");
-		if( dicts.indexOf(word.toUpperCase())  != -1 ) {
-			return word;
+		// if( dicts.indexOf(word.toUpperCase())  != -1 ) {
+		// 	isWordOnBoard(word, gameData);
+		// }
+		tilesOnBoard = isWordOnBoard(word.toUpperCase(), gameData);
+		if (tilesOnBoard) {
+			makeTilesFall(tilesOnBoard);
+		}
+		else {
+			console.log("word not found");
 		}
 	}
 }
+
+function makeTilesFall(tilesArray) {
+			console.log("Here are the tile coords to fall:");
+			console.log(tilesArray);
+}
+
