@@ -1,6 +1,7 @@
 var ROWS = 20;
 var COLS = 10;
 var SIZE = 32;
+var SPEEDS = [500, 450, 400, 350, 300, 250, 200, 150, 100, 50, 25, 10, 5, 1];
 
 var canvas;
 var context;
@@ -9,6 +10,9 @@ var currentTime;
 var isGameOver;
 var lineScore;
 var previousTime;
+var currentLevel = 1;
+var currentSpeed = SPEEDS[currentLevel-1];
+var dicts;
 
 $(window).load(function(){
 
@@ -17,18 +21,28 @@ $(window).load(function(){
 	lineScore = $('#lines');
 	previousTime = 0;
 	currentTime = 0;
-	startGame();
-	$(document).keydown(getKeyCode);
-	// drawBoard();
-	// block = getRandomBlock()
-	// drawBlock(block);
-})
 
+	startGame();
+	$(document).keydown(function(event){
+			k = event.keyCode
+			if(k==32||k==37||k==38||k==39||k==40)
+				getKeyCode(event);
+			if(k==13)
+				findWord();
+	})
+		// drawBoard();
+		// block = getRandomBlock()
+		// drawBlock(block);
+		loadDictionary();
+});
 
 function startGame() {
 	var row, col;
 	currentLines = 0;
 	isGameOver = false;
+	currentLevel = 1;
+	currentSpeed = SPEEDS[currentLevel - 1];
+	$("#levels").text(1)
 
 	gameData = new Array();
 
@@ -49,6 +63,44 @@ function startGame() {
 	requestAnimationFrame(updateGame);
 }
 
+function drawTile(drawX, drawY) {
+	context.strokeStyle = "#000";
+  context.beginPath();
+ 	// context.fillStyle = "#3c0";
+ 	context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
+ 	context.fill();
+ 	context.stroke();
+}
+
+function drawTileBackground(drawX, drawY) {
+	numberPosX = drawX * SIZE;
+	numberPosY = drawY * SIZE;
+	image = new Image();
+	image.src = "http://www.mobilier-beton.net/wp-content/uploads/2013/05/Wood1.jpg";
+
+	pattern = context.createPattern(image, "no-repeat");
+  context.fillStyle = pattern;
+  context.fillRect(numberPosX, numberPosY, SIZE, SIZE);
+}
+
+function drawLetter(drawX, drawY, letter) {
+	letterPosX = drawX * SIZE + 7;
+	letterPosY = drawY * SIZE + 27;
+
+	context.fillStyle = "#000";
+ 	context.font = '20pt Arial';
+ 	context.fillText(letter, letterPosX, letterPosY, SIZE);
+}
+
+function drawNumber(drawX, drawY, score) {
+	numberPosX = drawX * SIZE + 2;
+	numberPosY = drawY * SIZE + 10;
+
+	context.fillStyle = "#000";
+ 	context.font = 'bolder 8pt Arial';
+ 	context.fillText(score, numberPosX, numberPosY, SIZE);
+}
+
 
 function drawBoard() {
 	// context.drawImage(bgImg, 0, 0, 320, 640, 0, 0, 320, 640);
@@ -65,10 +117,15 @@ function drawBoard() {
 		for(var col = 0; col < COLS; col++) {
 			if(gameData[row][col] != 0) {
 				// context.drawImage(blockImg, (gameData[row][col] - 1) * SIZE, 0, SIZE, SIZE, col * SIZE, row * SIZE, SIZE, SIZE); -->
-				context.beginPath();
-				context.rect(col * SIZE, row * SIZE, SIZE, SIZE);
-				context.fillStyle="green";
-				context.fill();
+				// context.beginPath();
+				// context.rect(col * SIZE, row * SIZE, SIZE, SIZE);
+				// context.fillStyle="green";
+				// context.fill();
+				tile = gameData[row][col]
+				drawTileBackground(col, row);
+				drawTile(col, row);
+				drawLetter(col, row, tile.letter);
+				drawNumber(col, row, tile.score);
 			}
 		}
 	}
@@ -83,13 +140,23 @@ function drawBlock(block) {
 
 	for(var row = 0, len = block.rotations[rotation].length; row < len; row++) {
 		for(var col = 0, len2 = block.rotations[rotation][row].length; col < len2; col++) {
-			if(block.rotations[rotation][row][col] == 1 && drawY >= 0) {
+			if(block.rotations[rotation][row][col] != 0 && drawY >= 0) {
 				// context.drawImage(blockImg, block.color * SIZE, 0, SIZE, SIZE, drawX * SIZE, drawY * SIZE, SIZE, SIZE);
 				// context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
-				context.beginPath();
-				context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
-				context.fillStyle="green";
-				context.fill();
+				// context.beginPath();
+				// context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
+				// context.fillStyle="green";
+				// context.fill();
+				// context.stroke();
+				// context.fillStyle ="black";
+				// // context.font = 'bold 20pt Calibri';
+				// context.fillText("A", 0, 0);
+				// context.fillStyle="white"context.font = "18pt Arial";
+				tile = block.rotations[rotation][row][col]
+				drawTileBackground(drawX, drawY);
+				drawTile(drawX, drawY);
+				drawLetter(drawX, drawY, tile.letter);
+				drawNumber(drawX, drawY, tile.score);
 
 			}
 			drawX += 1;
@@ -191,7 +258,7 @@ function validateMove(xpos, ypos, newRotation) {
 function updateGame() {
   currentTime = new Date().getTime();
 
-  if (currentTime - previousTime > 500) {
+  if (currentTime - previousTime > currentSpeed) {
     // drop currentBlock every half-second
     if (validateMove(currentBlock.gridX, currentBlock.gridY + 1, currentBlock.currentRotation)) {
       currentBlock.gridY += 1;
@@ -240,6 +307,7 @@ function checkForCompleteLines() {
 			row++;
 			lineFound = true;
 			currentLines++;
+			advanceLevelIfNeeded();
 		}
 		fullRow = true;
 		col = COLS - 1;
@@ -257,8 +325,9 @@ function landBlock(block) {
 
 	for(var row = 0, len = block.rotations[rotation].length; row < len; row++) {
 		for(var col = 0, len2 = block.rotations[rotation][row].length; col < len2; col++) {
-			if(block.rotations[rotation][row][col] == 1 && ypos >= 0) {
-				gameData[ypos][xpos] = (block.color + 1);
+			if(block.rotations[rotation][row][col] != 0 && ypos >= 0) {
+				tile = block.rotations[rotation][row][col]
+				gameData[ypos][xpos] = tile;
 			}
 			xpos += 1;
 		}
@@ -288,5 +357,41 @@ function clearCompletedRow(row) {
 		}
 		col = 0;
 		row --;
+	}
+	updateScore('line')
+}
+
+function advanceLevelIfNeeded() {
+	if (currentLines % 10 === 0 && currentLevel < SPEEDS.length){
+		currentLevel += 1;
+		currentSpeed = SPEEDS[currentLevel - 1];
+		$("#levels").text(currentLevel.toString());
+	};
+}
+
+function updateScore(type) {
+	if (type === 'line') {
+		var totalScore = parseInt($("#overall_score").text()) + 10;
+		$("#overall_score").text(totalScore);
+		var lines = parseInt($("#lines").text()) + 1;
+		$("#lines").text(lines);
+	}
+}
+
+function loadDictionary() {
+  $.get( "/assets/dictionary.txt", function( text ) {
+    dicts = text.split( "\n" );
+  } );
+}
+
+function findWord() {
+	letters = $("#boggle_letters").val();
+	var currentLetters = letters.split( "" );
+	if( currentLetters.length >= 2 ) {
+		word = currentLetters.join("");
+		if( dicts.indexOf(word)  != -1 ) {
+			console.log("MATCHED!")
+			return word
+		}
 	}
 }
