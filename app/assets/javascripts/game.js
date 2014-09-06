@@ -12,6 +12,7 @@ var lineScore;
 var previousTime;
 var currentLevel = 1;
 var currentSpeed = SPEEDS[currentLevel-1];
+var dicts;
 
 $(window).load(function(){
 
@@ -20,13 +21,20 @@ $(window).load(function(){
 	lineScore = $('#lines');
 	previousTime = 0;
 	currentTime = 0;
-	startGame();
-	$(document).keydown(getKeyCode);
-	// drawBoard();
-	// block = getRandomBlock()
-	// drawBlock(block);
-})
 
+	startGame();
+	$(document).keydown(function(event){
+			k = event.keyCode
+			if(k==32||k==37||k==38||k==39||k==40)
+				getKeyCode(event);
+			if(k==13)
+				findWord();
+	})
+		// drawBoard();
+		// block = getRandomBlock()
+		// drawBlock(block);
+		loadDictionary();
+});
 
 function startGame() {
 	var row, col;
@@ -354,5 +362,23 @@ function updateScore(type) {
 		$("#overall_score").text(totalScore);
 		var lines = parseInt($("#lines").text()) + 1;
 		$("#lines").text(lines);
+	}
+}
+
+function loadDictionary() {
+  $.get( "/assets/dictionary.txt", function( text ) {
+    dicts = text.split( "\n" );
+  } );
+}
+
+function findWord() {
+	letters = $("#boggle_letters").val();
+	var currentLetters = letters.split( "" );
+	if( currentLetters.length >= 2 ) {
+		word = currentLetters.join("");
+		if( dicts.indexOf(word)  != -1 ) {
+			console.log("MATCHED!")
+			return word
+		}
 	}
 }
