@@ -13,6 +13,7 @@ var previousTime;
 var currentLevel = 1;
 var currentSpeed = SPEEDS[currentLevel-1];
 var dicts;
+var gameIsPaused = false;
 
 $(window).load(function(){
 
@@ -29,6 +30,8 @@ $(window).load(function(){
 				getKeyCode(event);
 			if(k==13)
 				findWord();
+			if(k==27)
+				toggleGamePause();
 	})
 		// drawBoard();
 		// block = getRandomBlock()
@@ -258,7 +261,7 @@ function validateMove(xpos, ypos, newRotation) {
 function updateGame() {
   currentTime = new Date().getTime();
 
-  if (currentTime - previousTime > currentSpeed) {
+  if (currentTime - previousTime > currentSpeed && !(gameIsPaused)) {
     // drop currentBlock every half-second
     if (validateMove(currentBlock.gridX, currentBlock.gridY + 1, currentBlock.currentRotation)) {
       currentBlock.gridY += 1;
@@ -406,5 +409,9 @@ function findWord() {
 function makeTilesFall(tilesArray) {
 			console.log("Here are the tile coords to fall:");
 			console.log(tilesArray);
+}
+
+function toggleGamePause() {
+	gameIsPaused = !(gameIsPaused);
 }
 
