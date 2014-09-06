@@ -58,10 +58,21 @@ function startGame() {
 function drawTile(drawX, drawY) {
 	context.strokeStyle = "#000";
   context.beginPath();
- 	context.fillStyle = "#3c0";
+ 	// context.fillStyle = "#3c0";
  	context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
  	context.fill();
  	context.stroke();
+}
+
+function drawTileBackground(drawX, drawY) {
+	numberPosX = drawX * SIZE;
+	numberPosY = drawY * SIZE;
+	image = new Image();
+	image.src = "http://www.mobilier-beton.net/wp-content/uploads/2013/05/Wood1.jpg";
+
+	pattern = context.createPattern(image, "no-repeat");
+  context.fillStyle = pattern;
+  context.fillRect(numberPosX, numberPosY, SIZE, SIZE);
 }
 
 function drawLetter(drawX, drawY, letter) {
@@ -77,8 +88,8 @@ function drawNumber(drawX, drawY, score) {
 	numberPosX = drawX * SIZE + 2;
 	numberPosY = drawY * SIZE + 10;
 
-	context.fillStyle = "#fff";
- 	context.font = '6pt Arial';
+	context.fillStyle = "#000";
+ 	context.font = 'bolder 8pt Arial';
  	context.fillText(score, numberPosX, numberPosY, SIZE);
 }
 
@@ -103,6 +114,7 @@ function drawBoard() {
 				// context.fillStyle="green";
 				// context.fill();
 				tile = gameData[row][col]
+				drawTileBackground(col, row);
 				drawTile(col, row);
 				drawLetter(col, row, tile.letter);
 				drawNumber(col, row, tile.score);
@@ -133,6 +145,7 @@ function drawBlock(block) {
 				// context.fillText("A", 0, 0);
 				// context.fillStyle="white"context.font = "18pt Arial";
 				tile = block.rotations[rotation][row][col]
+				drawTileBackground(drawX, drawY);
 				drawTile(drawX, drawY);
 				drawLetter(drawX, drawY, tile.letter);
 				drawNumber(drawX, drawY, tile.score);
