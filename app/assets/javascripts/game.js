@@ -369,5 +369,16 @@ function loadDictionary() {
   $.get( "/assets/dictionary.txt", function( text ) {
     dicts = text.split( "\n" );
   } );
+}
 
+function findWord() {
+	letters = $("#boggle_letters").val();
+	var currentLetters = letters.split( "" );
+	if( currentLetters.length >= 2 ) {
+		word = currentLetters.join("");
+		if( dicts.indexOf(word)  != -1 ) {
+			console.log("MATCHED!")
+			return word
+		}
+	}
 }
