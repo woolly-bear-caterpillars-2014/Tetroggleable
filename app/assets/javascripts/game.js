@@ -12,6 +12,8 @@ var lineScore;
 var previousTime;
 var currentLevel = 1;
 var currentSpeed = SPEEDS[currentLevel-1];
+var dicts;
+var gameIsPaused = false;
 
 $(window).load(function(){
 
@@ -20,13 +22,22 @@ $(window).load(function(){
 	lineScore = $('#lines');
 	previousTime = 0;
 	currentTime = 0;
-	startGame();
-	$(document).keydown(getKeyCode);
-	// drawBoard();
-	// block = getRandomBlock()
-	// drawBlock(block);
-})
 
+	startGame();
+	$(document).keydown(function(event){
+			k = event.keyCode
+			if(k==32||k==37||k==38||k==39||k==40)
+				getKeyCode(event);
+			if(k==13)
+				findWord();
+			if(k==27)
+				toggleGamePause();
+	})
+		// drawBoard();
+		// block = getRandomBlock()
+		// drawBlock(block);
+		loadDictionary();
+});
 
 function startGame() {
 	var row, col;
@@ -58,10 +69,21 @@ function startGame() {
 function drawTile(drawX, drawY) {
 	context.strokeStyle = "#000";
   context.beginPath();
- 	context.fillStyle = "#3c0";
+ 	// context.fillStyle = "#3c0";
  	context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
  	context.fill();
  	context.stroke();
+}
+
+function drawTileBackground(drawX, drawY) {
+	numberPosX = drawX * SIZE;
+	numberPosY = drawY * SIZE;
+	image = new Image();
+	image.src = "http://www.mobilier-beton.net/wp-content/uploads/2013/05/Wood1.jpg";
+
+	pattern = context.createPattern(image, "no-repeat");
+  context.fillStyle = pattern;
+  context.fillRect(numberPosX, numberPosY, SIZE, SIZE);
 }
 
 function drawLetter(drawX, drawY, letter) {
@@ -77,8 +99,8 @@ function drawNumber(drawX, drawY, score) {
 	numberPosX = drawX * SIZE + 2;
 	numberPosY = drawY * SIZE + 10;
 
-	context.fillStyle = "#fff";
- 	context.font = '6pt Arial';
+	context.fillStyle = "#000";
+ 	context.font = 'bolder 8pt Arial';
  	context.fillText(score, numberPosX, numberPosY, SIZE);
 }
 
@@ -103,6 +125,7 @@ function drawBoard() {
 				// context.fillStyle="green";
 				// context.fill();
 				tile = gameData[row][col]
+				drawTileBackground(col, row);
 				drawTile(col, row);
 				drawLetter(col, row, tile.letter);
 				drawNumber(col, row, tile.score);
@@ -133,6 +156,7 @@ function drawBlock(block) {
 				// context.fillText("A", 0, 0);
 				// context.fillStyle="white"context.font = "18pt Arial";
 				tile = block.rotations[rotation][row][col]
+				drawTileBackground(drawX, drawY);
 				drawTile(drawX, drawY);
 				drawLetter(drawX, drawY, tile.letter);
 				drawNumber(drawX, drawY, tile.score);
@@ -237,7 +261,7 @@ function validateMove(xpos, ypos, newRotation) {
 function updateGame() {
   currentTime = new Date().getTime();
 
-  if (currentTime - previousTime > currentSpeed) {
+  if (currentTime - previousTime > currentSpeed && !(gameIsPaused)) {
     // drop currentBlock every half-second
     if (validateMove(currentBlock.gridX, currentBlock.gridY + 1, currentBlock.currentRotation)) {
       currentBlock.gridY += 1;
@@ -356,3 +380,38 @@ function updateScore(type) {
 		$("#lines").text(lines);
 	}
 }
+
+function loadDictionary() {
+  $.get( "/assets/dictionary.txt", function( text ) {
+    dicts = text.split( "\n" );
+  } );
+}
+
+function findWord() {
+	letters = $("#boggle_letters").val();
+	$("#boggle_letters").val("");
+	var currentLetters = letters.split( "" );
+	if( currentLetters.length >= 3 ) {
+		word = currentLetters.join("");
+		// if( dicts.indexOf(word.toUpperCase())  != -1 ) {
+		// 	isWordOnBoard(word, gameData);
+		// }
+		tilesOnBoard = isWordOnBoard(word.toUpperCase(), gameData);
+		if (tilesOnBoard) {
+			makeTilesFall(tilesOnBoard);
+		}
+		else {
+			console.log("word not found");
+		}
+	}
+}
+
+function makeTilesFall(tilesArray) {
+			console.log("Here are the tile coords to fall:");
+			console.log(tilesArray);
+}
+
+function toggleGamePause() {
+	gameIsPaused = !(gameIsPaused);
+}
+
