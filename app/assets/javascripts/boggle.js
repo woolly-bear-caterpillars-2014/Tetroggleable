@@ -55,7 +55,7 @@ function isWordOnBoard(word, board) {
     }
     console.log("Valid Words Coordinates:");
     console.log(validWordsCoords);
-    return validWordsCoords;
+    return coordinateArray;
   }
   else
     return false;

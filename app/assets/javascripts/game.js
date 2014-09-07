@@ -337,52 +337,28 @@ function landBlock(block) {
 		xpos = block.gridX;
 		ypos += 1;
 	}
-	checkForCompleteLines();
+		checkForCompleteLines();
 
-	if(block.gridY < 0) {
-		isGameOver = true;
+		if(block.gridY < 0) {
+			isGameOver = true;
+		}
 	}
-}
 
-function dropTiles(newCoords, oldCoords) {
-
-
-		// console.log([newCoords[i][0], newCoords[i][1]]);
-		// if gameData[newCoords[0]]
-		// row = gameData[newCoords];
-		// for(var i = 0; i < row.length; i++) {
-		// if (newCoords[0] < oldCoords[0]) {
-		// 	for
-
-		// }
-		// for (i = 0; i < row.length; i ++) {
-			console.log(gameData[newCoords[0]]);
-			console.log(gameData[oldCoords[0]]);
-		//  }
-
-		// if (newCoords[0] < oldCoords[0] && gameData[newCoords[0] == 0) {
-		// 	col
-		// 	shiftColumnDown();
-
-	}
-function shiftColumnDown(col) {
-
-
-}
 
 function clearTile(coords) {
 	var row = coords[0];
 	var col = coords[1];
-	gameData[row][col] = 0;
+	var val = gameData[row-1][col];
+
 	for (var i = row; i > 0; i--) {
 		gameData[i][col] = gameData[i-1][col];
+		// if( gameData[row-1][col] == 0) {
+		// 		gameData[row][col] = 0;
+		}
 	}
-}
 
 function clearTiles(array) {
-	console.log("length: " + array.length)
 	for(var i = 0; i < array.length; i++) {
-		console.log(Array[i]);
 		clearTile(array[i]);
 	}
 };
@@ -450,6 +426,7 @@ function findWord() {
 function makeTilesFall(tilesArray) {
 			console.log("Here are the tile coords to fall:");
 			console.log(tilesArray);
+			clearTiles(tilesArray);
 }
 
 function toggleGamePause() {
