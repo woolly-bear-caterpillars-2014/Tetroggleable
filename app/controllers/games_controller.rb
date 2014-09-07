@@ -18,10 +18,10 @@ class GamesController < ApplicationController
 	end
 
 
-	# private 
+	private 
 
 	# def game_params
-	# 	params.require(:game).permit(:score, :scrabble_score, :level, :lines)
+	# 	params.require(:game).permit(:score, :scrabble_score, :level, :lines, :user_id)
 	# end
 
 end

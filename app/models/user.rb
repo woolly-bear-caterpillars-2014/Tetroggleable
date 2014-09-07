@@ -1,7 +1,8 @@
 class User < ActiveRecord::Base
 	has_many :games
 
-	validates_presence_of :username, :email
+	validates :username, presence: true
+	validates :email, presence: true
 	validates_uniqueness_of :email
 
 end
