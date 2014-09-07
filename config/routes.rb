@@ -4,9 +4,21 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
 
-   root 'application#home'
+  root 'application#home'
 
-   resources :users, :applications, :games
+  resources :applications, only: [:home]
+
+  resources :game
+
+  resources :users, only: [:show, :edit, :update, :destroy]
+    get "profile" => 'users#show'
+    get 'signup' => 'users#new', :as => :signup
+    post 'signup' => 'users#create'
+
+    ## SESSIONS
+    get 'login' => 'sessions#new', :as => :login
+    post 'login' => 'sessions#create'
+    delete 'logout' => 'sessions#destroy'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
