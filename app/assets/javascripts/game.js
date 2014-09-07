@@ -437,9 +437,9 @@ function findWord() {
 }
 
 function makeTilesFall(tilesArray) {
-	console.log("Here are the tile coords to fall:");
-	console.log(tilesArray[0]);
-	clearTiles(tilesArray[0])
+	console.log("Here are the tile coords to fall sent back from boggle.js:");
+	console.log(tilesArray);
+	//clearTiles(tilesArray[0])
 
 }
 

@@ -17,13 +17,10 @@ board = [];
 function isWordOnBoard(word, board) {
   wordArray = word.split("")
   board = board
-  console.log(board);
 
   var firstLetterCoord = loop(board, wordArray[0]);
   var isValidWord = true;
   var validWordsCoords = [];
-  console.log("first Letter Coord");
-  console.log(firstLetterCoord);
 
   if(firstLetterCoord.length > 0) {
     for (var i=0; i < firstLetterCoord.length; i++) {
@@ -34,9 +31,11 @@ function isWordOnBoard(word, board) {
       coordinateArray = [firstLetterCoord[i]]
 
       for (var i = 0; i < (wordArray.length - 1); i++) {
-
+        //search for each corresponding letter in neighbors of previous coordinates
         neighborArray = getNeighbors(newCoordinates);
         newCoordinates = checkNeighbors(neighborArray, wordArray[i+1], board);
+        console.log('coordinates returned from checkNeighbors');
+        console.log(newCoordinates);
         coordinateArray.push(newCoordinates);
 
         // console.log('new coordinates return:');
@@ -51,7 +50,6 @@ function isWordOnBoard(word, board) {
       console.log(isValidWord);
       console.log(coordinateArray)
       validWordsCoords.push(coordinateArray)
-      break;
     }
     console.log("Valid Words Coordinates:");
     console.log(validWordsCoords);
@@ -100,8 +98,7 @@ function getNeighbors(coordinates) {
 	  neighborArray.push([x_coord + row[0], y_coord + row[1]])
 	}
 
-  console.log("Neighbors Array:  ");
-  console.log(neighborArray);
+  //returns all coordinates of current letter's neighbors
   return neighborArray;
 }
 
