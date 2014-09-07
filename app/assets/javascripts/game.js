@@ -354,7 +354,7 @@ function clearTile(coords) {
 
 	for (var i = row; i > 0; i--) {
 			gameData[i][col] = gameData[i-1][col];
-			while(newCoords == 0) {
+			while(gameData[newCoords] == 0) {
 			clearTile(newCoords);
 		// if( gameData[row-val][col] == 0 ) {
 		// 		gameData[row][col] = 0;
