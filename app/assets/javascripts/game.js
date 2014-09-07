@@ -92,16 +92,63 @@ function drawTile(drawX, drawY) {
  	context.stroke();
 }
 
-function drawTileBackground(drawX, drawY) {
+function drawTileBackground(drawX, drawY, scrabbleExtras) {
 	numberPosX = drawX * SIZE;
 	numberPosY = drawY * SIZE;
+	context.strokeStyle = "#000";
+  context.beginPath();
+	context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
+
+	if (scrabbleExtras == "NA") {
 	image = new Image();
 	image.src = "http://www.mobilier-beton.net/wp-content/uploads/2013/05/Wood1.jpg";
-
 	pattern = context.createPattern(image, "no-repeat");
   context.fillStyle = pattern;
-  context.fillRect(numberPosX, numberPosY, SIZE, SIZE);
-}
+ };
+
+ 	if (scrabbleExtras == "WX2"){
+
+ 		context.fillStyle = "#82002C";
+ 		context.fill();
+ 		context.stroke();
+ 	};
+ 		if (scrabbleExtras == "WX3"){
+
+ 		context.fillStyle = "#110649";
+ 		context.fill();
+ 		context.stroke();
+ 	};
+
+ 	if (scrabbleExtras == "LX2"){
+
+ 		context.fillStyle = "#E77F9C";
+ 		context.fill();
+ 		context.stroke();
+ 	};
+
+ 	if (scrabbleExtras == "LX3"){
+
+ 		context.fillStyle = "#5D709A";
+ 		context.fill();
+ 		context.stroke();
+ 	};
+
+ context.fillRect(numberPosX, numberPosY, SIZE, SIZE);
+};
+// function drawValues(drawX, drawY, scrabbleExtras) {
+// 	numberPosX = drawX * SIZE;
+// 	numberPosY = drawY * SIZE;
+
+// 	if (scrabbleExtras == "WX2"){
+// 		context.strokeStyle = "#000";
+//   	context.beginPath();
+//  		context.fillStyle = "#F62F68";
+//  		context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
+//  		context.fill();
+//  		context.stroke();
+
+// 	}
+// }
 
 function drawLetter(drawX, drawY, letter) {
 	letterPosX = drawX * SIZE + 7;
