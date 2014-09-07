@@ -121,11 +121,8 @@ function checkNeighbors(neighbors, currentLetter, board) {
 					return letterCoords;
 				}
 			}
-			// else
-			// 	return false;
 		}
 	}
-	// console.log(letterCoords)
 }
 
 function invalidWord() {
