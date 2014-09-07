@@ -15,5 +15,6 @@
 //= require turbolinks
 //= require_tree .
 //= require blocks
+//= require boggle
 //= require game
 
