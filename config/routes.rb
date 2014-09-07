@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     ## SESSIONS
     get 'login' => 'sessions#new', :as => :login
     post 'login' => 'sessions#create'
-    delete 'logout' => 'sessions#destroy'
+    get 'logout' => 'sessions#destroy', :as => :logout
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
