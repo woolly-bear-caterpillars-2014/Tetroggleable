@@ -348,14 +348,21 @@ function landBlock(block) {
 function clearTile(coords) {
 	var row = coords[0];
 	var col = coords[1];
-	var val = gameData[row-1][col];
+	var newCoordsX = row-1;
+	var newCoordsY = col;
+	var newCoords = [newCoordsX, newCoordsY]
 
 	for (var i = row; i > 0; i--) {
-		gameData[i][col] = gameData[i-1][col];
-		// if( gameData[row-1][col] == 0) {
+			gameData[i][col] = gameData[i-1][col];
+			while(newCoords == 0) {
+			clearTile(newCoords);
+		// if( gameData[row-val][col] == 0 ) {
 		// 		gameData[row][col] = 0;
+		// }
 		}
 	}
+}
+
 
 function clearTiles(array) {
 	for(var i = 0; i < array.length; i++) {
