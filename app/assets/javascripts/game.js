@@ -381,6 +381,16 @@ function updateScore(type) {
 	}
 }
 
+function updateBoggleScore(tiles) {
+	wordScore = 0;
+	console.log('boggle score tile')
+	console.log(tiles)
+	for (var i = 0; i < tiles[0].length; i++) {
+		console.log(tiles[i])
+		//tileScore = tiles[i].score
+	}
+}
+
 function loadDictionary() {
   $.get( "/assets/dictionary.txt", function( text ) {
     dicts = text.split( "\n" );
@@ -398,6 +408,7 @@ function findWord() {
 		// }
 		tilesOnBoard = isWordOnBoard(word.toUpperCase(), gameData);
 		if (tilesOnBoard) {
+			updateBoggleScore(tilesOnBoard)
 			makeTilesFall(tilesOnBoard);
 		}
 		else {
