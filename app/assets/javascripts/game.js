@@ -430,12 +430,6 @@ function findWord() {
 	}
 }
 
-function makeTilesFall(tilesArray) {
-			console.log("Here are the tile coords to fall:");
-			console.log(tilesArray);
-			clearTiles(tilesArray);
-}
-
 function toggleGamePause() {
 	gameIsPaused = !(gameIsPaused);
 }
