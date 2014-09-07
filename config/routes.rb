@@ -4,7 +4,8 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
 
-   root 'users#new'
+   root 'application#home'
+
    resources :users, :applications, :games
 
   # Example of regular route:
