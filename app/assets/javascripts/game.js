@@ -383,6 +383,60 @@ function clearCompletedRow(row) {
 	updateScore('line')
 }
 
+function dropTile(coordinates) {
+	var coordArray = [];
+	coordArray.push(coordinates);
+	for(var i=0; i < coordinates.length;i++){
+		
+		xCoord = coordinates[i][0];
+		yCoord = coordinates[i][1];
+		// coords = [xCoord, yCoord];
+		// coordArray.push(coordinates[i]);
+		// add = [coordinates[i-1][0]][coordinates[i-1][1]]
+		// coordArray.push(coordinates);
+		// console.log(coordinates[i]);
+		clearTile = gameData[coordinates[i][0]][coordinates[i][1]] = 0;
+		console.log(clearTile);
+		clearTile
+	}	
+	// console.log("I am coordArray " + coordArray[i]);
+	
+	// console.log("I am original Coordinate input " + coords);
+	// console.log("I am xcoord " + xCoord);
+	// console.log("I am ycoord " + yCoord);
+	// console.log(coordinates);
+
+	// if(gameData[coords][0] );{
+	// newCoords = [coordinates[i][0]][coordinates[i][1] - 1]
+	// console.log(newCoords);
+	// }
+}
+
+function aboveTile(coordinates){
+	var newArray = [];
+	return singleCoordArray(coordinates);
+	for(var i=0; i < coordinates.length; i++){
+		if(coordinates[i] % 2 === 0){
+			newCoord = coordinates[i-1];
+			newArray.push(newCoord);
+		} else {
+			newArray.push(coordinates[i]);
+		}
+	}
+	console.log(newArray);
+}
+
+function singleCoordArray(coordArray){
+	var singleArray= [];
+	for(var i=0; i < coordArray.length; i++){
+		for(var x=0; x < coordArray[i].length;x++) {
+			singleArray.push(coordArray[i][x]);
+		}
+	}
+	console.log(singleArray);
+
+}
+
 function advanceLevelIfNeeded() {
 	if (currentLines % 10 === 0 && currentLevel < SPEEDS.length){
 		currentLevel += 1;
@@ -438,12 +492,32 @@ function findWord() {
 	}
 }
 
+<<<<<<< HEAD
 function makeTilesFall(tilesArray) {
 	console.log("Here are the tile coords to fall sent back from boggle.js:");
 	console.log(tilesArray);
 	clearTiles(tilesArray)
 
 }
+=======
+function clearTiles(array) {
+	for(var i=0; i < array.length; i++) {
+		gameData[array[i][0]][array[i][1]] = 0;
+	}
+	for(var r =0; r < ROWS.length; r++){
+		for(var c=0; c<COLS.length; c++){
+			if(gameData[array[i][r][array][i][c]] === 0){
+				gameData[array[i][0][array][i][1]] = gameData[array[i][0]-1][array[i][1]];
+			}
+		}
+	}
+};
+
+// function dropTiles(){
+// 	for()
+// 	gameData[array[i][0][array][i][1]] = gameData[array[i-1][0]][array[i][1]];
+// }
+>>>>>>> bbcde46dbddf38f9a7da8f5ee9f7ce46448bd75d
 
 function toggleGamePause() {
 	gameIsPaused = !(gameIsPaused);

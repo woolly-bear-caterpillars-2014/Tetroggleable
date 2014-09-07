@@ -1,0 +1,32 @@
+<div class="container">
+<br><br>
+
+<h1> Sign-Up </h1>
+<br>
+<%= form_for @user do |f| %>
+  <% if @user.errors.any? %>
+    <div class="error_explanation">
+      <ul>
+        <% @user.errors.full_messages.each do |error| %>
+          <li><%= error %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div class="login-signup">
+  <p>
+    <%= f.label :username %><br>
+    <%= f.text_field :username %>
+  </p>
+  <p>
+    <%= f.label :email %><br>
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    <%= f.submit value:"PLAY GAME!" %>
+  </p>
+  <% end %>
+
+</div>
+</div>
