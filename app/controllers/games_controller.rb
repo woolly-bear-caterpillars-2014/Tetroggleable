@@ -1,9 +1,8 @@
 class GamesController < ApplicationController
 	def index
-		
 	end
-	
-	
+
+
 	def new
 		@game = Game.new
 	end
@@ -17,11 +16,9 @@ class GamesController < ApplicationController
 		end
 	end
 
-
-	private 
+	private
 
 	# def game_params
 	# 	params.require(:game).permit(:score, :scrabble_score, :level, :lines, :user_id)
 	# end
-
 end
