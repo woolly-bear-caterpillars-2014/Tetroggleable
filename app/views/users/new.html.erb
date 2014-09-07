@@ -1,1 +1,4 @@
 <%= render  'form' %>
+
+<%= form_for @game, url: game_path do |f| %>
+	<%= f.submit "PLAY" %>

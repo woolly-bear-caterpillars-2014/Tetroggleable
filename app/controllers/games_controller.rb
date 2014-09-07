@@ -1,6 +1,11 @@
 class GamesController < ApplicationController
 	def index
 	end
+	def show 
+		@game = Game.find(params[:id]) 
+		@user = @game.user
+		render :show
+	end
 
 	def new
 		@game = Game.new
