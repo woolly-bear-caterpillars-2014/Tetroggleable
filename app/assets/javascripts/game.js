@@ -363,6 +363,17 @@ function clearTile(coords) {
 	}
 }
 
+function clearTile(coords) {
+	var row = coords[0];
+	var col = coords[1];
+	var val = gameData[row-1][col];
+
+	for (var i = row; i > 0; i--) {
+		gameData[i][col] = gameData[i-1][col];
+		// if( gameData[row-val][col] == 0 ) {
+		// 		gameData[row][col] = 0;
+		}
+	}
 
 function clearTiles(array) {
 	for(var i = 0; i < array.length; i++) {
@@ -405,6 +416,16 @@ function updateScore(type) {
 	}
 }
 
+function updateBoggleScore(tiles) {
+	wordScore = 0;
+	// console.log('boggle tile coordinates sent')
+	// console.log(tiles)
+	// for (var i = 0; i < tiles[0].length; i++) {
+	// 	console.log(tiles[i])
+	// 	//tileScore = tiles[i].score
+	// }
+}
+
 function loadDictionary() {
   $.get( "/assets/dictionary.txt", function( text ) {
     dicts = text.split( "\n" );
@@ -421,7 +442,10 @@ function findWord() {
 		// 	isWordOnBoard(word, gameData);
 		// }
 		tilesOnBoard = isWordOnBoard(word.toUpperCase(), gameData);
+
+		//if isWordOnBoard does not return false, update score and make tiles fall
 		if (tilesOnBoard) {
+			updateBoggleScore(tilesOnBoard)
 			makeTilesFall(tilesOnBoard);
 		}
 		else {
@@ -430,6 +454,16 @@ function findWord() {
 	}
 }
 
+<<<<<<< HEAD
+=======
+function makeTilesFall(tilesArray) {
+	console.log("Here are the tile coords to fall sent back from boggle.js:");
+	console.log(tilesArray);
+	clearTiles(tilesArray)
+
+}
+
+>>>>>>> master
 function toggleGamePause() {
 	gameIsPaused = !(gameIsPaused);
 }
