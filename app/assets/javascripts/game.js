@@ -344,6 +344,25 @@ function landBlock(block) {
 	}
 }
 
+function clearTile(coords) {
+	var row = coords[0];
+	var col = coords[1];
+	var val = gameData[row-1][col];
+
+	for (var i = row; i > 0; i--) {
+		gameData[i][col] = gameData[i-1][col];
+		// if( gameData[row-val][col] == 0 ) {
+		// 		gameData[row][col] = 0;
+		}
+	}
+
+
+function clearTiles(array) {
+	for(var i = 0; i < array.length; i++) {
+		clearTile(array[i]);
+	}
+};
+
 function clearCompletedRow(row) {
 	var row = row;
 	var col = 0;
@@ -364,8 +383,6 @@ function clearCompletedRow(row) {
 	updateScore('line')
 }
 
-
-
 function advanceLevelIfNeeded() {
 	if (currentLines % 10 === 0 && currentLevel < SPEEDS.length){
 		currentLevel += 1;
@@ -381,6 +398,16 @@ function updateScore(type) {
 		var lines = parseInt($("#lines").text()) + 1;
 		$("#lines").text(lines);
 	}
+}
+
+function updateBoggleScore(tiles) {
+	wordScore = 0;
+	// console.log('boggle tile coordinates sent')
+	// console.log(tiles)
+	// for (var i = 0; i < tiles[0].length; i++) {
+	// 	console.log(tiles[i])
+	// 	//tileScore = tiles[i].score
+	// }
 }
 
 function loadDictionary() {
@@ -399,7 +426,10 @@ function findWord() {
 		// 	isWordOnBoard(word, gameData);
 		// }
 		tilesOnBoard = isWordOnBoard(word.toUpperCase(), gameData);
+
+		//if isWordOnBoard does not return false, update score and make tiles fall
 		if (tilesOnBoard) {
+			updateBoggleScore(tilesOnBoard)
 			makeTilesFall(tilesOnBoard);
 		}
 		else {
@@ -408,23 +438,12 @@ function findWord() {
 	}
 }
 
-function clearTiles(array) {
-	for(var i=0; i < array.length; i++) {
-		gameData[array[i][0]][array[i][1]] = 0;
-	}
-	for(var r =0; r < ROWS.length; r++){
-		for(var c=0; c<COLS.length; c++){
-			if(gameData[array[i][r][array][i][c]] === 0){
-				gameData[array[i][0][array][i][1]] = gameData[array[i][0]-1][array[i][1]];
-			}
-		}
-	}
-};
+function makeTilesFall(tilesArray) {
+	console.log("Here are the tile coords to fall sent back from boggle.js:");
+	console.log(tilesArray);
+	clearTiles(tilesArray)
 
-// function dropTiles(){
-// 	for()
-// 	gameData[array[i][0][array][i][1]] = gameData[array[i-1][0]][array[i][1]];
-// }
+}
 
 function toggleGamePause() {
 	gameIsPaused = !(gameIsPaused);
