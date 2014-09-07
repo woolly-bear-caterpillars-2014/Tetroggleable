@@ -341,6 +341,29 @@ function landBlock(block) {
 	}
 }
 
+function clearTiles(array) {
+	clearedTiles = []
+	for( i = 0; i < array.length; i++) {
+		xcoord = array[i][0];
+		ycoord = array[i][1];
+		clearedTiles.push([xcoord, ycoord])
+
+		gameData[array[i][0]][array[i][1]] = 0;
+
+			for( i = 0; i < clearedTiles.length; i++) {
+			// 	col = gameData[clearedTiles]
+			// 	if(gameData[row][col] == 0) {
+			// 	fullRow = false;
+			// 	col = -1;
+			// }
+			// col--;
+
+
+			}
+
+		}
+	};
+
 function clearCompletedRow(row) {
 	var row = row;
 	var col = 0;
