@@ -20,10 +20,11 @@ function isWordOnBoard(word, board) {
 
   var firstLetterCoord = loop(board, wordArray[0]);
   var isValidWord = true;
-  var validWordsCoords = [];
+  var validWordsCoords = false;
 
   if(firstLetterCoord.length > 0) {
     for (var i=0; i < firstLetterCoord.length; i++) {
+      console.log('checking new first letter');
       // priorLetter = wordArray[0];
       console.log("First letter found! Coords are below");
       console.log(firstLetterCoord[i]);
@@ -49,7 +50,8 @@ function isWordOnBoard(word, board) {
       console.log("is valid word?");
       console.log(isValidWord);
       console.log(coordinateArray)
-      validWordsCoords.push(coordinateArray)
+      if (isValidWord = true)
+        validWordsCoords = coordinateArray;
     }
     console.log("Valid Words Coordinates:");
     console.log(validWordsCoords);

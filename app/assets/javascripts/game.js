@@ -402,12 +402,12 @@ function updateScore(type) {
 
 function updateBoggleScore(tiles) {
 	wordScore = 0;
-	console.log('boggle score tile')
-	console.log(tiles)
-	for (var i = 0; i < tiles[0].length; i++) {
-		console.log(tiles[i])
-		//tileScore = tiles[i].score
-	}
+	// console.log('boggle tile coordinates sent')
+	// console.log(tiles)
+	// for (var i = 0; i < tiles[0].length; i++) {
+	// 	console.log(tiles[i])
+	// 	//tileScore = tiles[i].score
+	// }
 }
 
 function loadDictionary() {
@@ -439,7 +439,7 @@ function findWord() {
 function makeTilesFall(tilesArray) {
 	console.log("Here are the tile coords to fall sent back from boggle.js:");
 	console.log(tilesArray);
-	//clearTiles(tilesArray[0])
+	//clearTiles(tilesArray)
 
 }
 
