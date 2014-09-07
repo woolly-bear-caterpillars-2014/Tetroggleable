@@ -51,9 +51,8 @@ function isWordOnBoard(word, board) {
       if (isValidWord === true) {
         validWordsCoords = coordinateArray;
       }
-        
     }
-    return validWordsCoords;
+      return validWordsCoords;
   }
   else
     return false;
