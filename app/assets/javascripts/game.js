@@ -75,16 +75,49 @@ function drawTile(drawX, drawY) {
  	context.stroke();
 }
 
-function drawTileBackground(drawX, drawY) {
+function drawTileBackground(drawX, drawY, scrabbleExtras) {
 	numberPosX = drawX * SIZE;
 	numberPosY = drawY * SIZE;
+	context.strokeStyle = "#000";
+  context.beginPath();
+	context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
+
+	if (scrabbleExtras == "NA") {
 	image = new Image();
 	image.src = "http://www.mobilier-beton.net/wp-content/uploads/2013/05/Wood1.jpg";
-
 	pattern = context.createPattern(image, "no-repeat");
   context.fillStyle = pattern;
-  context.fillRect(numberPosX, numberPosY, SIZE, SIZE);
-}
+ };
+
+ 	if (scrabbleExtras == "WX2"){
+
+ 		context.fillStyle = "#F62F68";
+ 		context.fill();
+ 		context.stroke();
+ 	};
+ 		if (scrabbleExtras == "WX3"){
+
+ 		context.fillStyle = "#3E70E2";
+ 		context.fill();
+ 		context.stroke();
+ 	};
+
+ context.fillRect(numberPosX, numberPosY, SIZE, SIZE);
+};
+// function drawValues(drawX, drawY, scrabbleExtras) {
+// 	numberPosX = drawX * SIZE;
+// 	numberPosY = drawY * SIZE;
+
+// 	if (scrabbleExtras == "WX2"){
+// 		context.strokeStyle = "#000";
+//   	context.beginPath();
+//  		context.fillStyle = "#F62F68";
+//  		context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
+//  		context.fill();
+//  		context.stroke();
+
+// 	}
+// }
 
 function drawLetter(drawX, drawY, letter) {
 	letterPosX = drawX * SIZE + 7;
@@ -125,7 +158,7 @@ function drawBoard() {
 				// context.fillStyle="green";
 				// context.fill();
 				tile = gameData[row][col]
-				drawTileBackground(col, row);
+				drawTileBackground(col, row, tile.scrabbleExtras);
 				drawTile(col, row);
 				drawLetter(col, row, tile.letter);
 				drawNumber(col, row, tile.score);
@@ -156,7 +189,7 @@ function drawBlock(block) {
 				// context.fillText("A", 0, 0);
 				// context.fillStyle="white"context.font = "18pt Arial";
 				tile = block.rotations[rotation][row][col]
-				drawTileBackground(drawX, drawY);
+				drawTileBackground(drawX, drawY, tile.scrabbleExtras);
 				drawTile(drawX, drawY);
 				drawLetter(drawX, drawY, tile.letter);
 				drawNumber(drawX, drawY, tile.score);
@@ -337,24 +370,27 @@ function landBlock(block) {
 		xpos = block.gridX;
 		ypos += 1;
 	}
-	checkForCompleteLines();
+		checkForCompleteLines();
 
-	if(block.gridY < 0) {
-		isGameOver = true;
+		if(block.gridY < 0) {
+			isGameOver = true;
+		}
 	}
-}
+
 
 function clearTile(coords) {
 	var row = coords[0];
 	var col = coords[1];
-	var val = gameData[row-1][col];
 
 	for (var i = row; i > 0; i--) {
-		gameData[i][col] = gameData[i-1][col];
+			gameData[i][col] = gameData[i-1][col];
+				 // while(gameData[i][col] == 0) {
+				 // 			clearTile([row]);
+
 		// if( gameData[row-val][col] == 0 ) {
 		// 		gameData[row][col] = 0;
+		 }
 		}
-	}
 
 
 function clearTiles(array) {
@@ -373,8 +409,6 @@ function clearCompletedRow(row) {
 				gameData[row][col] = gameData[row-1][col];
 			else
 				gameData[row][col] = 0;
-
-
 			col++;
 		}
 		col = 0;
@@ -444,6 +478,7 @@ function makeTilesFall(tilesArray) {
 	clearTiles(tilesArray)
 
 }
+
 
 function toggleGamePause() {
 	gameIsPaused = !(gameIsPaused);
