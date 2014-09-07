@@ -91,13 +91,27 @@ function drawTileBackground(drawX, drawY, scrabbleExtras) {
 
  	if (scrabbleExtras == "WX2"){
 
- 		context.fillStyle = "#F62F68";
+ 		context.fillStyle = "#82002C";
  		context.fill();
  		context.stroke();
  	};
  		if (scrabbleExtras == "WX3"){
 
- 		context.fillStyle = "#3E70E2";
+ 		context.fillStyle = "#110649";
+ 		context.fill();
+ 		context.stroke();
+ 	};
+
+ 	if (scrabbleExtras == "LX2"){
+
+ 		context.fillStyle = "#E77F9C";
+ 		context.fill();
+ 		context.stroke();
+ 	};
+
+ 	if (scrabbleExtras == "LX3"){
+
+ 		context.fillStyle = "#5D709A";
  		context.fill();
  		context.stroke();
  	};
