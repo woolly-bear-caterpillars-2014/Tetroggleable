@@ -2,6 +2,8 @@ var ROWS = 20;
 var COLS = 10;
 var SIZE = 32;
 var SPEEDS = [500, 450, 400, 350, 300, 250, 200, 150, 100, 50, 25, 10, 5, 1];
+var BOARDHEIGHT = 640;
+var BOARDWIDTH = 320;
 
 var canvas;
 var context;
@@ -14,6 +16,18 @@ var currentLevel = 1;
 var currentSpeed = SPEEDS[currentLevel-1];
 var dicts;
 var gameIsPaused = false;
+var linePoints = 10;
+
+function setRowsCols() {
+	width = $(window).width();
+	height = $(window).height();
+
+	if (height < 1160) {
+		ROWS = 17;
+		BOARDHEIGHT = 544;
+		$("#gameCanvas").attr("height", 544);
+	}
+}
 
 $(window).load(function(){
 
@@ -22,6 +36,9 @@ $(window).load(function(){
 	lineScore = $('#lines');
 	previousTime = 0;
 	currentTime = 0;
+
+	//shrink for smaller screen
+	setRowsCols();
 
 	startGame();
 	$(document).keydown(function(event){
@@ -75,49 +92,16 @@ function drawTile(drawX, drawY) {
  	context.stroke();
 }
 
-function drawTileBackground(drawX, drawY, scrabbleExtras) {
+function drawTileBackground(drawX, drawY) {
 	numberPosX = drawX * SIZE;
 	numberPosY = drawY * SIZE;
-	context.strokeStyle = "#000";
-  context.beginPath();
-	context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
-
-	if (scrabbleExtras == "NA") {
 	image = new Image();
 	image.src = "http://www.mobilier-beton.net/wp-content/uploads/2013/05/Wood1.jpg";
+
 	pattern = context.createPattern(image, "no-repeat");
   context.fillStyle = pattern;
- };
-
- 	if (scrabbleExtras == "WX2"){
-
- 		context.fillStyle = "#F62F68";
- 		context.fill();
- 		context.stroke();
- 	};
- 		if (scrabbleExtras == "WX3"){
-
- 		context.fillStyle = "#3E70E2";
- 		context.fill();
- 		context.stroke();
- 	};
-
- context.fillRect(numberPosX, numberPosY, SIZE, SIZE);
-};
-// function drawValues(drawX, drawY, scrabbleExtras) {
-// 	numberPosX = drawX * SIZE;
-// 	numberPosY = drawY * SIZE;
-
-// 	if (scrabbleExtras == "WX2"){
-// 		context.strokeStyle = "#000";
-//   	context.beginPath();
-//  		context.fillStyle = "#F62F68";
-//  		context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
-//  		context.fill();
-//  		context.stroke();
-
-// 	}
-// }
+  context.fillRect(numberPosX, numberPosY, SIZE, SIZE);
+}
 
 function drawLetter(drawX, drawY, letter) {
 	letterPosX = drawX * SIZE + 7;
@@ -141,7 +125,7 @@ function drawNumber(drawX, drawY, score) {
 function drawBoard() {
 	// context.drawImage(bgImg, 0, 0, 320, 640, 0, 0, 320, 640);
 	context.beginPath();
-	context.rect(0, 0, 320, 640);
+	context.rect(0, 0, BOARDWIDTH, BOARDHEIGHT);
 	context.fillStyle="black";
 	context.fill();
 	// context.beginPath();
@@ -158,7 +142,7 @@ function drawBoard() {
 				// context.fillStyle="green";
 				// context.fill();
 				tile = gameData[row][col]
-				drawTileBackground(col, row, tile.scrabbleExtras);
+				drawTileBackground(col, row);
 				drawTile(col, row);
 				drawLetter(col, row, tile.letter);
 				drawNumber(col, row, tile.score);
@@ -189,7 +173,7 @@ function drawBlock(block) {
 				// context.fillText("A", 0, 0);
 				// context.fillStyle="white"context.font = "18pt Arial";
 				tile = block.rotations[rotation][row][col]
-				drawTileBackground(drawX, drawY, tile.scrabbleExtras);
+				drawTileBackground(drawX, drawY);
 				drawTile(drawX, drawY);
 				drawLetter(drawX, drawY, tile.letter);
 				drawNumber(drawX, drawY, tile.score);
@@ -250,7 +234,7 @@ function getKeyCode(e) {
 }
 
 function letBlockFall() {
-	for (var i=0; i<20; i++) {
+	for (var i=0; i<ROWS; i++) {
 		if (validateMove(currentBlock.gridX, currentBlock.gridY + 1, currentBlock.currentRotation))
 			currentBlock.gridY++;
 	}
@@ -308,7 +292,7 @@ function updateGame() {
     previousTime = currentTime;
   }
 
-  context.clearRect(0, 0, 320, 640);
+  context.clearRect(0, 0, BOARDWIDTH, BOARDHEIGHT);
   drawBoard();
   drawBlock(currentBlock);
 
@@ -370,31 +354,29 @@ function landBlock(block) {
 		xpos = block.gridX;
 		ypos += 1;
 	}
-		checkForCompleteLines();
+	checkForCompleteLines();
 
-		if(block.gridY < 0) {
-			isGameOver = true;
-		}
+	if(block.gridY < 0) {
+		isGameOver = true;
 	}
-
+}
 
 function clearTile(coords) {
 	var row = coords[0];
 	var col = coords[1];
+	var val = gameData[row-1][col];
 
 	for (var i = row; i > 0; i--) {
-			gameData[i][col] = gameData[i-1][col];
-				 // while(gameData[i][col] == 0) {
-				 // 			clearTile([row]);
-
+		gameData[i][col] = gameData[i-1][col];
 		// if( gameData[row-val][col] == 0 ) {
 		// 		gameData[row][col] = 0;
-		 }
 		}
+	}
 
 
 function clearTiles(array) {
 	for(var i = 0; i < array.length; i++) {
+		console.log(array[i])
 		clearTile(array[i]);
 	}
 };
@@ -409,12 +391,14 @@ function clearCompletedRow(row) {
 				gameData[row][col] = gameData[row-1][col];
 			else
 				gameData[row][col] = 0;
+
+
 			col++;
 		}
 		col = 0;
 		row --;
 	}
-	updateScore('line')
+	updateScore('line', linePoints)
 }
 
 function advanceLevelIfNeeded() {
@@ -425,23 +409,51 @@ function advanceLevelIfNeeded() {
 	};
 }
 
-function updateScore(type) {
+function updateScore(type, points) {
 	if (type === 'line') {
-		var totalScore = parseInt($("#overall_score").text()) + 10;
+		var totalScore = parseInt($("#overall_score").text()) + points;
 		$("#overall_score").text(totalScore);
 		var lines = parseInt($("#lines").text()) + 1;
 		$("#lines").text(lines);
 	}
+	else if (type === 'word') {
+
+	}
 }
 
 function updateBoggleScore(tiles) {
-	wordScore = 0;
-	// console.log('boggle tile coordinates sent')
-	// console.log(tiles)
-	// for (var i = 0; i < tiles[0].length; i++) {
-	// 	console.log(tiles[i])
-	// 	//tileScore = tiles[i].score
-	// }
+	var score = 0;
+	var extraMultiplier = 1;
+	
+	for (var i = 0; i < tiles.length; i++) {
+		tile = gameData[tiles[i][0]][tiles[i][1]];
+		console.log(tile)
+		//tileScore = tiles[i].score
+
+		currentLetterPoints = tile.score;
+
+		switch(result) {
+			case "NA": extraMultiplier *= 1;		break;
+			case "WX2": extraMultiplier *= 2;		break;
+			case "WX3": extraMultiplier *= 3;		break;
+			case "LX2": currentLetterPoints *=2;	break;
+			case "LX3": currentLetterPoints *=3;	break;
+		}	
+		
+		score += currentLetterPoints;
+		console.log("LETTER and POINTS")
+		console.log(tile.letter + ":" + currentLetterPoints)
+	}
+
+	console.log("SCORE so far");
+	console.log(score)
+	score *= extraMultiplier;
+
+	if (tiles.length >= 7) {
+		score *= 2;
+	}
+	
+	return score;
 }
 
 function loadDictionary() {
@@ -464,6 +476,7 @@ function findWord() {
 		//if isWordOnBoard does not return false, update score and make tiles fall
 		if (tilesOnBoard) {
 			updateBoggleScore(tilesOnBoard)
+			//updateBoggleScore('word', tilesOnBoard)
 			makeTilesFall(tilesOnBoard);
 		}
 		else {
@@ -476,9 +489,7 @@ function makeTilesFall(tilesArray) {
 	console.log("Here are the tile coords to fall sent back from boggle.js:");
 	console.log(tilesArray);
 	clearTiles(tilesArray)
-
 }
-
 
 function toggleGamePause() {
 	gameIsPaused = !(gameIsPaused);
