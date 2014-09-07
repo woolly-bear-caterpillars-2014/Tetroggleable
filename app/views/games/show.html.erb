@@ -1,0 +1,35 @@
+	
+<div id="info_panel">
+
+	<h1>Tetroggleable</h1>
+	<h2>Welcome! <%= @game.user %></h2>
+	<div class="info_boxes" id="boggle_box">
+		<p>BoggleWord</p>
+		<%= text_field_tag "boggle_letters"  %>
+	</div>
+
+	<div class="info_boxes" id="preview_box">
+		<p>Preview <span id="preview"></span></p>
+	</div>
+
+	<div class="info_boxes" id="levels_box">
+		<p>Level: <span id="levels">1</span></p>
+	</div>
+
+	<div class="info_boxes" id="scrabble_score_box">
+		<p>Scrabble Score: <span id="scrabble_score"></span></p>
+	</div>
+
+	<div class="info_boxes" id="lines_box">
+		<p>Lines: <span id="lines">0</span></p>
+	</div>
+
+	<div class="info_boxes" id="overall_score_box">
+		<p>Score: <span id="overall_score">0</span></p>
+	</div>
+
+</div>
+
+<div id="gameboard">
+	<canvas id="gameCanvas" width="320" height="640"></canvas>
+</div>
