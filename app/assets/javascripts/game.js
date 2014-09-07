@@ -460,10 +460,23 @@ function findWord() {
 	}
 }
 
-function makeTilesFall(tilesArray) {
-			console.log("Here are the tile coords to fall:");
-			console.log(tilesArray);
-}
+function clearTiles(array) {
+	for(var i=0; i < array.length; i++) {
+		gameData[array[i][0]][array[i][1]] = 0;
+	}
+	for(var r =0; r < ROWS.length; r++){
+		for(var c=0; c<COLS.length; c++){
+			if(gameData[array[i][r][array][i][c]] === 0){
+				gameData[array[i][0][array][i][1]] = gameData[array[i][0]-1][array[i][1]];
+			}
+		}
+	}
+};
+
+// function dropTiles(){
+// 	for()
+// 	gameData[array[i][0][array][i][1]] = gameData[array[i-1][0]][array[i][1]];
+// }
 
 function toggleGamePause() {
 	gameIsPaused = !(gameIsPaused);
