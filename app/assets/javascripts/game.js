@@ -344,28 +344,48 @@ function landBlock(block) {
 	}
 }
 
+function dropTiles(newCoords, oldCoords) {
+
+
+		// console.log([newCoords[i][0], newCoords[i][1]]);
+		// if gameData[newCoords[0]]
+		// row = gameData[newCoords];
+		// for(var i = 0; i < row.length; i++) {
+		// if (newCoords[0] < oldCoords[0]) {
+		// 	for
+
+		// }
+		// for (i = 0; i < row.length; i ++) {
+			console.log(gameData[newCoords[0]]);
+			console.log(gameData[oldCoords[0]]);
+		//  }
+
+		// if (newCoords[0] < oldCoords[0] && gameData[newCoords[0] == 0) {
+		// 	col
+		// 	shiftColumnDown();
+
+	}
+function shiftColumnDown(col) {
+
+
+}
+
+function clearTile(coords) {
+	var row = coords[0];
+	var col = coords[1];
+	gameData[row][col] = 0;
+	for (var i = row; i > 0; i--) {
+		gameData[i][col] = gameData[i-1][col];
+	}
+}
+
 function clearTiles(array) {
-	clearedTiles = []
-	for( i = 0; i < array.length; i++) {
-		xcoord = array[i][0];
-		ycoord = array[i][1];
-		clearedTiles.push([xcoord, ycoord])
-
-		gameData[array[i][0]][array[i][1]] = 0;
-
-			for( i = 0; i < clearedTiles.length; i++) {
-			// 	col = gameData[clearedTiles]
-			// 	if(gameData[row][col] == 0) {
-			// 	fullRow = false;
-			// 	col = -1;
-			// }
-			// col--;
-
-
-			}
-
-		}
-	};
+	console.log("length: " + array.length)
+	for(var i = 0; i < array.length; i++) {
+		console.log(Array[i]);
+		clearTile(array[i]);
+	}
+};
 
 function clearCompletedRow(row) {
 	var row = row;
@@ -377,8 +397,6 @@ function clearCompletedRow(row) {
 				gameData[row][col] = gameData[row-1][col];
 			else
 				gameData[row][col] = 0;
-
-
 			col++;
 		}
 		col = 0;
