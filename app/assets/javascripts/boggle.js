@@ -35,8 +35,8 @@ function isWordOnBoard(word, board) {
         //search for each corresponding letter in neighbors of previous coordinates
         neighborArray = getNeighbors(newCoordinates);
         newCoordinates = checkNeighbors(neighborArray, wordArray[i+1], board);
-        console.log('coordinates returned from checkNeighbors');
-        console.log(newCoordinates);
+        // console.log('coordinates returned from checkNeighbors');
+        // console.log(newCoordinates);
         coordinateArray.push(newCoordinates);
 
         // console.log('new coordinates return:');
@@ -47,14 +47,12 @@ function isWordOnBoard(word, board) {
           break;
         }
       }
-      console.log("is valid word?");
-      console.log(isValidWord);
-      console.log(coordinateArray)
-      if (isValidWord = true)
+
+      if (isValidWord === true) {
         validWordsCoords = coordinateArray;
+      }
+        
     }
-    console.log("Valid Words Coordinates:");
-    console.log(validWordsCoords);
     return validWordsCoords;
   }
   else

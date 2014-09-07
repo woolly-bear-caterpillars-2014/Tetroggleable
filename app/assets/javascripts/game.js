@@ -426,6 +426,8 @@ function findWord() {
 		// 	isWordOnBoard(word, gameData);
 		// }
 		tilesOnBoard = isWordOnBoard(word.toUpperCase(), gameData);
+
+		//if isWordOnBoard does not return false, update score and make tiles fall
 		if (tilesOnBoard) {
 			updateBoggleScore(tilesOnBoard)
 			makeTilesFall(tilesOnBoard);
@@ -439,7 +441,7 @@ function findWord() {
 function makeTilesFall(tilesArray) {
 	console.log("Here are the tile coords to fall sent back from boggle.js:");
 	console.log(tilesArray);
-	//clearTiles(tilesArray)
+	clearTiles(tilesArray)
 
 }
 
