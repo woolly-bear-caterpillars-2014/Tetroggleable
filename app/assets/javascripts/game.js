@@ -344,6 +344,25 @@ function landBlock(block) {
 	}
 }
 
+function clearTile(coords) {
+	var row = coords[0];
+	var col = coords[1];
+	var val = gameData[row-1][col];
+
+	for (var i = row; i > 0; i--) {
+		gameData[i][col] = gameData[i-1][col];
+		// if( gameData[row-val][col] == 0 ) {
+		// 		gameData[row][col] = 0;
+		}
+	}
+
+
+function clearTiles(array) {
+	for(var i = 0; i < array.length; i++) {
+		clearTile(array[i]);
+	}
+};
+
 function clearCompletedRow(row) {
 	var row = row;
 	var col = 0;
@@ -418,8 +437,10 @@ function findWord() {
 }
 
 function makeTilesFall(tilesArray) {
-			console.log("Here are the tile coords to fall:");
-			console.log(tilesArray);
+	console.log("Here are the tile coords to fall:");
+	console.log(tilesArray[0]);
+	clearTiles(tilesArray[0])
+
 }
 
 function toggleGamePause() {
