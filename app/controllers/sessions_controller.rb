@@ -3,11 +3,11 @@ class SessionsController < ApplicationController
   end
 
   def create
-    @user = User.find_by(:email => params[:email])
+    @user = User.find_by(:username => params[:username])
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
-   
-      redirect_to game_path
+      @game = @user.games.create()
+      redirect_to game_path(@game)
     else
       render :new
     end

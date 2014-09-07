@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   resources :applications, only: [:home]
 
-  resources :game
+  resources :games
 
   resources :users, only: [:show, :edit, :update, :destroy]
     get "profile" => 'users#show'

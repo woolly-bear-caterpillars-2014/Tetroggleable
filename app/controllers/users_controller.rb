@@ -1,11 +1,12 @@
 class UsersController < ApplicationController
-
+	include UsersHelper
 	def index
 		@users = User.all
 	end
 
 	def show
-		@user = User.find(params[:id])
+		@user = current_user
+		@game = Game.where(:user_id == session[:user_id])
 	end
 
 	def new
