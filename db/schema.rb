@@ -32,9 +32,7 @@ ActiveRecord::Schema.define(version: 20140908031503) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "password_digest"
-
     t.boolean  "guest"
- 
   end
 
 end

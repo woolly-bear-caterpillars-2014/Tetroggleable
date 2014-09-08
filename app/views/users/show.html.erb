@@ -1,4 +1,10 @@
 <div>
-	<%= @user.username %>
+	<h1><%= @user.username %> Stats:</h1>
 </div>
 <p><%= link_to 'Play Game', new_game_path, 'data-no-turbolink' => true %></p>
+
+<div class="container">
+	<% @user.games.each do |game|  %>
+	<p> Score: <%= game.score  %></p>
+<% end %>
+</div>
