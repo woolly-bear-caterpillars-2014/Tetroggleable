@@ -1,4 +1,4 @@
 <div>
 	<%= @user.username %>
 </div>
-<p><%= link_to 'Play Game', new_game_path(@user) %></p>
+<p><%= link_to 'Play Game', new_game_path, 'data-no-turbolink' => true %></p>
