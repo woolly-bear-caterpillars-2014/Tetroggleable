@@ -33,6 +33,20 @@
 	<canvas id="gameCanvas" width="320" height="640"></canvas>
 </div>
 
-<% if current_user %>
-	<%= link_to 'New Game', games_path(:user_id), :method => :post %>
-<% end  %>
+<div id="colorkey">
+
+		<h3> GAME OVER </h3>
+
+		<div class="key"><div id="keybox1"></div> <p class="pkey">Double Letter Score</p></div>
+		
+		<div class="key"><div id="keybox2"></div> <p class="pkey">Triple Letter Score</p></div>
+		
+		<div class="key"><div id="keybox3"></div> <p class="pkey">Double Word Score</p></div>
+		
+		<div class="key"><div id="keybox4"></div> <p class="pkey">Triple Word Score</p></div></div>
+	
+
+</div>
+
+
+<%= link_to 'New Game', new_game_path, 'data-no-turbolink' => true %>

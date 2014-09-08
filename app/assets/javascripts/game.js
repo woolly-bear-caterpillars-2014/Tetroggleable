@@ -8,6 +8,8 @@ var BOARDWIDTH = 320;
 var txt;
 var canvas;
 var context;
+var preview;
+var prevctx;
 var currentBlock;
 var currentTime;
 var isGameOver;
@@ -18,6 +20,11 @@ var currentSpeed = SPEEDS[currentLevel-1];
 var dicts;
 var gameIsPaused = false;
 var linePoints = 10;
+var tileColor = "#E4C390"
+var lX2 = "#95B8D3"
+var lX3 = "#095E9F"
+var wX2 = "#DD9ABD"
+var wX3 = "#89223A"
 
 function setRowsCols() {
 	width = $(window).width();
@@ -34,6 +41,8 @@ $(window).load(function(){
 
 	canvas = document.getElementById('gameCanvas');
 	context = canvas.getContext('2d');
+	preview = document.getElementById('gamePreview');
+	prevctx = preview.getContext('2d');
 	lineScore = $('#lines');
 	previousTime = 0;
 	currentTime = 0;
@@ -76,12 +85,16 @@ function startGame() {
 		}
 
 	currentBlock = getRandomBlock();
+	nextBlock = getRandomBlock();
+
+
 	var requestAnimFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
 			window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
 	window.requestAnimationFrame = requestAnimFrame;
 
 	requestAnimationFrame(updateGame);
+	drawPreview();
 }
 
 function drawTile(drawX, drawY) {
@@ -93,6 +106,28 @@ function drawTile(drawX, drawY) {
  	context.stroke();
 }
 
+function tileColors(contextName, scrabbleExtras) {
+	if (scrabbleExtras == "NA") {
+	  contextName.fillStyle = tileColor;
+ 	};
+ 	if (scrabbleExtras == "WX2"){
+ 		contextName.fillStyle = wX2;
+ 	};
+	if (scrabbleExtras == "WX3"){
+ 		contextName.fillStyle = wX3;
+
+ 	};
+ 	if (scrabbleExtras == "LX2"){
+ 		contextName.fillStyle = lX2;
+ 	};
+ 	if (scrabbleExtras == "LX3"){
+		contextName.fillStyle = lX3;
+ 	};
+
+ 	contextName.fill();
+	contextName.stroke();
+}
+
 function drawTileBackground(drawX, drawY, scrabbleExtras) {
 	numberPosX = drawX * SIZE;
 	numberPosY = drawY * SIZE;
@@ -100,56 +135,9 @@ function drawTileBackground(drawX, drawY, scrabbleExtras) {
   context.beginPath();
 	context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
 
-	if (scrabbleExtras == "NA") {
-	image = new Image();
-	image.src = "http://www.mobilier-beton.net/wp-content/uploads/2013/05/Wood1.jpg";
-	pattern = context.createPattern(image, "no-repeat");
-  context.fillStyle = pattern;
- };
-
- 	if (scrabbleExtras == "WX2"){
-
- 		context.fillStyle = "#82002C";
- 		context.fill();
- 		context.stroke();
- 	};
- 		if (scrabbleExtras == "WX3"){
-
- 		context.fillStyle = "#110649";
- 		context.fill();
- 		context.stroke();
- 	};
-
- 	if (scrabbleExtras == "LX2"){
-
- 		context.fillStyle = "#E77F9C";
- 		context.fill();
- 		context.stroke();
- 	};
-
- 	if (scrabbleExtras == "LX3"){
-
- 		context.fillStyle = "#5D709A";
- 		context.fill();
- 		context.stroke();
- 	};
-
- context.fillRect(numberPosX, numberPosY, SIZE, SIZE);
+	tileColors(context, scrabbleExtras);
+ 	context.fillRect(numberPosX, numberPosY, SIZE, SIZE);
 };
-// function drawValues(drawX, drawY, scrabbleExtras) {
-// 	numberPosX = drawX * SIZE;
-// 	numberPosY = drawY * SIZE;
-
-// 	if (scrabbleExtras == "WX2"){
-// 		context.strokeStyle = "#000";
-//   	context.beginPath();
-//  		context.fillStyle = "#F62F68";
-//  		context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
-//  		context.fill();
-//  		context.stroke();
-
-// 	}
-// }
 
 function drawLetter(drawX, drawY, letter) {
 	letterPosX = drawX * SIZE + 7;
@@ -157,7 +145,8 @@ function drawLetter(drawX, drawY, letter) {
 
 	context.fillStyle = "#000";
  	context.font = '20pt Arial';
- 	context.fillText(letter, letterPosX, letterPosY, SIZE);
+	context.fillText(letter, letterPosX, letterPosY, 22);
+
 }
 
 function drawNumber(drawX, drawY, score) {
@@ -176,19 +165,10 @@ function drawBoard() {
 	context.rect(0, 0, 320, 640);
 	context.fillStyle="black";
 	context.fill();
-	// context.beginPath();
-	// context.lineWidth = "2";
-	// context.strokeStyle = "yellow";
-	// context.stroke();
 
 	for(var row = 0; row < ROWS; row++) {
 		for(var col = 0; col < COLS; col++) {
 			if(gameData[row][col] != 0) {
-				// context.drawImage(blockImg, (gameData[row][col] - 1) * SIZE, 0, SIZE, SIZE, col * SIZE, row * SIZE, SIZE, SIZE); -->
-				// context.beginPath();
-				// context.rect(col * SIZE, row * SIZE, SIZE, SIZE);
-				// context.fillStyle="green";
-				// context.fill();
 				tile = gameData[row][col]
 				drawTileBackground(col, row, tile.scrabbleExtras);
 				drawTile(col, row);
@@ -204,28 +184,14 @@ function drawBlock(block) {
 	var drawY = block.gridY;
 	var rotation = block.currentRotation;
 
-// drawY = 10;
-
 	for(var row = 0, len = block.rotations[rotation].length; row < len; row++) {
 		for(var col = 0, len2 = block.rotations[rotation][row].length; col < len2; col++) {
 			if(block.rotations[rotation][row][col] != 0 && drawY >= 0) {
-				// context.drawImage(blockImg, block.color * SIZE, 0, SIZE, SIZE, drawX * SIZE, drawY * SIZE, SIZE, SIZE);
-				// context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
-				// context.beginPath();
-				// context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
-				// context.fillStyle="green";
-				// context.fill();
-				// context.stroke();
-				// context.fillStyle ="black";
-				// // context.font = 'bold 20pt Calibri';
-				// context.fillText("A", 0, 0);
-				// context.fillStyle="white"context.font = "18pt Arial";
 				tile = block.rotations[rotation][row][col]
 				drawTileBackground(drawX, drawY, tile.scrabbleExtras);
 				drawTile(drawX, drawY);
 				drawLetter(drawX, drawY, tile.letter);
 				drawNumber(drawX, drawY, tile.score);
-
 			}
 			drawX += 1;
 		}
@@ -333,7 +299,9 @@ function updateGame() {
     }
     else {
       landBlock(currentBlock);
-      currentBlock = getRandomBlock();
+      currentBlock = nextBlock;
+      nextBlock = getRandomBlock();
+      drawPreview();
     }
 
     // update time
@@ -348,8 +316,9 @@ function updateGame() {
     requestAnimationFrame(updateGame);
   }
   else {
-    context.fillText("GAME OVER", 10 , 10);
-    context.fillStyle = "white";
+    // context.fillText("GAME OVER", 10 , 10);
+    // context.fillStyle = "white";
+    $("#colorkey h3").fadeIn(1000).fadeOut(500).fadeIn(1000);
 	}
 }
 
@@ -406,15 +375,7 @@ function landBlock(block) {
 
 	if(block.gridY < 0) {
 		isGameOver = true;
-// 		var r =	confirm("Play again?")
-// 	if (r == true) {
-//     txt = "You pressed OK!";
-// 		window.location.reload();
-// 		startGame();
-// } else {
-//     txt = "You pressed Cancel!";
-//     isGameOver = true
-// }
+
 	}
 }
 
@@ -481,7 +442,7 @@ function updateScores(type, points) {
 function calculateScrabbleScore(tiles) {
 	var score = 0;
 	var extraMultiplier = 1;
-	
+
 	for (var i = 0; i < tiles.length; i++) {
 		tile = gameData[tiles[i][0]][tiles[i][1]];
 		console.log(tile)
@@ -495,8 +456,8 @@ function calculateScrabbleScore(tiles) {
 			case "WX3": extraMultiplier *= 3;		break;
 			case "LX2": currentLetterPoints *=2;	break;
 			case "LX3": currentLetterPoints *=3;	break;
-		}	
-		
+		}
+
 		score += currentLetterPoints;
 		console.log("LETTER and POINTS")
 		console.log(tile.letter + ":" + currentLetterPoints)
@@ -511,7 +472,7 @@ function calculateScrabbleScore(tiles) {
 	if (tiles.length >= 7) {
 		score *= 2;
 	}
-	
+
 	return score;
 }
 
@@ -527,9 +488,9 @@ function findWord() {
 	var currentLetters = letters.split( "" );
 	if( currentLetters.length >= 3 ) {
 		word = currentLetters.join("");
-		// if( dicts.indexOf(word.toUpperCase())  != -1 ) {
-		// 	isWordOnBoard(word, gameData);
-		// }
+		if( dicts.indexOf(word.toUpperCase())  != -1 ) {
+			isWordOnBoard(word, gameData);
+		}
 		tilesOnBoard = isWordOnBoard(word.toUpperCase(), gameData);
 
 		//if isWordOnBoard does not return false, update score and make tiles fall
