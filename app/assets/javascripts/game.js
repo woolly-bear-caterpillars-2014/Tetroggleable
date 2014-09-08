@@ -80,14 +80,15 @@ function startGame() {
 
 	currentBlock = getRandomBlock();
 	nextBlock = getRandomBlock();
-	drawPreview();
-	
+
+
 	var requestAnimFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
 			window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
 	window.requestAnimationFrame = requestAnimFrame;
 
 	requestAnimationFrame(updateGame);
+	drawPreview();
 }
 
 function drawTile(drawX, drawY) {
@@ -149,7 +150,7 @@ function drawLetter(drawX, drawY, letter) {
 
 	context.fillStyle = "#000";
  	context.font = '20pt Arial';
- 	context.fillText(letter, letterPosX, letterPosY, SIZE);
+ 	context.fillText(letter, letterPosX, letterPosY, 22);
 }
 
 function drawNumber(drawX, drawY, score) {
@@ -443,7 +444,7 @@ function updateScores(type, points) {
 function calculateScrabbleScore(tiles) {
 	var score = 0;
 	var extraMultiplier = 1;
-	
+
 	for (var i = 0; i < tiles.length; i++) {
 		tile = gameData[tiles[i][0]][tiles[i][1]];
 		console.log(tile)
@@ -457,8 +458,8 @@ function calculateScrabbleScore(tiles) {
 			case "WX3": extraMultiplier *= 3;		break;
 			case "LX2": currentLetterPoints *=2;	break;
 			case "LX3": currentLetterPoints *=3;	break;
-		}	
-		
+		}
+
 		score += currentLetterPoints;
 		console.log("LETTER and POINTS")
 		console.log(tile.letter + ":" + currentLetterPoints)
@@ -473,7 +474,7 @@ function calculateScrabbleScore(tiles) {
 	if (tiles.length >= 7) {
 		score *= 2;
 	}
-	
+
 	return score;
 }
 

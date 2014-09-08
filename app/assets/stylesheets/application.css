@@ -67,6 +67,10 @@ h1 {
 	height: 120px;
 }
 
+#gamePreview {
+	margin-left: 65px;
+}
+
 #boggle_box {
 	height: 90px;
 }

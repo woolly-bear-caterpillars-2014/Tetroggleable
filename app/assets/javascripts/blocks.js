@@ -215,15 +215,15 @@ function getRandomBlock() {
 
 function drawPreview() {
   prevsize = 20;
-  prevDrawX = nextBlock.gridX;
-  prevDrawY = nextBlock.gridY + 4;
+  prevDrawX = 0;
+  prevDrawY = 0;
 
-  prevctx.strokeStyle = "#fff";
+
   prevctx.beginPath();
   prevctx.rect(0, 0, 150, 100);
   prevctx.fillStyle="black";
   prevctx.fill();
-  prevctx.stroke();
+
 
   for(var row = 0, len = nextBlock.rotations[0].length; row < len; row++) {
     for(var col = 0, len2 = nextBlock.rotations[0][row].length; col < len2; col++) {
@@ -280,8 +280,9 @@ function drawPreview() {
         prevctx.stroke();
 
         prevctx.fillStyle = "#000";
-        prevctx.font = '16pt Arial';
-        prevctx.fillText(tile.letter, (prevDrawX * prevsize + 5), (prevDrawY * prevsize + 15), prevsize);
+        prevctx.font = '15pt Arial';
+        // prevctx.textAlign = 'left';
+        prevctx.fillText(tile.letter, (prevDrawX * prevsize + 3), (prevDrawY * prevsize + 17), 15);
 
         // prevctx.fillStyle = "#000";
         // prevctx.font = 'bolder pt Arial';
@@ -291,7 +292,7 @@ function drawPreview() {
       prevDrawX += 1;
       console.log(prevDrawX)
     }
-    prevDrawX = nextBlock.gridX + 2;
+    prevDrawX = 0;
     prevDrawY += 1;
   }
 }
