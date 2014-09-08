@@ -89,7 +89,7 @@ function WordFinder(word, board) {
       for (var nI=0; nI<numNeighbors; nI++) {  // go thru each neighbor
         var x = neighbors[nI][0];
         var y = neighbors[nI][1];
-        if (board[x][y].letter === charNeeded) { // save potential matches--what we do depends on how many there are, so let's store them in an array
+        if (board[x][y] != 0 && board[x][y] != undefined && board[x][y].letter === charNeeded) { // save potential matches--what we do depends on how many there are, so let's store them in an array
           var c = new Coord(x,y,board);
           matchesInNeighbors.push(c);
         }
@@ -132,7 +132,7 @@ function WordFinder(word, board) {
 }
 
 function wordCoordsOnBoggleBoard(word, board) {
-  w = new WordFinder(word, board);
+  w = new WordFinder(word.toUpperCase(), board);
   allCoordObjs = w.returnAllWordCoords();
   allCoordCoords = [];
   for (var i=0, len=allCoordObjs.length; i<len; i++) {
