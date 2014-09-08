@@ -7,6 +7,8 @@ var BOARDWIDTH = 320;
 
 var canvas;
 var context;
+var preview;
+var prevctx;
 var currentBlock;
 var currentTime;
 var isGameOver;
@@ -33,6 +35,8 @@ $(window).load(function(){
 
 	canvas = document.getElementById('gameCanvas');
 	context = canvas.getContext('2d');
+	preview = document.getElementById('gamePreview');
+	prevctx = preview.getContext('2d');
 	lineScore = $('#lines');
 	previousTime = 0;
 	currentTime = 0;
@@ -75,6 +79,9 @@ function startGame() {
 		}
 
 	currentBlock = getRandomBlock();
+	nextBlock = getRandomBlock();
+	drawPreview();
+	
 	var requestAnimFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
 			window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
@@ -135,20 +142,6 @@ function drawTileBackground(drawX, drawY, scrabbleExtras) {
 
  context.fillRect(numberPosX, numberPosY, SIZE, SIZE);
 };
-// function drawValues(drawX, drawY, scrabbleExtras) {
-// 	numberPosX = drawX * SIZE;
-// 	numberPosY = drawY * SIZE;
-
-// 	if (scrabbleExtras == "WX2"){
-// 		context.strokeStyle = "#000";
-//   	context.beginPath();
-//  		context.fillStyle = "#F62F68";
-//  		context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
-//  		context.fill();
-//  		context.stroke();
-
-// 	}
-// }
 
 function drawLetter(drawX, drawY, letter) {
 	letterPosX = drawX * SIZE + 7;
@@ -175,19 +168,10 @@ function drawBoard() {
 	context.rect(0, 0, 320, 640);
 	context.fillStyle="black";
 	context.fill();
-	// context.beginPath();
-	// context.lineWidth = "2";
-	// context.strokeStyle = "yellow";
-	// context.stroke();
 
 	for(var row = 0; row < ROWS; row++) {
 		for(var col = 0; col < COLS; col++) {
 			if(gameData[row][col] != 0) {
-				// context.drawImage(blockImg, (gameData[row][col] - 1) * SIZE, 0, SIZE, SIZE, col * SIZE, row * SIZE, SIZE, SIZE); -->
-				// context.beginPath();
-				// context.rect(col * SIZE, row * SIZE, SIZE, SIZE);
-				// context.fillStyle="green";
-				// context.fill();
 				tile = gameData[row][col]
 				drawTileBackground(col, row, tile.scrabbleExtras);
 				drawTile(col, row);
@@ -203,28 +187,14 @@ function drawBlock(block) {
 	var drawY = block.gridY;
 	var rotation = block.currentRotation;
 
-// drawY = 10;
-
 	for(var row = 0, len = block.rotations[rotation].length; row < len; row++) {
 		for(var col = 0, len2 = block.rotations[rotation][row].length; col < len2; col++) {
 			if(block.rotations[rotation][row][col] != 0 && drawY >= 0) {
-				// context.drawImage(blockImg, block.color * SIZE, 0, SIZE, SIZE, drawX * SIZE, drawY * SIZE, SIZE, SIZE);
-				// context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
-				// context.beginPath();
-				// context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
-				// context.fillStyle="green";
-				// context.fill();
-				// context.stroke();
-				// context.fillStyle ="black";
-				// // context.font = 'bold 20pt Calibri';
-				// context.fillText("A", 0, 0);
-				// context.fillStyle="white"context.font = "18pt Arial";
 				tile = block.rotations[rotation][row][col]
 				drawTileBackground(drawX, drawY, tile.scrabbleExtras);
 				drawTile(drawX, drawY);
 				drawLetter(drawX, drawY, tile.letter);
 				drawNumber(drawX, drawY, tile.score);
-
 			}
 			drawX += 1;
 		}
@@ -332,7 +302,9 @@ function updateGame() {
     }
     else {
       landBlock(currentBlock);
-      currentBlock = getRandomBlock();
+      currentBlock = nextBlock;
+      nextBlock = getRandomBlock();
+      drawPreview();
     }
 
     // update time

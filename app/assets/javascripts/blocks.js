@@ -212,3 +212,86 @@ function getRandomBlock() {
 
   return block;
 }
+
+function drawPreview() {
+  prevsize = 20;
+  prevDrawX = nextBlock.gridX;
+  prevDrawY = nextBlock.gridY + 4;
+
+  prevctx.strokeStyle = "#fff";
+  prevctx.beginPath();
+  prevctx.rect(0, 0, 150, 100);
+  prevctx.fillStyle="black";
+  prevctx.fill();
+  prevctx.stroke();
+
+  for(var row = 0, len = nextBlock.rotations[0].length; row < len; row++) {
+    for(var col = 0, len2 = nextBlock.rotations[0][row].length; col < len2; col++) {
+      if(nextBlock.rotations[0][row][col] != 0) {
+        tile = nextBlock.rotations[0][row][col];
+        // console.log('tile coords')
+        // console.log(prevDrawX);
+        // console.log(prevDrawY);
+        prevctx.strokeStyle = "#000";
+        prevctx.beginPath();
+        prevctx.rect(prevDrawX * prevsize, prevDrawY * prevsize, prevsize, prevsize);
+
+        if (tile.scrabbleExtras == "NA") {
+          image = new Image();
+          image.src = "http://www.mobilier-beton.net/wp-content/uploads/2013/05/Wood1.jpg";
+          pattern = prevctx.createPattern(image, "no-repeat");
+          prevctx.fillStyle = pattern;
+         };
+
+        if (tile.scrabbleExtras == "WX2"){
+
+          prevctx.fillStyle = "#82002C";
+          prevctx.fill();
+          prevctx.stroke();
+        };
+          if (tile.scrabbleExtras == "WX3"){
+
+          prevctx.fillStyle = "#110649";
+          prevctx.fill();
+          prevctx.stroke();
+        };
+
+        if (tile.scrabbleExtras == "LX2"){
+
+          prevctx.fillStyle = "#E77F9C";
+          prevctx.fill();
+          prevctx.stroke();
+        };
+
+        if (tile.scrabbleExtras == "LX3"){
+
+          prevctx.fillStyle = "#5D709A";
+          prevctx.fill();
+          prevctx.stroke();
+        };
+
+        prevctx.fillRect(prevDrawX * prevsize, prevDrawY * prevsize, prevsize, prevsize);
+
+        prevctx.strokeStyle = "#000";
+        prevctx.beginPath();
+        // context.fillStyle = "#3c0";
+        prevctx.rect(prevDrawX * prevsize, prevDrawY * prevsize, prevsize, prevsize);
+        prevctx.fill();
+        prevctx.stroke();
+
+        prevctx.fillStyle = "#000";
+        prevctx.font = '16pt Arial';
+        prevctx.fillText(tile.letter, (prevDrawX * prevsize + 5), (prevDrawY * prevsize + 15), prevsize);
+
+        // prevctx.fillStyle = "#000";
+        // prevctx.font = 'bolder pt Arial';
+        // prevctx.fillText(tile.score, drawX * prevsize, drawY * prevsize, prevsize);
+      }
+      console.log(prevDrawX)
+      prevDrawX += 1;
+      console.log(prevDrawX)
+    }
+    prevDrawX = nextBlock.gridX + 2;
+    prevDrawY += 1;
+  }
+}
