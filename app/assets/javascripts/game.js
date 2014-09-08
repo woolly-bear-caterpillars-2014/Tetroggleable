@@ -112,14 +112,15 @@ function tileColors(contextName, scrabbleExtras) {
  	if (scrabbleExtras == "WX2"){
  		contextName.fillStyle = wX2;
  	};
- 	if (scrabbleExtras == "WX3"){
+	if (scrabbleExtras == "WX3"){
  		contextName.fillStyle = wX3;
+
  	};
  	if (scrabbleExtras == "LX2"){
  		contextName.fillStyle = lX2;
  	};
  	if (scrabbleExtras == "LX3"){
- 		contextName.fillStyle = lX3;
+		contextName.fillStyle = lX3;
  	};
 
  	contextName.fill();
@@ -143,7 +144,8 @@ function drawLetter(drawX, drawY, letter) {
 
 	context.fillStyle = "#000";
  	context.font = '20pt Arial';
- 	context.fillText(letter, letterPosX, letterPosY, 22);
+	context.fillText(letter, letterPosX, letterPosY, 22);
+
 }
 
 function drawNumber(drawX, drawY, score) {
@@ -313,8 +315,9 @@ function updateGame() {
     requestAnimationFrame(updateGame);
   }
   else {
-    context.fillText("GAME OVER", 10 , 10);
-    context.fillStyle = "white";
+    // context.fillText("GAME OVER", 10 , 10);
+    // context.fillStyle = "white";
+    $("#colorkey h3").fadeIn(1000).fadeOut(500).fadeIn(1000);
 	}
 }
 
@@ -483,9 +486,9 @@ function findWord() {
 	var currentLetters = letters.split( "" );
 	if( currentLetters.length >= 3 ) {
 		word = currentLetters.join("");
-		// if( dicts.indexOf(word.toUpperCase())  != -1 ) {
-		// 	isWordOnBoard(word, gameData);
-		// }
+		if( dicts.indexOf(word.toUpperCase())  != -1 ) {
+			isWordOnBoard(word, gameData);
+		}
 		tilesOnBoard = isWordOnBoard(word.toUpperCase(), gameData);
 
 		//if isWordOnBoard does not return false, update score and make tiles fall
