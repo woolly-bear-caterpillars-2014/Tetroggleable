@@ -1,6 +1,5 @@
-	<div id="info_panel">
-
-	<h1>Tetroggleable</h1>
+<h1>Tetroggleable</h1>
+<div id="info_panel">
 	<h2>Welcome!</h2>
 	<div class="info_boxes" id="boggle_box">
 		<p>BoggleWord</p>
@@ -38,6 +37,8 @@
 
 		<h3> GAME OVER </h3>
 
+		<%= link_to 'New Game', new_game_path, 'data-no-turbolink' => true %>
+
 		<div class="key"><div id="keybox1"></div> <p class="pkey">Double Letter Score</p></div>
 		
 		<div class="key"><div id="keybox2"></div> <p class="pkey">Triple Letter Score</p></div>
@@ -48,6 +49,3 @@
 	
 
 </div>
-
-
-<%= link_to 'New Game', new_game_path, 'data-no-turbolink' => true %>
