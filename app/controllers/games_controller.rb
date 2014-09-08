@@ -1,10 +1,17 @@
 class GamesController < ApplicationController
+	include UsersHelper
+
 	def index
 	end
-	def show 
-		@game = Game.find(params[:id]) 
-		@user = @game.user
-		render :show
+
+	def show
+		if current_user
+			@game = Game.find(params[:id])
+			@user = User.find(session[:user_id])
+		else
+			@game = Game.new
+			flash.now[:notice] = "You are not logged in"
+		end
 	end
 
 	def new
@@ -12,17 +19,19 @@ class GamesController < ApplicationController
 	end
 
 	def create
-		@game = Game.new(params[:game])
-		if @game.save
-			redirect_to games_path
+		if current_user
+			@game = current_user.games.create(params[game_params])
+			if @game.save
+				redirect_to game_path
+			end
 		else
-			render :new
+			flash.now[:notice] = "You are not logged in"
 		end
 	end
 
 	private
 
-	# def game_params
-	# 	params.require(:game).permit(:score, :scrabble_score, :level, :lines, :user_id)
-	# end
+	def game_params
+		params.require(:game).permit(:score, :scrabble_score, :level, :lines, :user_id)
+	end
 end

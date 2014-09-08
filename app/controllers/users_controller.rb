@@ -1,11 +1,12 @@
 class UsersController < ApplicationController
-
+	include UsersHelper
 	def index
 		@users = User.all
 	end
 
 	def show
-		@user = User.find(params[:id])
+		@user = current_user
+		@game = Game.where(:user_id == session[:user_id])
 	end
 
 	def new
@@ -13,8 +14,9 @@ class UsersController < ApplicationController
 	end
 
 	def create
-		@user = User.new(user_params)
+		@user = params[:user] ? User.new(user_params) : User.new_guest
 		if @user.save
+   			session[:user_id] = @user.id
 			@game = @user.games.create()
 			redirect_to game_path(@game)
 		else
@@ -25,7 +27,7 @@ class UsersController < ApplicationController
 	private
 
 	def user_params
-		params.require(:user).permit(:username, :email)
+		params.require(:user).permit(:username, :email, :password)
 	end
 
 end

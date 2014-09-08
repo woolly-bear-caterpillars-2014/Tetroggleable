@@ -1,7 +1,7 @@
 	<div id="info_panel">
 
 	<h1>Tetroggleable</h1>
-	<h2>Welcome! <%= @game.user.username %></h2>
+	<h2><%= @user.name  %></h2>
 	<div class="info_boxes" id="boggle_box">
 		<p>BoggleWord</p>
 		<%= text_field_tag "boggle_letters"  %>
