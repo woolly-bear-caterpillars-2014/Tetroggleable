@@ -40,11 +40,11 @@ h1 {
 	border: 10px #E60484 solid;
 	border-style: double;
 	margin-top: 30px;
+	float: left;
 }
 
 #info_panel {
 	margin: 0px 110px 0 200px;
-	display: inline-block;
 	float: left;
 }
 
@@ -70,3 +70,77 @@ h1 {
 #boggle_box {
 	height: 90px;
 }
+
+#colorkey {
+	float: right;
+	margin: 30px 50px 0 0;
+	width: 300px;
+	height: 500px;
+}
+
+#colorkey h3 {
+	display: none;
+	color: #E60484;
+	margin-left: 50px;
+}
+
+
+#keybox1 {
+	height: 20px;
+	width: 20px;
+	margin-top: 20px;
+	background-color: #E77F9C;
+	border-radius: 3px;
+	margin-left: 50px;
+}
+
+#keybox2 {
+	height: 20px;
+	width: 20px;
+	margin-top: 20px;
+	background-color: #788AEC;
+	border-radius: 3px;
+	margin-left: 50px;
+}
+
+#keybox3 {
+	height: 20px;
+	width: 20px;
+	margin-top: 20px;
+	background-color: #82002C;
+	border-radius: 3px;
+	margin-left: 50px;
+	
+}
+
+#keybox4 {
+	height: 20px;
+	width: 20px;
+	margin-top: 20px;
+	background-color: #1932B9;
+	border-radius: 3px;
+	margin-left: 50px;
+}
+
+.pkey {
+	position: relative;
+	left: 80px;
+	margin-top: -20px;
+	color: white;
+	font-size: 1em;
+}
+
+#boggle_letters {
+	width: 155px;
+}
+
+
+
+
+
+
+
+
+
+
+
