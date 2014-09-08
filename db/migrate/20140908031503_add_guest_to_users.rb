@@ -1,5 +1,5 @@
 class AddGuestToUsers < ActiveRecord::Migration
   def change
-    add_column :users, :guests, :boolean
+    add_column :users, :guest, :boolean
   end
 end
