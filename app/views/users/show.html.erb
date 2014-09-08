@@ -6,5 +6,6 @@
 <div class="container">
 	<% @user.games.each do |game|  %>
 	<p> Score: <%= game.score  %></p>
+	<p>Scrabble Score: <%= game.scrabble_score %> </p>
 <% end %>
 </div>
