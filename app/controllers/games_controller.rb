@@ -26,8 +26,6 @@ class GamesController < ApplicationController
 				p params
 				@game = current_user.games.create(game_params)
 				render :json => @game
-			else
-				redirect_to signup_path
 			end
 		else
 			render :new
