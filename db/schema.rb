@@ -11,12 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
+
 
 ActiveRecord::Schema.define(version: 20140908000453) do
-=======
-ActiveRecord::Schema.define(version: 20140907153510) do
->>>>>>> parent of aec5034... Add Guest functionality
+
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
