@@ -1,1 +1,5 @@
-<p><%= button_to "Play as Guest!", signup_path, method: :post  %></p>
+<% if current_user  %>
+	<p><%= link_to 'New Game', games_path(:user_id), :method => :post %></p>
+<% else %>
+	<p><%= button_to "Play as Guest!", signup_path, method: :post  %></p>
+<% end %>

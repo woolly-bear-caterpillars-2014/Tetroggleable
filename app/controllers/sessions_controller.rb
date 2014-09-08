@@ -6,12 +6,11 @@ class SessionsController < ApplicationController
     @user = User.find_by(:username => params[:username])
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
-      @game = @user.games.create()
-      redirect_to game_path(@game)
+      # @game = @user.games.create()
+      redirect_to user_path(@user)
     else
       render :new
     end
-
   end
 
   def destroy

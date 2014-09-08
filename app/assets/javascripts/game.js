@@ -5,6 +5,7 @@ var SPEEDS = [500, 450, 400, 350, 300, 250, 200, 150, 100, 50, 25, 10, 5, 1];
 var BOARDHEIGHT = 640;
 var BOARDWIDTH = 320;
 
+var txt;
 var canvas;
 var context;
 var currentBlock;
@@ -405,6 +406,15 @@ function landBlock(block) {
 
 	if(block.gridY < 0) {
 		isGameOver = true;
+// 		var r =	confirm("Play again?")
+// 	if (r == true) {
+//     txt = "You pressed OK!";
+// 		window.location.reload();
+// 		startGame();
+// } else {
+//     txt = "You pressed Cancel!";
+//     isGameOver = true
+// }
 	}
 }
 

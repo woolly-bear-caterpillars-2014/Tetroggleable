@@ -1,7 +1,7 @@
 	<div id="info_panel">
 
 	<h1>Tetroggleable</h1>
-	<h2>Welcome! <%= @user.name %></h2>
+	<h2>Welcome!</h2>
 	<div class="info_boxes" id="boggle_box">
 		<p>BoggleWord</p>
 		<%= text_field_tag "boggle_letters"  %>
@@ -32,3 +32,7 @@
 <div id="gameboard">
 	<canvas id="gameCanvas" width="320" height="640"></canvas>
 </div>
+
+<% if current_user %>
+	<%= link_to 'New Game', games_path(:user_id), :method => :post %>
+<% end  %>
