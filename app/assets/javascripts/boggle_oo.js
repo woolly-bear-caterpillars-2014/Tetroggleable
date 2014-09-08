@@ -144,21 +144,3 @@ function wordCoordsOnBoggleBoard(word, board) {
   }
       return allCoordCoords;
 }
-
-
-// board1 = [
-//   ['B', 'E', 'A', 'B', 'T'],
-//   ['E', 'E', 'E', 'H', 'E'],
-//   ['A', 'A', 'A', 'L', 'S'],
-//   ['X', 'N', 'O', 'X', 'T'],
-//   ['X', 'N', 'O', 'X', 'T']
-// ]
-
-// w = new WordFinder("BEAN", board1);
-// console.log(w.returnAllWordCoords().length === 7);
-// w = new WordFinder("BTESTT", board1);
-// console.log(w.returnAllWordCoords().length === 1);
-// w = new WordFinder("XNOXT", board1);
-// console.log(w.returnAllWordCoords().length === 32);
-
-// wordCoordsOnBoggleBoard("BEAN", board1);
