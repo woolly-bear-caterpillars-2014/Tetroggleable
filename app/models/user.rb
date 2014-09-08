@@ -17,8 +17,4 @@ class User < ActiveRecord::Base
     new { |u| u.guest = true }
   end
 
-  def move_to(user)
-    games.update_all(user_id: user.id)
-  end
-
 end
