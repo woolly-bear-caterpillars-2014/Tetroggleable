@@ -99,13 +99,14 @@ function WordFinder(word, board) {
     var newStemsCreated = []; // we will push this to this.validStems at the very end of the function
 
     var numStems = this.validStemsOfWords.length;
-    console.log("VALID STEMS OF WORDS")
-    console.log("*********************")
+    console.log("VALID STEMS OF WORDS");
+    console.log("*********************" + i);
     for (var i=0; i<numStems; i++) {
       console.log(this.validStemsOfWords[i]);
     }
-    console.log("*********************")
-    console.log("*********************")
+    console.log("*********************");
+    console.log("SEEKING LETTER: " + charNeeded);
+    console.log("*********************");
 
     for (var stemI=0; stemI<this.validStemsOfWords.length; stemI++) {  // for each candidate
       // var currentOriginalStem=this.validStemsOfWords[stemI];
@@ -114,32 +115,44 @@ function WordFinder(word, board) {
       // console.log("stemI: " + stemI);
       // console.log("lastCharObj.neighbors()");
       // console.log("Stem: " + this.validStemsOfWords);
-      console.log(lastCharObj.neighbors());
       var numNeighbors = neighbors.length; // how many neighbors are there?
       var matchesInNeighbors = [];
+      console.log("Last Character: " + lastCharObj.letter + "(" + lastCharObj.x + ", " + lastCharObj.y + ")");
+      console.log("neighbors of the last character object are below!");
+      // for (var n=0; n<numNeighbors; n++) {
+      //   console.log(boggle)
+      // }
+      console.log(lastCharObj.neighbors());
 
       for (var nI=0; nI<numNeighbors; nI++) {  // go thru each neighbor
         var x = neighbors[nI][0];
         var y = neighbors[nI][1];
         if (board[x][y] === charNeeded) { // save potential matches--what we do depends on how many there are, so let's store them in an array
+          console.log("*************************");
+          console.log("Neighbor: " + nI + ":  " + board[x][y] + " (" + x + ", " + y + ")");
           var c = new Coord(x,y,board);
           matchesInNeighbors.push(c);
         }
       }
 
+      console.log("#Matches In Neighbors:" + matchesInNeighbors.length);
+
       // WHAT WE DO DEPENDS ON HOW MANY MATCHES
       if (matchesInNeighbors.length === 0) { // if no matches, delete the current stem
-        this.validStemsOfWords.splice(stemI, 1);
+        // this.validStemsOfWords.splice(stemI, 1);
+        console.log("There were no matches.");
       }
 
       else if (matchesInNeighbors.length === 1) { // if only one match, extend the current stem with the match
         var match = matchesInNeighbors[0];
+        console.log("There was only ONE match.");
         this.validStemsOfWords[stemI].push(match);
       }
 
       else if (matchesInNeighbors.length >= 1) { // if multiple matches, extend the current stem with the first one, duplicate stems for the remaining, and add matches onto those
        for (var m=0; m<matchesInNeighbors.length; m++) {
         var currentOriginalStem=clone(this.validStemsOfWords[stemI]);
+        console.log("There WERE a few matches.");
         currentOriginalStem.push(matchesInNeighbors[m]);
         newStemsCreated.push(currentOriginalStem);
        }
@@ -205,11 +218,12 @@ function WordFinder(word, board) {
 
 // w = new WordFinder("BTESTT", board2);
 // w = new WordFinder("BTEST", board2);
-w = new WordFinder("BEAN", board2);
+// w = new WordFinder("BEAN", board2);
+w = new WordFinder("BHLXX", board2);
 w.doYourMagic();
 
 console.log(w.validStemsOfWords);
 console.log(w.validStemsOfWords.length);
 
 b = new Coord(0, 3, board2);
-console.log(b.neighbors());
+// console.log(b.neighbors());
