@@ -58,7 +58,11 @@ $(window).load(function(){
 				findWord();
 			if(k==27)
 				toggleGamePause();
+			else
+				$('boggle_letters').focus();
 	})
+	$('input:text:first').focus();
+
 		// drawBoard();
 		// block = getRandomBlock()
 		// drawBlock(block);
@@ -318,7 +322,7 @@ function updateGame() {
   else {
     // context.fillText("GAME OVER", 10 , 10);
     // context.fillStyle = "white";
-    $("#colorkey h3").fadeIn(1000).fadeOut(500).fadeIn(1000);
+    $("#colorkey h3").fadeIn(500).fadeOut(500).fadeIn(500).fadeOut(500).fadeIn(500);
 	}
 }
 
@@ -381,12 +385,10 @@ function landBlock(block) {
 function clearTile(coords) {
 	var row = coords[0];
 	var col = coords[1];
-	var val = gameData[row-1][col];
 
 	for (var i = row; i > 0; i--) {
+		console.log("johnnyb:" + gameData[i][col])
 		gameData[i][col] = gameData[i-1][col];
-		// if( gameData[row-val][col] == 0 ) {
-		// 		gameData[row][col] = 0;
 		}
 	}
 
