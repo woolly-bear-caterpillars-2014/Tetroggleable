@@ -67,7 +67,6 @@ function WordFinder(word, board) {
     var indexOfCharNeeded = this.validStemsOfWords[0].length;
     var charNeeded = this.word[indexOfCharNeeded];
     var newStemsCreated = []; // we will push this to this.validStems at the very end of the function
-    var numStems = this.validStemsOfWords.length;
 
     for (var stemI=0; stemI<this.validStemsOfWords.length; stemI++) {  // for each candidate
       var lastCharObj = this.validStemsOfWords[stemI][indexOfCharNeeded-1];
@@ -109,14 +108,14 @@ function WordFinder(word, board) {
     }
   }
 
-  this.doYourMagic = function() {
-    var numCharsToDo = this.word.length - 1;
+  this.returnAllWordCoords = function() {
     this.firstLetterCoords();
-    for (var i=0; i<numCharsToDo; i++) {
+    for (var i=0, numCharsToDo = this.word.length - 1; i<numCharsToDo; i++) {
       if (this.validStemsOfWords.length > 0) {
         this.followStemsOneMoreLetter();
       }
     }
+    return this.validStemsOfWords;
   }
 }
 
@@ -130,12 +129,8 @@ board1 = [
 ]
 
 w = new WordFinder("BEAN", board1);
-w.doYourMagic();
-console.log(w.validStemsOfWords.length === 7);
+console.log(w.returnAllWordCoords().length === 7);
 w = new WordFinder("BTESTT", board1);
-w.doYourMagic();
-console.log(w.validStemsOfWords.length === 1);
+console.log(w.returnAllWordCoords().length === 1);
 w = new WordFinder("XNOXT", board1);
-w.doYourMagic();
-console.log(w.validStemsOfWords.length === 32);
-
+console.log(w.returnAllWordCoords().length === 32);
