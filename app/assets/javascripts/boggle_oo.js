@@ -1,3 +1,5 @@
+// UTILITY FUNCTIONS
+
 function clone(obj) {
     if (null == obj || "object" != typeof obj) return obj;
     var copy = obj.constructor();
@@ -7,38 +9,48 @@ function clone(obj) {
     return copy;
 }
 
+// function arrayUnique(a) {
+//     return a.reduce(function(p, c) {
+//         if (p.indexOf(c) < 0) p.push(c);
+//         return p;
+//     }, []);
+// };
+
+
+// BOGGLE FUNCTIONS
+
 function Coord(x, y, board){
   this.x = x;
   this.y = y;
-  this.letter = board[x][y];
+  this.letter = board[x][y].letter;
 
   this.neighbors = function() {
-  x_coord = this.x;
-  y_coord = this.y;
+    x_coord = this.x;
+    y_coord = this.y;
 
-  var neighbors = [
-                    [- 1, -1],
-                    [-1, 0],
-                    [-1, +1],
-                    [0, -1],
-                    [0, +1],
-                    [+1, -1],
-                    [+1, 0],
-                    [+1, +1]
-                  ];
-  neighborArray = [];
+    var neighbors = [
+                      [- 1, -1],
+                      [-1, 0],
+                      [-1, +1],
+                      [0, -1],
+                      [0, +1],
+                      [+1, -1],
+                      [+1, 0],
+                      [+1, +1]
+                    ];
+    neighborArray = [];
 
-  for(var r = 0; r < neighbors.length; r++){
-    row = neighbors[r];
-    if ( x_coord + row[0] >= 0 &&
-         x_coord + row[0] < board.length &&
-         y_coord + row[1] >= 0 &&
-         y_coord + row[1] < board.length ) {
-      neighborArray.push([x_coord + row[0], y_coord + row[1]])
+    for(var r = 0; r < neighbors.length; r++){
+      row = neighbors[r];
+      if ( x_coord + row[0] >= 0 &&
+           x_coord + row[0] < board.length &&
+           y_coord + row[1] >= 0 &&
+           y_coord + row[1] < board.length ) {
+        neighborArray.push([x_coord + row[0], y_coord + row[1]])
+      }
     }
+      return neighborArray;
   }
-  return neighborArray;
-}
 
 }
 
@@ -50,7 +62,7 @@ function WordFinder(word, board) {
   this.firstLetterCoords = function() {
     for (var r=0; r<board.length; r++) {
       for (var c=0; c<board[0].length; c++) {
-        if (board[r][c] === word[0]) {
+        if (board[r][c].letter === word[0]) {
           this.validStemsOfWords.push([new Coord(r,c,board)]);
         }
       }
@@ -77,7 +89,7 @@ function WordFinder(word, board) {
       for (var nI=0; nI<numNeighbors; nI++) {  // go thru each neighbor
         var x = neighbors[nI][0];
         var y = neighbors[nI][1];
-        if (board[x][y] === charNeeded) { // save potential matches--what we do depends on how many there are, so let's store them in an array
+        if (board[x][y].letter === charNeeded) { // save potential matches--what we do depends on how many there are, so let's store them in an array
           var c = new Coord(x,y,board);
           matchesInNeighbors.push(c);
         }
@@ -119,18 +131,34 @@ function WordFinder(word, board) {
   }
 }
 
+function wordCoordsOnBoggleBoard(word, board) {
+  w = new WordFinder(word, board);
+  allCoordObjs = w.returnAllWordCoords();
+  allCoordCoords = [];
+  for (var i=0, len=allCoordObjs.length; i<len; i++) {
+    var x=allCoordObjs[i].length;
+    for (var j=0; j<x; j++) {
+      var coordArray = [allCoordObjs[i][j].x, allCoordObjs[i][j].y];
+      allCoordCoords.push(coordArray);
+  }
+  }
+      return allCoordCoords;
+}
 
-board1 = [
-  ['B', 'E', 'A', 'B', 'T'],
-  ['E', 'E', 'E', 'H', 'E'],
-  ['A', 'A', 'A', 'L', 'S'],
-  ['X', 'N', 'O', 'X', 'T'],
-  ['X', 'N', 'O', 'X', 'T']
-]
 
-w = new WordFinder("BEAN", board1);
-console.log(w.returnAllWordCoords().length === 7);
-w = new WordFinder("BTESTT", board1);
-console.log(w.returnAllWordCoords().length === 1);
-w = new WordFinder("XNOXT", board1);
-console.log(w.returnAllWordCoords().length === 32);
+// board1 = [
+//   ['B', 'E', 'A', 'B', 'T'],
+//   ['E', 'E', 'E', 'H', 'E'],
+//   ['A', 'A', 'A', 'L', 'S'],
+//   ['X', 'N', 'O', 'X', 'T'],
+//   ['X', 'N', 'O', 'X', 'T']
+// ]
+
+// w = new WordFinder("BEAN", board1);
+// console.log(w.returnAllWordCoords().length === 7);
+// w = new WordFinder("BTESTT", board1);
+// console.log(w.returnAllWordCoords().length === 1);
+// w = new WordFinder("XNOXT", board1);
+// console.log(w.returnAllWordCoords().length === 32);
+
+// wordCoordsOnBoggleBoard("BEAN", board1);
