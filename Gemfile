@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.1.5'
 # Use postgresql as the database for Active Record
 gem 'pg'
-
+gem 'bcrypt', '~> 3.1.7'
 #styling home page
 gem 'bootstrap-sass'
 # Use SCSS for stylesheets
