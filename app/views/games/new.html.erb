@@ -1,4 +1,3 @@
-<h1>Tetroggleable</h1>
 <div id="info_panel">
 	<h2>Welcome!</h2>
 	<div class="info_boxes" id="boggle_box">
@@ -40,11 +39,11 @@
 	<canvas id="gameCanvas" width="320" height="640"></canvas>
 </div>
 
-<div id="colorkey">
+<div id="right-bar">
 
 		<h3> GAME OVER </h3>
 
-		<%= link_to 'New Game', new_game_path, 'data-no-turbolink' => true %>
+		<div id="colorkey">
 
 		<div class="key"><div id="keybox1"></div> <p class="pkey">Double Letter Score</p></div>
 		
@@ -52,7 +51,11 @@
 		
 		<div class="key"><div id="keybox3"></div> <p class="pkey">Double Word Score</p></div>
 		
-		<div class="key"><div id="keybox4"></div> <p class="pkey">Triple Word Score</p></div></div>
+		<div class="key"><div id="keybox4"></div> <p class="pkey">Triple Word Score</p></div>
+
+		</div>
+
+		<%= link_to 'New Game', new_game_path, 'data-no-turbolink' => true %>
 	
 
 </div>
