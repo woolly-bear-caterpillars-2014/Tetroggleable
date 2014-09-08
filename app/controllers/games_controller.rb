@@ -23,7 +23,7 @@ class GamesController < ApplicationController
 	def create
 		if current_user
 			@game = @user.games.create()
-			redirect_to game_path(@game)
+			redirect_to new_game_path(@game)
 		else
 			flash.now[:notice] = "You are not logged in"
 		end
