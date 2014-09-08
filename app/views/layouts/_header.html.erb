@@ -1,10 +1,14 @@
-<ul class="nav nav-pills">
-  <li> <%= link_to 'Home', root_path, class: "active" %></li>
-  <% if current_user %>
-  	<li><%= link_to 'Profile', profile_path %></li>
-   <li><%= link_to 'Logout', logout_path , class: "active" %></li>
-  <% else %>
-   <li><%= link_to 'Sign Up',signup_path , class: "active" %></li>
-   <li><%= link_to 'Log In', login_path, class: "active" %></li>
- <% end %>
-</ul>
+<header class="clearfix">
+	<ul class="nav nav-pills">
+	  <li> <%= link_to 'Home', root_path, class: "active" %></li>
+	  <% if current_user %>
+	   <li><%= link_to 'Logout', logout_path , class: "active" %></li>
+	  <% else %>
+	   <li><%= link_to 'Sign Up',signup_path , class: "active" %></li>
+	   <li><%= link_to 'Log In', login_path, class: "active" %></li>
+	 <% end %>
+	</ul>
+	<div class="logo">
+		<h2>Tetroggleable</h2>
+	</div>
+</header>
