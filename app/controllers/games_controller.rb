@@ -21,13 +21,14 @@ class GamesController < ApplicationController
 	end
 
 	def create
-		if current_user
-			@game = current_user.games.create(params[game_params])
-			if @game.save
-				redirect_to game_path
+		if request.xhr?
+			if current_user
+				p params
+				@game = current_user.games.create(game_params)
+				render :json => @game
 			end
 		else
-			flash.now[:notice] = "You are not logged in"
+			render :new
 		end
 	end
 

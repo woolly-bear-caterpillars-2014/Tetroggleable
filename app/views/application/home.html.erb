@@ -1,1 +1,5 @@
-<p><%= button_to "Play as Guest!", signup_path, method: :post  %></p>
+<% if current_user  %>
+	<p><%= link_to 'New Game', new_game_path, 'data-no-turbolink' => true %></p>
+<% else %>
+	<p><%= link_to "Play as Guest!", new_game_path, 'data-no-turbolink' => true  %></p>
+<% end %>
