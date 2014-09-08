@@ -7,5 +7,6 @@
 	<% @user.games.each do |game|  %>
 	<p> Score: <%= game.score  %></p>
 	<p>Scrabble Score: <%= game.scrabble_score %> </p>
+	<p>Lines <%= game.lines  %> </p>
 <% end %>
 </div>
