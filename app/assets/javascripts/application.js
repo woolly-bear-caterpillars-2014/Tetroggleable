@@ -16,5 +16,6 @@
 //= require_tree .
 //= require blocks
 //= require boggle
+//= require boggle_oo
 //= require game
 
