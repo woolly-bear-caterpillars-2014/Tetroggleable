@@ -229,46 +229,12 @@ function drawPreview() {
     for(var col = 0, len2 = nextBlock.rotations[0][row].length; col < len2; col++) {
       if(nextBlock.rotations[0][row][col] != 0) {
         tile = nextBlock.rotations[0][row][col];
-        // console.log('tile coords')
-        // console.log(prevDrawX);
-        // console.log(prevDrawY);
+
         prevctx.strokeStyle = "#000";
         prevctx.beginPath();
         prevctx.rect(prevDrawX * prevsize, prevDrawY * prevsize, prevsize, prevsize);
 
-        if (tile.scrabbleExtras == "NA") {
-          image = new Image();
-          image.src = "http://www.mobilier-beton.net/wp-content/uploads/2013/05/Wood1.jpg";
-          pattern = prevctx.createPattern(image, "no-repeat");
-          prevctx.fillStyle = pattern;
-         };
-
-        if (tile.scrabbleExtras == "WX2"){
-
-          prevctx.fillStyle = "#82002C";
-          prevctx.fill();
-          prevctx.stroke();
-        };
-          if (tile.scrabbleExtras == "WX3"){
-
-          prevctx.fillStyle = "#110649";
-          prevctx.fill();
-          prevctx.stroke();
-        };
-
-        if (tile.scrabbleExtras == "LX2"){
-
-          prevctx.fillStyle = "#E77F9C";
-          prevctx.fill();
-          prevctx.stroke();
-        };
-
-        if (tile.scrabbleExtras == "LX3"){
-
-          prevctx.fillStyle = "#5D709A";
-          prevctx.fill();
-          prevctx.stroke();
-        };
+        tileColors(prevctx, tile.scrabbleExtras);
 
         prevctx.fillRect(prevDrawX * prevsize, prevDrawY * prevsize, prevsize, prevsize);
 
@@ -281,16 +247,9 @@ function drawPreview() {
 
         prevctx.fillStyle = "#000";
         prevctx.font = '15pt Arial';
-        // prevctx.textAlign = 'left';
         prevctx.fillText(tile.letter, (prevDrawX * prevsize + 3), (prevDrawY * prevsize + 17), 15);
-
-        // prevctx.fillStyle = "#000";
-        // prevctx.font = 'bolder pt Arial';
-        // prevctx.fillText(tile.score, drawX * prevsize, drawY * prevsize, prevsize);
       }
-      console.log(prevDrawX)
       prevDrawX += 1;
-      console.log(prevDrawX)
     }
     prevDrawX = 0;
     prevDrawY += 1;

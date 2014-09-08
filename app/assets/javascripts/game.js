@@ -19,6 +19,11 @@ var currentSpeed = SPEEDS[currentLevel-1];
 var dicts;
 var gameIsPaused = false;
 var linePoints = 10;
+var tileColor = "#E4C390"
+var lX2 = "#95B8D3"
+var lX3 = "#095E9F"
+var wX2 = "#DD9ABD"
+var wX3 = "#89223A"
 
 function setRowsCols() {
 	width = $(window).width();
@@ -100,6 +105,27 @@ function drawTile(drawX, drawY) {
  	context.stroke();
 }
 
+function tileColors(contextName, scrabbleExtras) {
+	if (scrabbleExtras == "NA") {
+	  contextName.fillStyle = tileColor;
+ 	};
+ 	if (scrabbleExtras == "WX2"){
+ 		contextName.fillStyle = wX2;
+ 	};
+ 	if (scrabbleExtras == "WX3"){
+ 		contextName.fillStyle = wX3;
+ 	};
+ 	if (scrabbleExtras == "LX2"){
+ 		contextName.fillStyle = lX2;
+ 	};
+ 	if (scrabbleExtras == "LX3"){
+ 		contextName.fillStyle = lX3;
+ 	};
+
+ 	contextName.fill();
+	contextName.stroke();
+}
+
 function drawTileBackground(drawX, drawY, scrabbleExtras) {
 	numberPosX = drawX * SIZE;
 	numberPosY = drawY * SIZE;
@@ -107,41 +133,8 @@ function drawTileBackground(drawX, drawY, scrabbleExtras) {
   context.beginPath();
 	context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
 
-	if (scrabbleExtras == "NA") {
-	image = new Image();
-	image.src = "http://www.mobilier-beton.net/wp-content/uploads/2013/05/Wood1.jpg";
-	pattern = context.createPattern(image, "no-repeat");
-  context.fillStyle = pattern;
- };
-
- 	if (scrabbleExtras == "WX2"){
-
- 		context.fillStyle = "#82002C";
- 		context.fill();
- 		context.stroke();
- 	};
- 		if (scrabbleExtras == "WX3"){
-
- 		context.fillStyle = "#110649";
- 		context.fill();
- 		context.stroke();
- 	};
-
- 	if (scrabbleExtras == "LX2"){
-
- 		context.fillStyle = "#E77F9C";
- 		context.fill();
- 		context.stroke();
- 	};
-
- 	if (scrabbleExtras == "LX3"){
-
- 		context.fillStyle = "#5D709A";
- 		context.fill();
- 		context.stroke();
- 	};
-
- context.fillRect(numberPosX, numberPosY, SIZE, SIZE);
+	tileColors(context, scrabbleExtras);
+ 	context.fillRect(numberPosX, numberPosY, SIZE, SIZE);
 };
 
 function drawLetter(drawX, drawY, letter) {
