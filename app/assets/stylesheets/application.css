@@ -27,6 +27,7 @@ h1 {
 
 h2 {
 	color:#E60484;
+	font-family: 'Orbitron', sans-serif;
 }
 
 .container {
@@ -60,18 +61,29 @@ h2 {
 	margin-top: 30px;
 	padding: 8px;
 	width: 180px;
-	height: 30px;
 	border: 3px solid #3C00FB;
 	border-radius: 8px;
 	color: #C7BFE0;
 	font-weight: bold;
-	font-size:18px;
-	line-height: 4px;
+	font-size:16px;
+	line-height: 18px;
 	font-family: helvetica;
 }
 
+#score_box p {
+	margin:10px 0;
+}
+
+#score_box span {
+	padding-top:5px;
+	color: #E60484;
+	font-size:20px;
+	display:block;
+	font-family: 'Orbitron', sans-serif;
+}
+
 #preview_box {
-	height: 120px;
+	height: 130px;
 }
 
 #gamePreview {
@@ -79,7 +91,7 @@ h2 {
 }
 
 #boggle_box {
-	height: 90px;
+	height: 80px;
 }
 
 #colorkey {
@@ -92,6 +104,7 @@ h2 {
 #colorkey h3 {
 	display: none;
 	color: #E60484;
+	font-family: 'Orbitron', sans-serif;
 	/*margin-left: 50px;*/
 }
 
@@ -125,6 +138,15 @@ h2 {
 	margin-top: -20px;
 	color: white;
 	font-size: 1em;
+}
+
+#colorkey a {
+	border: 3px solid #3C00FB;
+	border-radius: 8px;
+	padding: 5px;
+	color: #C7BFE0;
+	text-transform: uppercase;
+	font-weight: bold;
 }
 
 #boggle_letters {
