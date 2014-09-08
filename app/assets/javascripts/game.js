@@ -120,8 +120,7 @@ function tileColors(contextName, scrabbleExtras) {
  		contextName.fillStyle = lX2;
  	};
  	if (scrabbleExtras == "LX3"){
-
- 		contextName.fillStyle = lX3;
+		contextName.fillStyle = lX3;
  	};
 
  	contextName.fill();
