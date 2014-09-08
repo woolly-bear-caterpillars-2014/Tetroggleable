@@ -321,7 +321,7 @@ function updateGame() {
   }
   else {
 
-    $("#colorkey h3").fadeIn(500).fadeOut(500).fadeIn(500).fadeOut(500).fadeIn(500);
+    $("#right-bar h3").fadeIn(500).fadeOut(500).fadeIn(500).fadeOut(500).fadeIn(500);
   }
 }
 
