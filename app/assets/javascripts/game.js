@@ -59,7 +59,11 @@ $(window).load(function(){
 				findWord();
 			if(k==27)
 				toggleGamePause();
+			else
+				$('boggle_letters').focus();
 	})
+	$('input:text:first').focus();
+
 		// drawBoard();
 		// block = getRandomBlock()
 		// drawBlock(block);
@@ -317,11 +321,8 @@ function updateGame() {
   }
   else {
 
-    // context.fillText("GAME OVER", 10 , 10);
-    // context.fillStyle = "white";
-    $("#colorkey h3").fadeIn(1000).fadeOut(500).fadeIn(1000);
-    saveGame();
-	}
+    $("#colorkey h3").fadeIn(500).fadeOut(500).fadeIn(500).fadeOut(500).fadeIn(500);
+  }
 }
 
 function checkForCompleteLines() {
@@ -384,12 +385,10 @@ function landBlock(block) {
 function clearTile(coords) {
 	var row = coords[0];
 	var col = coords[1];
-	var val = gameData[row-1][col];
 
 	for (var i = row; i > 0; i--) {
+		console.log("johnnyb:" + gameData[i][col])
 		gameData[i][col] = gameData[i-1][col];
-		// if( gameData[row-val][col] == 0 ) {
-		// 		gameData[row][col] = 0;
 		}
 	}
 
@@ -485,18 +484,19 @@ function loadDictionary() {
 }
 
 function findWord() {
-	letters = $("#boggle_letters").val();
+	var letters = $("#boggle_letters").val();
 	$("#boggle_letters").val("");
 	var currentLetters = letters.split( "" );
+	var tilesOnBoard = [];
 	if( currentLetters.length >= 3 ) {
 		word = currentLetters.join("");
 		if( dicts.indexOf(word.toUpperCase())  != -1 ) {
-			isWordOnBoard(word, gameData);
+			tilesOnBoard = wordCoordsOnBoggleBoard(word, gameData);
 		}
-		tilesOnBoard = isWordOnBoard(word.toUpperCase(), gameData);
+		// tilesOnBoard = isWordOnBoard(word.toUpperCase(), gameData);
 
 		//if isWordOnBoard does not return false, update score and make tiles fall
-		if (tilesOnBoard) {
+		if (tilesOnBoard.length > 0) {
 			wordScore = calculateScrabbleScore(tilesOnBoard)
 			updateScores('word', wordScore)
 			makeTilesFall(tilesOnBoard);
@@ -506,6 +506,29 @@ function findWord() {
 		}
 	}
 }
+
+// function findWord() {
+// 	letters = $("#boggle_letters").val();
+// 	$("#boggle_letters").val("");
+// 	var currentLetters = letters.split( "" );
+// 	if( currentLetters.length >= 3 ) {
+// 		word = currentLetters.join("");
+// 		if( dicts.indexOf(word.toUpperCase())  != -1 ) {
+// 			isWordOnBoard(word, gameData);
+// 		}
+// 		tilesOnBoard = isWordOnBoard(word.toUpperCase(), gameData);
+
+// 		//if isWordOnBoard does not return false, update score and make tiles fall
+// 		if (tilesOnBoard) {
+// 			wordScore = calculateScrabbleScore(tilesOnBoard)
+// 			updateScores('word', wordScore)
+// 			makeTilesFall(tilesOnBoard);
+// 		}
+// 		else {
+// 			console.log("word not found");
+// 		}
+// 	}
+// }
 
 function makeTilesFall(tilesArray) {
 	console.log("Here are the tile coords to fall sent back from boggle.js:");
@@ -542,5 +565,5 @@ function saveGame(){
 	.always(function() {
 		console.log("complete");
 	});
-	
+
 }
