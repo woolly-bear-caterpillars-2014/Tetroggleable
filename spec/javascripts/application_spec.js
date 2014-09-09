@@ -20,14 +20,14 @@ describe ("tile", function(){
     });
 });
 
-describe ("LBlock", function () {
-  beforeEach(function () {
-    lBlock = new LBlock(t);
-    });
+// describe ("LBlock", function () {
+//   beforeEach(function () {
+//     lBlock = new LBlock();
+//     });
 
-     it("assigns LBlocks rotation1 pattern", function() {
+//      it("should return an LBlock object", function() {
 
-      expect(lBlock.rotation1).toBe( );
+//       expect(LBlock.rotation1).toBeDefined();
 
-  });
-});
+//   });
+// });
