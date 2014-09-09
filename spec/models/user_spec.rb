@@ -39,6 +39,17 @@ describe User do
 
 		describe "validate presence of username" do 
 			it { should validate_presence_of(:username) }
+
+			context "validates presence of email" do 
+			it { should validate_presence_of(:email) }
+		end
+		
+		context "validates username uniqueness" do 
+			it { should validate_uniqueness_of(:username) }
+		end
+		
+		context "validates uniqueness of email" do 
+			it { should validate_uniqueness_of(:email) }
 		end
 	end
 end
