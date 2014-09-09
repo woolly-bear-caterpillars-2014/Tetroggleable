@@ -20,7 +20,6 @@ class GamesController < ApplicationController
 	def create
 		if request.xhr?
       if current_user
-        p params
         @game = current_user.games.create(game_params)
         render :json => @game
       end
