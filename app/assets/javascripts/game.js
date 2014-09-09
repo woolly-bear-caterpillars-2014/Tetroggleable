@@ -403,6 +403,7 @@ function makeTilesFall(tilesArray) {
 	console.log("Here are the tile coords to fall sent back from boggle.js:");
 	console.log(tilesArray);
 
+	//Remove duplicate coordinates
 	for(var i = 0; i < tilesArray.length; i++) {
     for(var j = i + 1; j < tilesArray.length; ) {
       if(tilesArray[i][0] == tilesArray[j][0] && tilesArray[i][1] == tilesArray[j][1])
@@ -414,6 +415,7 @@ function makeTilesFall(tilesArray) {
     }    
 	}
 
+	//sort coordinates
 	newTilesArray = tilesArray.sort(function(a, b){
 	  return a[1] - b[1];
 	});
