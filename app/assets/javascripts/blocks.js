@@ -5,6 +5,8 @@ POINTS = {"A":1, "B":3, "C":3, "D":2, "E":1, "F":4, "G":2, "H":4, "I":1, "J":8, 
 
 SCRABBLE = ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA","WX2", "WX3", "NA", "LX3", "NA", "LX2"]
 
+var tileTextColor = "#000";
+
 function LBlock(t) {
 
   this.rotation1 =
@@ -249,7 +251,7 @@ function drawPreview() {
       if(nextBlock.rotations[0][row][col] != 0) {
         tile = nextBlock.rotations[0][row][col];
 
-        prevctx.strokeStyle = "#000";
+        prevctx.strokeStyle = tileTextColor;
         prevctx.beginPath();
         prevctx.rect(prevDrawX * prevsize, prevDrawY * prevsize, prevsize, prevsize);
 
@@ -257,14 +259,13 @@ function drawPreview() {
 
         prevctx.fillRect(prevDrawX * prevsize, prevDrawY * prevsize, prevsize, prevsize);
 
-        prevctx.strokeStyle = "#000";
+        prevctx.strokeStyle = tileTextColor;
         prevctx.beginPath();
-        // context.fillStyle = "#3c0";
         prevctx.rect(prevDrawX * prevsize, prevDrawY * prevsize, prevsize, prevsize);
         prevctx.fill();
         prevctx.stroke();
 
-        prevctx.fillStyle = "#000";
+        prevctx.fillStyle = tileTextColor;
         prevctx.font = '15pt Arial';
         prevctx.fillText(tile.letter, (prevDrawX * prevsize + 3), (prevDrawY * prevsize + 17), 15);
       }
