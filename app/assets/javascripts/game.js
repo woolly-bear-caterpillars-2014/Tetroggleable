@@ -414,14 +414,13 @@ function makeTilesFall(tilesArray) {
     }    
 	}
 
-	tilesArray.sort(function(a, b){
-		console.log(a + ", " + b)
+	newTilesArray = tilesArray.sort(function(a, b){
 	  return a[1] - b[1];
 	});
 
 	console.log('new tile array');
-	console.log(tilesArray);
-	clearTiles(tilesArray)
+	console.log(newTilesArray);
+	clearTiles(newTilesArray)
 }
 
 function clearCompletedRow(row) {
@@ -515,9 +514,9 @@ function findWord() {
 	var tilesOnBoard = [];
 	if( currentLetters.length >= 3 ) {
 		word = currentLetters.join("");
-		if( dicts.indexOf(word.toUpperCase())  != -1 ) {
+		//if( dicts.indexOf(word.toUpperCase())  != -1 ) {
 			tilesOnBoard = wordCoordsOnBoggleBoard(word, gameData);
-		}
+		//}
 		// tilesOnBoard = isWordOnBoard(word.toUpperCase(), gameData);
 
 		//if isWordOnBoard does not return false, update score and make tiles fall
