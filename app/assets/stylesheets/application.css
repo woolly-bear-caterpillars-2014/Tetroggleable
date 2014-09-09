@@ -46,11 +46,8 @@ h2 {
 	clear:both;
 }
 
-#game_board {
-	display: inline-block;
-	margin-left: 200px;
-	background-color: red;
-	float: right;
+#gameboard {
+
 }
 
 #gameCanvas {
@@ -176,8 +173,8 @@ h2 {
 	font-family: 'Orbitron', sans-serif;
 	position: fixed;
 	z-index: 1;
-	margin-left: 310px;
-
+	margin-left: 300px;
+	margin-top: 0;
 }
 
 .score span {
