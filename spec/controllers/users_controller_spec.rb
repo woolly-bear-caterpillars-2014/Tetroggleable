@@ -35,6 +35,18 @@ describe UsersController do
 				expect(response.status).to eq(200)
 			end
 		end
+		context "when invalid params are passed" do 
+		 	it "does not save user" do 
+		 		expect {
+		 			post :create, user: FactoryGirl.attributes_for(:invalid_user)
+		 			}.to_not change(User, :count)
+		 	end
+
+		 	it "redirects to new user" do 
+		 		post :create, user: FactoryGirl.attributes_for(:invalid_user)
+		 		expect(response).to render_template :new
+		 	end
+		end
 	end
 
 
