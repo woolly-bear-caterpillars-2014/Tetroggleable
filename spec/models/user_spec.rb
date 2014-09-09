@@ -36,5 +36,9 @@ describe User do
 				expect { User.new(:user, password: nil) }.to raise_error(ArgumentError)	
 			end
 		end
+
+		describe "validate presence of username" do 
+			it { should validate_presence_of(:username) }
+		end
 	end
 end

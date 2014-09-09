@@ -35,7 +35,7 @@ group :development, :test do
   gem 'rspec-support'
   gem 'capybara'
   gem 'factory_girl_rails'
-  gem 'rspec-activemodel-mocks'
+  gem 'shoulda-matchers'
 end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
