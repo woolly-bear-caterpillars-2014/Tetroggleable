@@ -385,19 +385,38 @@ function landBlock(block) {
 function clearTile(coords) {
 	var row = coords[0];
 	var col = coords[1];
+	console.log('tile to remove coordinate');
+	console.log(coords)
 
 	for (var i = row; i > 0; i--) {
-		console.log("johnnyb:" + gameData[i][col])
 		gameData[i][col] = gameData[i-1][col];
-		}
 	}
-
+}
 
 function clearTiles(array) {
 	for(var i = 0; i < array.length; i++) {
 		clearTile(array[i]);
 	}
 };
+
+function makeTilesFall(tilesArray) {
+	console.log("Here are the tile coords to fall sent back from boggle.js:");
+	console.log(tilesArray);
+
+	for(var i = 0; i < tilesArray.length; i++) {
+    for(var j = i + 1; j < tilesArray.length; ) {
+      if(tilesArray[i][0] == tilesArray[j][0] && tilesArray[i][1] == tilesArray[j][1])
+          // Found the same. Remove it.
+          tilesArray.splice(j, 1);
+      else
+        // No match. Go ahead.
+        j++;
+    }    
+	}
+	console.log('new tile array');
+	console.log(tilesArray);
+	clearTiles(tilesArray)
+}
 
 function clearCompletedRow(row) {
 	var row = row;
@@ -529,12 +548,6 @@ function findWord() {
 // 		}
 // 	}
 // }
-
-function makeTilesFall(tilesArray) {
-	console.log("Here are the tile coords to fall sent back from boggle.js:");
-	console.log(tilesArray);
-	clearTiles(tilesArray)
-}
 
 function toggleGamePause() {
 	gameIsPaused = !(gameIsPaused);
