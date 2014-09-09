@@ -441,7 +441,6 @@ function makeTilesFall(tilesArray) {
 	console.log(newTilesArray);
 	highlightTiles(newTilesArray);
 	setTimeout(function(){clearTiles(newTilesArray)}, 800);
-	//clearTiles(newTilesArray)
 }
 
 function highlightTiles(tiles) {
