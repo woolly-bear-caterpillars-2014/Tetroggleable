@@ -258,7 +258,6 @@ function drawPreview() {
 
         prevctx.strokeStyle = "#000";
         prevctx.beginPath();
-        // context.fillStyle = "#3c0";
         prevctx.rect(prevDrawX * prevsize, prevDrawY * prevsize, prevsize, prevsize);
         prevctx.fill();
         prevctx.stroke();
