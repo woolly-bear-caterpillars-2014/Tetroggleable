@@ -55,6 +55,10 @@ describe User do
 	describe "associations" do 
 		it { should have_many(:games) }
 	end
+
+	describe "has secure password" do 
+		it { should have_secure_password }
+	end
 end
 
 
