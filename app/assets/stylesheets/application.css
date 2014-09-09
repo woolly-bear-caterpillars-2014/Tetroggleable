@@ -42,6 +42,16 @@ h2 {
 	font-family: 'Orbitron', sans-serif;
 }
 
+h4 {
+	color:#E60484;
+	font-family: 'Orbitron', sans-serif;
+}
+
+.tetrog {
+	color:#E60484;
+	font-family: 'Orbitron', sans-serif;
+}
+
 .container {
 	clear:both;
 }
@@ -196,8 +206,20 @@ h2 {
 	color: #AAA;
 }
 
+#instructions strong {
+	color: #CCC;
+}
+
+#instructions h4 {
+	margin-top: 25px;
+}
+
 #disclaimer {
 	color: #555;
+}
+
+#boggle_table {
+	margin: 20px auto;
 }
 
 #boggle_table .die {
@@ -211,7 +233,11 @@ h2 {
 }
 
 #boggle_table .legit {
-	background-color: #AAA;
+	font-weight: bold;
+	text-align: center;
+	color: blue;
+	background-color: pink;
+	border: 2px solid #555;
 }
 
 
