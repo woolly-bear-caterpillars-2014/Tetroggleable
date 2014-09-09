@@ -197,6 +197,7 @@ function Tile () {
   this.letter = getRandomLetter();
   this.score = POINTS[this.letter];
   this.scrabbleExtras = SCRABBLE[Math.floor(Math.random()*SCRABBLE.length)];
+  this.highlight = false;
 }
 
 function rotate(block){
