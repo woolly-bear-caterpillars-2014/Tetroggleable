@@ -9,5 +9,10 @@ describe UsersController do
 				controller.stub(:current_user).and_return(:user)
 				# expect(assigns(:user)).to eq(current_user)
 			end
+
+			it "Game sessions id equals current_user" do 
+				get :show, id: user
+				controller.stub(:current_user).and_return(:game)
+			end
 		end
 	end
