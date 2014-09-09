@@ -29,5 +29,16 @@ describe UsersController do
 					post :create, user: FactoryGirl.attributes_for(:user)
 				end
 			end
+
+			it "redirects to new game route" do 
+				post :create, user: FactoryGirl.attributes_for(:user)
+				expect(response.status).to eq(200)
+			end
 		end
 	end
+
+
+
+
+
+

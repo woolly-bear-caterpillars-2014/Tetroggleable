@@ -9,7 +9,7 @@ class GamesController < ApplicationController
 		@games = Game.all
 		@user = current_user
 		@game = Game.where(@user)
-		@game = Game.find(params[:id])
+		# @game = Game.find(params[:id])
 		# @game.current_user
 	end
 
