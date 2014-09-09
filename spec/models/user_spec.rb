@@ -19,4 +19,10 @@ describe User do
 			expect(user.password).to eq("password")
 		end
 	end
+
+	describe "Invalid username" do 
+		it "is invalid without a username" do 
+			expect { User.new(:user, username: nil) }.to raise_error(ArgumentError)
+		end
+	end
 end
