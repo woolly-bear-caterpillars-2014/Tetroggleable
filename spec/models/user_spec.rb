@@ -36,20 +36,28 @@ describe User do
 				expect { User.new(:user, password: nil) }.to raise_error(ArgumentError)	
 			end
 		end
+	end
 
-		describe "validate presence of username" do 
-			it { should validate_presence_of(:username) }
+	describe "validate presence of attributes" do 
+		it { should validate_presence_of(:username) }
 
-			context "validates presence of email" do 
-			it { should validate_presence_of(:email) }
-		end
+	 
+		it { should validate_presence_of(:email) }
+	end	
+	
+	describe "validate uniqueness of attributes" do 
 		
-		context "validates username uniqueness" do 
-			it { should validate_uniqueness_of(:username) }
-		end
+		it { should validate_uniqueness_of(:username) }
 		
-		context "validates uniqueness of email" do 
-			it { should validate_uniqueness_of(:email) }
-		end
+		it { should validate_uniqueness_of(:email) }
+	end
+
+	describe "associations" do 
+		it { should have_many(:games) }
 	end
 end
+
+
+
+
+
