@@ -212,7 +212,7 @@ function getRandomLetter() {
 }
 
 function Tile () {
-  this.letter = LETTERS[Math.floor(Math.random()*LETTERS.length)];
+  this.letter = getRandomLetter();
   this.score = POINTS[this.letter];
   this.scrabbleExtras = SCRABBLE[Math.floor(Math.random()*SCRABBLE.length)];
 }
