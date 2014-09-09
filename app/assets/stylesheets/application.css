@@ -188,3 +188,8 @@ h2 {
 	color:#E60484;
  }
 
+.score_table {
+	width: 100%;
+	font-family: Orbitron;
+	color: #CCFFFF;
+}

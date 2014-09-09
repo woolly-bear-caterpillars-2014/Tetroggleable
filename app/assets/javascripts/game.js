@@ -419,7 +419,7 @@ function makeTilesFall(tilesArray) {
           tilesArray.splice(j, 1);
       else
         j++;
-    }    
+    }
 	}
 
 	//sort coordinates

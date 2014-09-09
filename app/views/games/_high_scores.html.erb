@@ -1,3 +1,18 @@
-<% @games.sort.each do |game| %>
-	<p> <%=game.id %>: <%= game.score %><p>
+<% sorted_games = @games.sort_by{ |id,score| score }.reverse %>
+<% i = 0 %>
+<table class="score_table">
+  <tr>
+  <th>Rank</th>
+  <th>Name</th>
+  <th>Score</th>
+  </tr>
+<% sorted_games.each do |game| %>
+
+<tr>
+  <td><%=i +=1%></td>
+  <td><%= game.user.username.to_s.upcase %></td>
+  <td><%= game.score %></td>
+</tr>
+
 <% end %>
+</table>
