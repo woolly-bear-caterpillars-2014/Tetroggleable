@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 	end
 
 	def show
-		@user = current_user	
+		@user = current_user
 		@game = Game.where(:user_id == session[:user_id])
 	end
 
@@ -14,15 +14,15 @@ class UsersController < ApplicationController
 	end
 
 	def create
-		@user = User.new(user_params) 
+		@user = User.new(user_params)
 		if @user.save
    		session[:user_id] = @user.id
 			# @game = @user.games.create()
-			
-		else 
+
+		redirect_to new_game_path
+		else
 			render :new
 		end
-		redirect_to new_game_path
 	end
 
 	private
