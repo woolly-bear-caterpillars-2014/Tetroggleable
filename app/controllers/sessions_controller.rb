@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
       session[:user_id] = @user.id
       redirect_to new_game_path
     else
+      flash.now[:notice] = "Please enter valid username or password!"
       render :new
     end
 
@@ -16,5 +17,6 @@ class SessionsController < ApplicationController
   def destroy
     session.clear
     redirect_to root_url
+    flash[:success] = "Successfully logged out!"
   end
 end
