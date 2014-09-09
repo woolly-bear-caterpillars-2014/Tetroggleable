@@ -413,6 +413,12 @@ function makeTilesFall(tilesArray) {
         j++;
     }    
 	}
+
+	tilesArray.sort(function(a, b){
+		console.log(a + ", " + b)
+	  return a[1] - b[1];
+	});
+
 	console.log('new tile array');
 	console.log(tilesArray);
 	clearTiles(tilesArray)
