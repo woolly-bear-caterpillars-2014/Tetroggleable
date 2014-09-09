@@ -440,7 +440,7 @@ function makeTilesFall(tilesArray) {
 	console.log('new tile array');
 	console.log(newTilesArray);
 	highlightTiles(newTilesArray);
-	setTimeout(function(){clearTiles(newTilesArray)}, 3000);
+	setTimeout(function(){clearTiles(newTilesArray)}, 800);
 	//clearTiles(newTilesArray)
 }
 
