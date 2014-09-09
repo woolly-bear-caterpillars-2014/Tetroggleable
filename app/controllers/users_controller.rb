@@ -6,8 +6,7 @@ class UsersController < ApplicationController
 
 	def show
 		@user = current_user	
-		@game = Game.where(@user)
-		
+		@game = Game.where(:user_id == session[:user_id])
 	end
 
 	def new

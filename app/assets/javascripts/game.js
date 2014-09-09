@@ -320,7 +320,7 @@ function updateGame() {
     requestAnimationFrame(updateGame);
   }
   else {
-
+  	saveGame();
     $("#right-bar h3").fadeIn(500).fadeOut(500).fadeIn(500).fadeOut(500).fadeIn(500);
   }
 }
@@ -548,12 +548,13 @@ function saveGame(){
 	$.ajaxSetup({
 	headers: {
 		'X-CSRF-Token':$('meta[name="csrf-token"]').attr("content")
-	}});
+		}
+	});
 	$.ajax({
 		url: '/games',
 		type: 'POST',
 		dataType: 'json',
-		data: {game: {level: level, scrabble_score: scrabble_score, lines: lines, score: score}}
+		data: {game: { score: score, scrabble_score: scrabble_score, level: level,  lines: lines,}}
 	})
 	.done(function(response) {
 		console.log("success");
