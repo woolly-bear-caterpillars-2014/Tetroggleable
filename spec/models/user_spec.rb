@@ -24,5 +24,17 @@ describe User do
 		it "is invalid without a username" do 
 			expect { User.new(:user, username: nil) }.to raise_error(ArgumentError)
 		end
+
+		context "invalid email" do 
+			it "is invalid without an email" do 
+				expect { User.new(:user, email: nil) }.to raise_error(ArgumentError)
+			end
+		end
+
+		context "invalid password" do 
+			it "is invalid without a password" do 
+				expect { User.new(:user, password: nil) }.to raise_error(ArgumentError)	
+			end
+		end
 	end
 end
