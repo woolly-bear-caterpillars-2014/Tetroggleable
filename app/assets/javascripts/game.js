@@ -179,6 +179,15 @@ function drawBoard() {
 				drawLetter(col, row, tile.letter);
 				drawNumber(col, row, tile.score);
 			}
+			// else {
+			// 	letterPosX = col * SIZE + 7;
+			// 	letterPosY = row * SIZE + 27;
+
+			// 	context.fillStyle = "#fff";
+			//  	context.font = '14pt Arial';
+			//  	coord = row + "," + col;
+			// 	context.fillText(coord, letterPosX, letterPosY, 22);
+			// }
 		}
 	}
 }
@@ -415,7 +424,7 @@ function makeTilesFall(tilesArray) {
 
 	//sort coordinates
 	CoordinateComparer = function(a, b) {
-		result = b[0] - a[0] ;
+		return b[0] - a[0] ;
 	}
 	newTilesArray =  tilesArray.sort(CoordinateComparer).reverse();
 
