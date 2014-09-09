@@ -42,6 +42,16 @@ h2 {
 	font-family: 'Orbitron', sans-serif;
 }
 
+h4 {
+	color:#E60484;
+	font-family: 'Orbitron', sans-serif;
+}
+
+.tetrog {
+	color:#E60484;
+	font-family: 'Orbitron', sans-serif;
+}
+
 .container {
 	clear:both;
 }
@@ -183,13 +193,52 @@ h2 {
 .score p {
 	color: #CCFFFF;
 
+.score_table {
+	width: 100%;
+	font-family: Orbitron;
+	color: #CCFFFF;
+}
+
 }
  #cut {
 	color:#E60484;
  }
 
-.score_table {
-	width: 100%;
-	font-family: Orbitron;
-	color: #CCFFFF;
+#instructions {
+	width: 700px;
+	color: #AAA;
+}
+
+#instructions strong {
+	color: #CCC;
+}
+
+#instructions h4 {
+	margin-top: 25px;
+}
+
+#disclaimer {
+	color: #555;
+}
+
+#boggle_table {
+	margin: 20px auto;
+}
+
+#boggle_table .die {
+	font-size: 1.5em;
+	border: 2px solid #555;
+	text-align: center;
+	width: 30px;
+	height: 30px;
+	background-color: white;
+	color: blue;
+}
+
+#boggle_table .legit {
+	font-weight: bold;
+	text-align: center;
+	color: blue;
+	background-color: pink;
+	border: 2px solid #555;
 }
