@@ -1,4 +1,5 @@
 class GamesController < ApplicationController
+
 	include UsersHelper
 
 	def index

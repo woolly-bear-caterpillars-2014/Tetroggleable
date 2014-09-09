@@ -103,7 +103,7 @@ function startGame() {
 }
 
 function drawTile(drawX, drawY) {
-	context.strokeStyle = "#000";
+	context.strokeStyle = tileTextColor;
   context.beginPath();
  	// context.fillStyle = "#3c0";
  	context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
@@ -111,7 +111,7 @@ function drawTile(drawX, drawY) {
  	context.stroke();
 }
 
-function tileColors(contextName, scrabbleExtras) {
+function tileColors(contextName, scrabbleExtras, highlight) {
 	if (scrabbleExtras == "NA") {
 	  contextName.fillStyle = tileColor;
  	};
@@ -128,19 +128,21 @@ function tileColors(contextName, scrabbleExtras) {
  	if (scrabbleExtras == "LX3"){
 		contextName.fillStyle = lX3;
  	};
+ 	if (highlight)
+		contextName.fillStyle = "#3C00FB";
 
  	contextName.fill();
 	contextName.stroke();
 }
 
-function drawTileBackground(drawX, drawY, scrabbleExtras) {
+function drawTileBackground(drawX, drawY, scrabbleExtras, highlight) {
 	numberPosX = drawX * SIZE;
 	numberPosY = drawY * SIZE;
-	context.strokeStyle = "#000";
+	context.strokeStyle = tileTextColor;
   context.beginPath();
 	context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
 
-	tileColors(context, scrabbleExtras);
+	tileColors(context, scrabbleExtras, highlight);
  	context.fillRect(numberPosX, numberPosY, SIZE, SIZE);
 };
 
@@ -148,7 +150,7 @@ function drawLetter(drawX, drawY, letter) {
 	letterPosX = drawX * SIZE + 7;
 	letterPosY = drawY * SIZE + 27;
 
-	context.fillStyle = "#000";
+	context.fillStyle = tileTextColor;
  	context.font = '20pt Arial';
 	context.fillText(letter, letterPosX, letterPosY, 22);
 
@@ -158,7 +160,7 @@ function drawNumber(drawX, drawY, score) {
 	numberPosX = drawX * SIZE + 2;
 	numberPosY = drawY * SIZE + 10;
 
-	context.fillStyle = "#000";
+	context.fillStyle = tileTextColor;
  	context.font = 'bolder 8pt Arial';
  	context.fillText(score, numberPosX, numberPosY, SIZE);
 }
@@ -175,7 +177,7 @@ function drawBoard() {
 		for(var col = 0; col < COLS; col++) {
 			if(gameData[row][col] != 0) {
 				tile = gameData[row][col]
-				drawTileBackground(col, row, tile.scrabbleExtras);
+				drawTileBackground(col, row, tile.scrabbleExtras, tile.highlight);
 				drawTile(col, row);
 				drawLetter(col, row, tile.letter);
 				drawNumber(col, row, tile.score);
@@ -202,7 +204,7 @@ function drawBlock(block) {
 		for(var col = 0, len2 = block.rotations[rotation][row].length; col < len2; col++) {
 			if(block.rotations[rotation][row][col] != 0 && drawY >= 0) {
 				tile = block.rotations[rotation][row][col]
-				drawTileBackground(drawX, drawY, tile.scrabbleExtras);
+				drawTileBackground(drawX, drawY, tile.scrabbleExtras, tile.highlight);
 				drawTile(drawX, drawY);
 				drawLetter(drawX, drawY, tile.letter);
 				drawNumber(drawX, drawY, tile.score);
@@ -404,15 +406,13 @@ function clearTile(coords) {
 }
 
 function clearTiles(array) {
+
 	for(var i = 0; i < array.length; i++) {
 		clearTile(array[i]);
 	}
 };
 
-function makeTilesFall(tilesArray) {
-	console.log("Here are the tile coords to fall sent back from boggle.js:");
-	console.log(tilesArray);
-
+function cleanTilesArray(tilesArray) {
 	//Remove duplicate coordinates
 	for(var i = 0; i < tilesArray.length; i++) {
     for(var j = i + 1; j < tilesArray.length; ) {
@@ -428,10 +428,28 @@ function makeTilesFall(tilesArray) {
 		return b[0] - a[0] ;
 	}
 	newTilesArray =  tilesArray.sort(CoordinateComparer).reverse();
+	return newTilesArray;
+}
+
+function makeTilesFall(tilesArray) {
+	console.log("Here are the tile coords to fall sent back from boggle.js:");
+	console.log(tilesArray);
+
+	newTilesArray = cleanTilesArray(tilesArray)
 
 	console.log('new tile array');
 	console.log(newTilesArray);
-	clearTiles(newTilesArray)
+	highlightTiles(newTilesArray);
+	setTimeout(function(){clearTiles(newTilesArray)}, 3000);
+	//clearTiles(newTilesArray)
+}
+
+function highlightTiles(tiles) {
+	console.log('highlight tiles');
+	for(var i = 0; i < tiles.length; i++) {
+		tile = gameData[tiles[i][0]][tiles[i][1]];
+		tile.highlight = true;
+	}
 }
 
 function clearCompletedRow(row) {
@@ -444,8 +462,6 @@ function clearCompletedRow(row) {
 				gameData[row][col] = gameData[row-1][col];
 			else
 				gameData[row][col] = 0;
-
-
 			col++;
 		}
 		col = 0;
