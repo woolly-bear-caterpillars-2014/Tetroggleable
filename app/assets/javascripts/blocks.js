@@ -4,6 +4,26 @@ POINTS = {"A":1, "B":3, "C":3, "D":2, "E":1, "F":4, "G":2, "H":4, "I":1, "J":8, 
 
 SCRABBLE = ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA","WX2", "WX3", "NA", "LX3", "NA", "LX2"]
 
+//Fisher-Yates Shuffle
+// from http://bost.ocks.org/mike/shuffle/
+function shuffle(array) {
+  var m = array.length, t, i;
+
+  // While there remain elements to shuffle…
+  while (m) {
+
+    // Pick a remaining element…
+    i = Math.floor(Math.random() * m--);
+
+    // And swap it with the current element.
+    t = array[m];
+    array[m] = array[i];
+    array[i] = t;
+  }
+
+  return array;
+}
+
 function LBlock(t) {
 
   this.rotation1 =
@@ -181,6 +201,8 @@ function SBlock(t) {
   this.gridX = 4;
   this.gridY = -2;
 }
+
+
 
 function Tile () {
   this.letter = LETTERS[Math.floor(Math.random()*LETTERS.length)];
