@@ -515,9 +515,9 @@ function findWord() {
 	var tilesOnBoard = [];
 	if( currentLetters.length >= 3 ) {
 		word = currentLetters.join("");
-		//if( dicts.indexOf(word.toUpperCase())  != -1 ) {
+		if( dicts.indexOf(word.toUpperCase())  != -1 ) {
 			tilesOnBoard = wordCoordsOnBoggleBoard(word, gameData);
-		//}
+		}
 		// tilesOnBoard = isWordOnBoard(word.toUpperCase(), gameData);
 
 		//if isWordOnBoard does not return false, update score and make tiles fall
