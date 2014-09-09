@@ -15,4 +15,11 @@ describe UsersController do
 				controller.stub(:current_user).and_return(:game)
 			end
 		end
+
+		describe "GET #new" do 
+			it "initializes a new instance of user" do 
+				get :new, id: user 
+				expect(assigns(:user)).to be_a User
+			end
+		end
 	end
