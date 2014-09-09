@@ -3,10 +3,16 @@
 </div>
 <p><%= link_to 'Play Game', new_game_path, 'data-no-turbolink' => true %></p>
 
-<div class="container">
+<div class="score">
+	
+	<% i = 0 %>
 	<% @user.games.each do |game|  %>
-	<p> Score: <%= game.score  %></p>
-	<p>Scrabble Score: <%= game.scrabble_score %> </p>
-	<p>Lines <%= game.lines  %> </p>
+		
+		<p><span>Game<span>:<%= i += 1  %> </p>
+		<p> Score: <%= game.score  %></p>
+		<p>Scrabble Score: <%= game.scrabble_score %> </p>
+		<p>Level <%= game.level  %> </p>
+		<p>Lines <%= game.lines  %> </p>
+		<p><span id="cut">================<span></p>
 <% end %>
 </div>

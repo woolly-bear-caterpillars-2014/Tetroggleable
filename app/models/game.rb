@@ -3,6 +3,6 @@ class Game < ActiveRecord::Base
 	
 
 	def self.average_score
-
+		
 	end
 end
