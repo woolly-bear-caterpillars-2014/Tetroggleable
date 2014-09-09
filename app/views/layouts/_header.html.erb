@@ -1,6 +1,7 @@
 <header class="clearfix">
 	<ul class="nav nav-pills">
 	  <li> <%= link_to 'Home', root_path, class: "active" %></li>
+	  <li> <%= link_to 'Scores', games_path %> </li>
 	  <% if current_user %>
 	   <li><%= link_to 'Profile', profile_path , class: "active" %></li>
 	   <li><%= link_to 'Logout', logout_path , class: "active" %></li>

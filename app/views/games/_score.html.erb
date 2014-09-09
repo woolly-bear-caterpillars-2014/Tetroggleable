@@ -1,0 +1,13 @@
+
+	<% i = 0 %>
+	<% @user.games.each do |game|  %>
+		
+		<p><span>Game<span>:<%= i += 1  %> </p>
+		<p> Score: <%= game.score  %></p>
+		<p>Scrabble Score: <%= game.scrabble_score %> </p>
+		<p>Level <%= game.level  %> </p>
+		<p>Lines <%= game.lines  %> </p>
+		<p><span id="cut">================<span></p>
+<% end %>
+
+
