@@ -140,7 +140,7 @@ h2 {
 }
 
 #keybox3 {
-	background-color: #DD9ABD;	
+	background-color: #DD9ABD;
 }
 
 #keybox4 {
@@ -170,6 +170,16 @@ h2 {
 	color:#000000;
 }
 
+#wordNotFound {
+	color: #FFF866;
+	display: none;
+	font-family: 'Orbitron', sans-serif;
+	position: fixed;
+	z-index: 1;
+	margin-left: 310px;
+
+}
+
 .score span {
 	color:#E60484;
 }
@@ -180,3 +190,4 @@ h2 {
  #cut {
 	color:#E60484;
  }
+
