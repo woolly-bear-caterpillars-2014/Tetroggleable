@@ -16,6 +16,6 @@
 //= require utilityFunctions
 //= require_tree .
 //= require blocks
-//= require boggle_oo
+//= require boggle
 //= require game
 
