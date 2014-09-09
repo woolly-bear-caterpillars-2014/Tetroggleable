@@ -2,7 +2,7 @@ class GamesController < ApplicationController
 	include UsersHelper
 
 	def index
-
+		@games = Game.all
 	end
 
 	def show
