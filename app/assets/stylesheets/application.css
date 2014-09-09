@@ -191,3 +191,29 @@ h2 {
 	color:#E60484;
  }
 
+#instructions {
+	width: 700px;
+	color: #AAA;
+}
+
+#disclaimer {
+	color: #555;
+}
+
+#boggle_table .die {
+	font-size: 1.5em;
+	border: 2px solid #555;
+	text-align: center;
+	width: 30px;
+	height: 30px;
+	background-color: white;
+	color: blue;
+}
+
+#boggle_table .legit {
+	background-color: #AAA;
+}
+
+
+
+
