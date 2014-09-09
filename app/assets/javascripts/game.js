@@ -411,7 +411,7 @@ function makeTilesFall(tilesArray) {
       else
         // No match. Go ahead.
         j++;
-    }    
+    }
 	}
 
 	newTilesArray = tilesArray.sort(function(a, b){
