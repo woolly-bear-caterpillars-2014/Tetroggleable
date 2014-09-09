@@ -28,7 +28,6 @@ describe UsersController do
 				it "creates a new user" do 
 					post :create, user: FactoryGirl.attributes_for(:user)
 				end
-			end
 
 			it "redirects to new game route" do 
 				post :create, user: FactoryGirl.attributes_for(:user)
@@ -40,6 +39,7 @@ describe UsersController do
 		 		expect {
 		 			post :create, user: FactoryGirl.attributes_for(:invalid_user)
 		 			}.to_not change(User, :count)
+		 		end
 		 	end
 
 		 	it "redirects to new user" do 
