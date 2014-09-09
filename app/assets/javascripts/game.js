@@ -320,7 +320,7 @@ function updateGame() {
     requestAnimationFrame(updateGame);
   }
   else {
-
+  	saveGame();
     $("#right-bar h3").fadeIn(500).fadeOut(500).fadeIn(500).fadeOut(500).fadeIn(500);
   }
 }
@@ -385,19 +385,43 @@ function landBlock(block) {
 function clearTile(coords) {
 	var row = coords[0];
 	var col = coords[1];
+	console.log('tile to remove coordinate');
+	console.log(coords)
 
 	for (var i = row; i > 0; i--) {
-		console.log("johnnyb:" + gameData[i][col])
 		gameData[i][col] = gameData[i-1][col];
-		}
 	}
-
+}
 
 function clearTiles(array) {
 	for(var i = 0; i < array.length; i++) {
 		clearTile(array[i]);
 	}
 };
+
+function makeTilesFall(tilesArray) {
+	console.log("Here are the tile coords to fall sent back from boggle.js:");
+	console.log(tilesArray);
+
+	for(var i = 0; i < tilesArray.length; i++) {
+    for(var j = i + 1; j < tilesArray.length; ) {
+      if(tilesArray[i][0] == tilesArray[j][0] && tilesArray[i][1] == tilesArray[j][1])
+          // Found the same. Remove it.
+          tilesArray.splice(j, 1);
+      else
+        // No match. Go ahead.
+        j++;
+    }    
+	}
+
+	newTilesArray = tilesArray.sort(function(a, b){
+	  return a[1] - b[1];
+	});
+
+	console.log('new tile array');
+	console.log(newTilesArray);
+	clearTiles(newTilesArray)
+}
 
 function clearCompletedRow(row) {
 	var row = row;
@@ -490,9 +514,9 @@ function findWord() {
 	var tilesOnBoard = [];
 	if( currentLetters.length >= 3 ) {
 		word = currentLetters.join("");
-		if( dicts.indexOf(word.toUpperCase())  != -1 ) {
+		//if( dicts.indexOf(word.toUpperCase())  != -1 ) {
 			tilesOnBoard = wordCoordsOnBoggleBoard(word, gameData);
-		}
+		//}
 		// tilesOnBoard = isWordOnBoard(word.toUpperCase(), gameData);
 
 		//if isWordOnBoard does not return false, update score and make tiles fall
@@ -530,12 +554,6 @@ function findWord() {
 // 	}
 // }
 
-function makeTilesFall(tilesArray) {
-	console.log("Here are the tile coords to fall sent back from boggle.js:");
-	console.log(tilesArray);
-	clearTiles(tilesArray)
-}
-
 function toggleGamePause() {
 	gameIsPaused = !(gameIsPaused);
 }
@@ -548,12 +566,13 @@ function saveGame(){
 	$.ajaxSetup({
 	headers: {
 		'X-CSRF-Token':$('meta[name="csrf-token"]').attr("content")
-	}});
+		}
+	});
 	$.ajax({
 		url: '/games',
 		type: 'POST',
 		dataType: 'json',
-		data: {game: {level: level, scrabble_score: scrabble_score, lines: lines, score: score}}
+		data: {game: { score: score, scrabble_score: scrabble_score, level: level,  lines: lines,}}
 	})
 	.done(function(response) {
 		console.log("success");
