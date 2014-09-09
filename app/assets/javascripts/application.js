@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require utilityFunctions
 //= require_tree .
 //= require blocks
 //= require boggle
