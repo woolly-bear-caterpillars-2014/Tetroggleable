@@ -33,6 +33,8 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
   gem 'jasmine-rails'
   gem 'rspec-support'
+  gem 'capybara'
+  gem 'factory_girl_rails'
 end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
