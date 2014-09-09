@@ -13,7 +13,6 @@ Our project is a game that involves the base gameplay of Tetris, while combining
 [Stephen Estrada](https://github.com/stcrestrada)
 
 
-
 [Styleguide:](https://github.com/airbnb/javascript)
 
 [Trello Board](https://trello.com/b/dcPl2IMM/tetrisbogglescrabble)

@@ -12,8 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require utilityFunctions
 //= require blocks
 //= require boggle
-//= require boggle_oo
 //= require game
 

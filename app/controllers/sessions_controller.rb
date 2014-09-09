@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
-	def new
+
+  def new
   end
 
   def create
@@ -11,7 +12,6 @@ class SessionsController < ApplicationController
       flash.now[:notice] = "Please enter valid username or password!"
       render :new
     end
-
   end
 
   def destroy

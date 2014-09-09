@@ -1,130 +1,128 @@
-// board = [
-// 	['A', 'B', 'C', 'D'],
-// 	['E', 'F', 'G', 'H'],
-// 	['I', 'J', 'K', 'L'],
-// 	['M', 'N', 'O', 'P']
-// ]
 
-// word = 'FIZ'
-// word2 = 'FIN'
-// word3 = 'LOP'
-// word4 = 'ABCD'
-// word5 = 'AFCH'
-// word6 = 'DJP'
+// BOGGLE FUNCTIONS
 
-board = [];
+function Coord(x, y, board){
+  this.x = x;
+  this.y = y;
+  this.letter = board[x][y].letter;
 
-function isWordOnBoard(word, board) {
-  wordArray = word.split("")
-  board = board
+  this.neighbors = function() {
+    x_coord = this.x;
+    y_coord = this.y;
 
-  var firstLetterCoord = loop(board, wordArray[0]);
-  var isValidWord = true;
-  var validWordsCoords = false;
+    var neighbors = [
+                      [- 1, -1],
+                      [-1, 0],
+                      [-1, +1],
+                      [0, -1],
+                      [0, +1],
+                      [+1, -1],
+                      [+1, 0],
+                      [+1, +1]
+                    ];
+    neighborArray = [];
 
-  if(firstLetterCoord.length > 0) {
-    for (var i=0; i < firstLetterCoord.length; i++) {
-      console.log('checking new first letter');
-      // priorLetter = wordArray[0];
-      console.log("First letter found! Coords are below");
-      console.log(firstLetterCoord[i]);
-      newCoordinates = firstLetterCoord[i];
-      coordinateArray = [firstLetterCoord[i]]
+    for(var r = 0; r < neighbors.length; r++){
+      row = neighbors[r];
+      if ( x_coord + row[0] >= 0 &&
+           x_coord + row[0] < board.length &&
+           y_coord + row[1] >= 0 &&
+           y_coord + row[1] < board.length ) {
+        neighborArray.push([x_coord + row[0], y_coord + row[1]])
+      }
+    }
+      return neighborArray;
+  }
 
-      for (var i = 0; i < (wordArray.length - 1); i++) {
-        //search for each corresponding letter in neighbors of previous coordinates
-        neighborArray = getNeighbors(newCoordinates);
-        newCoordinates = checkNeighbors(neighborArray, wordArray[i+1], board);
-        console.log('coordinates returned from checkNeighbors');
-        console.log(newCoordinates);
-        coordinateArray.push(newCoordinates);
+}
 
-        // console.log('new coordinates return:');
-        // console.log(newCoordinates);
-        if (newCoordinates === false || newCoordinates === undefined) {
-          invalidWord();
-          isValidWord = false;
-          break;
+function WordFinder(word, board) {
+  this.word = word;
+  this.currentCharIndex = 0;
+  this.validStemsOfWords = [];
+
+  this.firstLetterCoords = function() {
+    for (var r=0; r<board.length; r++) {
+      for (var c=0; c<board[0].length; c++) {
+        if (board[r][c].letter === word[0]) {
+          this.validStemsOfWords.push([new Coord(r,c,board)]);
+        }
+      }
+    }
+    return this.validStemsOfWords;
+  }
+
+  // FOR EACH CURRENT STEM CANDIDATE,
+  // GO THROUGH EACH OF ITS NEIGHBORS, SEE IF ONE OR MORE NEIGHBORS MATCHES NEXT LETTER,
+  // IF ONE (AND ONLY ONE MATCHES), ADD ONTO IT
+  // IF NONE MATCH, REMOVE THE ORIGINAL STEM FROM THE ARRAY
+  // IF MULTIPLES MATCH, DUPLICATE THE ORIGINAL STEM AND THEN ADD ON TO THEM
+  this.followStemsOneMoreLetter = function() {
+    var indexOfCharNeeded = this.validStemsOfWords[0].length;
+    var charNeeded = this.word[indexOfCharNeeded];
+    var newStemsCreated = []; // we will push this to this.validStems at the very end of the function
+
+    for (var stemI=0; stemI<this.validStemsOfWords.length; stemI++) {  // for each candidate
+      var lastCharObj = this.validStemsOfWords[stemI][indexOfCharNeeded-1];
+      var neighbors = lastCharObj.neighbors();
+      var numNeighbors = neighbors.length; // how many neighbors are there?
+      var matchesInNeighbors = [];
+
+      for (var nI=0; nI<numNeighbors; nI++) {  // go thru each neighbor
+        var x = neighbors[nI][0];
+        var y = neighbors[nI][1];
+        if (board[x][y] != 0 && board[x][y] != undefined && board[x][y].letter === charNeeded) { // save potential matches--what we do depends on how many there are, so let's store them in an array
+          var c = new Coord(x,y,board);
+          matchesInNeighbors.push(c);
         }
       }
 
-      if (isValidWord === true) {
-        validWordsCoords = coordinateArray;
+      // WHAT WE DO DEPENDS ON HOW MANY MATCHES
+      if (matchesInNeighbors.length === 1) { // if only one match, extend the current stem with the match
+        var match = matchesInNeighbors[0];
+        this.validStemsOfWords[stemI].push(match);
       }
 
+      else if (matchesInNeighbors.length >= 1) { // if multiple matches, extend the current stem with the first one, duplicate stems for the remaining, and add matches onto those
+       for (var m=0; m<matchesInNeighbors.length; m++) {
+        var currentOriginalStem=clone(this.validStemsOfWords[stemI]);
+        currentOriginalStem.push(matchesInNeighbors[m]);
+        newStemsCreated.push(currentOriginalStem);
+       }
+      }
     }
-    return validWordsCoords;
-  }
-  else
-    return false;
-
-}
-
-function loop(array, targetLetter){
-  result = false;
-  coordinateArray = [];
-  console.log("Looking for " + targetLetter);
-  for(var r = 0; r < array.length; r++){
-    row = array[r];
-    for(var c = 0; c < row.length; c++) {
-      if(row[c].letter && row[c].letter == targetLetter) {
-        result =  true;
-        coordinates = [r, c];
-        coordinateArray.push(coordinates);
+    // add each newly created stem (from multiple neighbor candidates) to the valid stems
+    for (var i=0; i<newStemsCreated.length; i++) {
+      this.validStemsOfWords.push(newStemsCreated[i]);
+    }
+    for (var i=this.validStemsOfWords.length-1; i>=0; i--) {
+      if (this.validStemsOfWords[i].length != (indexOfCharNeeded+1)) {
+        this.validStemsOfWords.splice(i, 1);
       }
     }
   }
-  return coordinateArray;
+
+  this.returnAllWordCoords = function() {
+    this.firstLetterCoords();
+    for (var i=0, numCharsToDo = this.word.length - 1; i<numCharsToDo; i++) {
+      if (this.validStemsOfWords.length > 0) {
+        this.followStemsOneMoreLetter();
+      }
+    }
+    return this.validStemsOfWords;
+  }
 }
 
-function getNeighbors(coordinates) {
-	x_coord = coordinates[0];
-	y_coord = coordinates[1];
-
-	var neighbors = [
-            [- 1, -1],
-            [-1, 0],
-            [-1, +1],
-            [0, -1],
-            [0, +1],
-            [+1, -1],
-            [+1, 0],
-            [+1, +1]
-            ]
-  neighborArray = [];
-
-	for(var r = 0; r < neighbors.length; r++){
-	  row = neighbors[r];
-	  neighborArray.push([x_coord + row[0], y_coord + row[1]])
-	}
-
-  //returns all coordinates of current letter's neighbors
-  return neighborArray;
+function wordCoordsOnBoggleBoard(word, board) {
+  w = new WordFinder(word.toUpperCase(), board);
+  allCoordObjs = w.returnAllWordCoords();
+  allCoordCoords = [];
+  for (var i=0, len=allCoordObjs.length; i<len; i++) {
+    var x=allCoordObjs[i].length;
+    for (var j=0; j<x; j++) {
+      var coordArray = [allCoordObjs[i][j].x, allCoordObjs[i][j].y];
+      allCoordCoords.push(coordArray);
+  }
+  }
+      return allCoordCoords;
 }
-
-function checkNeighbors(neighbors, currentLetter, board) {
-	lettersArray = [];
-	letterCoords = [];
-
-	for(var i = 0; i < neighbors.length; i++){
-		if (neighbors[i][0] >= 0 && neighbors[i][1] >= 0) {
-			if (board[neighbors[i][0]][neighbors[i][1]] != undefined && board[neighbors[i][0]][neighbors[i][1]].letter) {
-				letter = board[neighbors[i][0]][neighbors[i][1]].letter;
-				lettersArray.push(letter);
-
-				if (letter == currentLetter) {
-          console.log('letter matches')
-					letterCoords = [neighbors[i][0], neighbors[i][1]];
-					// console.log('matching letter coordinates')
-					// console.log(letterCoords);
-					return letterCoords;
-				}
-			}
-		}
-	}
-}
-
-function invalidWord() {
-	console.log('Your word is not on the board!')
-}
-
