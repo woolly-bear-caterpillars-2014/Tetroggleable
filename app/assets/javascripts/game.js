@@ -526,7 +526,7 @@ function findWord() {
 			makeTilesFall(tilesOnBoard);
 		}
 		else {
-			console.log("word not found");
+			$('#wordNotFound').show().fadeOut(2000);
 		}
 	}
 }
