@@ -4,6 +4,7 @@ var SIZE = 32;
 var SPEEDS = [500, 450, 400, 350, 300, 250, 200, 150, 100, 50, 25, 10, 5, 1];
 var BOARDHEIGHT = 640;
 var BOARDWIDTH = 320;
+var INPRODUCTION = false;
 
 var txt;
 var canvas;
@@ -535,6 +536,9 @@ function loadDictionary() {
 }
 
 function findWord() {
+	if (gameIsPaused && INPRODUCTION) {
+		return
+	};
 	var letters = $("#boggle_letters").val();
 	$("#boggle_letters").val("");
 	var currentLetters = letters.split( "" );
@@ -544,9 +548,7 @@ function findWord() {
 		if( dicts.indexOf(word.toUpperCase())  != -1 ) {
 			tilesOnBoard = wordCoordsOnBoggleBoard(word, gameData);
 		}
-		// tilesOnBoard = isWordOnBoard(word.toUpperCase(), gameData);
 
-		//if isWordOnBoard does not return false, update score and make tiles fall
 		if (tilesOnBoard.length > 0) {
 			wordScore = calculateScrabbleScore(tilesOnBoard)
 			updateScores('word', wordScore)
@@ -557,29 +559,6 @@ function findWord() {
 		}
 	}
 }
-
-// function findWord() {
-// 	letters = $("#boggle_letters").val();
-// 	$("#boggle_letters").val("");
-// 	var currentLetters = letters.split( "" );
-// 	if( currentLetters.length >= 3 ) {
-// 		word = currentLetters.join("");
-// 		if( dicts.indexOf(word.toUpperCase())  != -1 ) {
-// 			isWordOnBoard(word, gameData);
-// 		}
-// 		tilesOnBoard = isWordOnBoard(word.toUpperCase(), gameData);
-
-// 		//if isWordOnBoard does not return false, update score and make tiles fall
-// 		if (tilesOnBoard) {
-// 			wordScore = calculateScrabbleScore(tilesOnBoard)
-// 			updateScores('word', wordScore)
-// 			makeTilesFall(tilesOnBoard);
-// 		}
-// 		else {
-// 			console.log("word not found");
-// 		}
-// 	}
-// }
 
 function toggleGamePause() {
 	gameIsPaused = !(gameIsPaused);
