@@ -78,9 +78,6 @@ function browserTest() {
 		$("#browser_notice .not_mobile").show();
 		return;
 	}
-	else {
-		console.log('not touch')
-	}
 	if (!Modernizr.canvas) {
 		$("#game_main").hide();
 		$("#browser_notice .upgrade").show();
