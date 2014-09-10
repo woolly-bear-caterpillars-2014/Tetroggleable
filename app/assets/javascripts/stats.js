@@ -46,35 +46,35 @@ function StatsTracker() {
 
 	}
 
+	this.saveGame = function(){
+	var level = $("#levels").text();
+	var scrabble_score = $("#scrabble_score").text();
+	var lines = $("#lines").text();
+	var score = $("#overall_score").text();
+	$.ajaxSetup({
+	headers: {
+		'X-CSRF-Token':$('meta[name="csrf-token"]').attr("content")
+		}
+	});
+	$.ajax({
+		url: '/games',
+		type: 'POST',
+		dataType: 'json',
+		data: {game: { score: score, scrabble_score: scrabble_score, level: level,  lines: lines, longest_word: this.longest_word, longest_word_score: this.longest_word_score, highest_word: this.highest_word, highest_word_score: this.highest_word_score, most_common_word: this.most_common_word,}}
+	})
+	.done(function(response) {
+		console.log("success");
+		console.log(response)
+	})
+	.fail(function() {
+		console.log("error");
+	})
+	.always(function() {
+		console.log("complete");
+	});
 
-	this.saveGame = function() {
-		var level = $("#levels").text();
-		var scrabble_score = $("#scrabble_score").text();
-		var lines = $("#lines").text();
-		var score = $("#overall_score").text();
-		$.ajaxSetup({
-		headers: {
-			'X-CSRF-Token':$('meta[name="csrf-token"]').attr("content")
-			}
-		});
-		$.ajax({
-			url: '/games',
-			type: 'POST',
-			dataType: 'json',
-			data: {game: { score: score, scrabble_score: scrabble_score, level: level,  lines: lines, longest_word: longest_word, longest_word_score: longest_word_score, highest_word: highest_word, highest_word_score: highest_word_score, most_common_word: most_common_word}}
-			})
-		.done(function(response) {
-			console.log("success");
-			// console.log( score: score, scrabble_score: scrabble_score, level: level,  lines: lines, longest_word: longest_word, longest_word_score: longest_word_score, highest_word: highest_word, highest_word_score: highest_word_score, most_common_word: most_common_word);
-			console.log(response)
-		})
-		.fail(function() {
-			console.log("error");
-		})
-		.always(function() {
-			console.log("complete");
-		});
+}
 
-	}
+
 
 }

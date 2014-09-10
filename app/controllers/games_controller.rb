@@ -1,15 +1,12 @@
 class GamesController < ApplicationController
 
-	include UsersHelper
-
 	def index
 		@games = Game.all
 	end
 
 	def show
 		@games = Game.all
-		@user = current_user
-		@game = Game.where(@user)
+		@game = Game.where(current_user)
 		# @game = Game.find(params[:id])
 		# @game.current_user
 	end

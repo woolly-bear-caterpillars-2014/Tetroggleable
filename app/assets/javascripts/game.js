@@ -169,7 +169,6 @@ function drawNumber(drawX, drawY, score) {
 
 
 function drawBoard() {
-	// context.drawImage(bgImg, 0, 0, 320, 640, 0, 0, 320, 640);
 	context.beginPath();
 	context.rect(0, 0, 320, 640);
 	context.fillStyle="black";
@@ -184,15 +183,6 @@ function drawBoard() {
 				drawLetter(col, row, tile.letter);
 				drawNumber(col, row, tile.score);
 			}
-			// else {
-			// 	letterPosX = col * SIZE + 7;
-			// 	letterPosY = row * SIZE + 27;
-
-			// 	context.fillStyle = "#fff";
-			//  	context.font = '14pt Arial';
-			//  	coord = row + "," + col;
-			// 	context.fillText(coord, letterPosX, letterPosY, 22);
-			// }
 		}
 	}
 }
@@ -221,7 +211,6 @@ function drawBlock(block) {
 }
 
 function getKeyCode(e) {
-	// if(!e) { var e = window.event; }
 	e.preventDefault();
 
 	if(isGameOver != true) {
@@ -291,7 +280,6 @@ function validateMove(xpos, ypos, newRotation) {
 				col = length2;
 				row = length1;
 			}
-
 			newx += 1;
 		}
 
@@ -334,7 +322,7 @@ function updateGame() {
     requestAnimationFrame(updateGame);
   }
   else {
-  	saveGame();
+  	statTracker.saveGame();
     $("#right-bar h3").fadeIn(500).fadeOut(500).fadeIn(500).fadeOut(500).fadeIn(500);
   }
 }
@@ -447,7 +435,6 @@ function makeTilesFall(tilesArray) {
 }
 
 function highlightTiles(tiles) {
-	console.log('highlight tiles');
 	for(var i = 0; i < tiles.length; i++) {
 		tile = gameData[tiles[i][0]][tiles[i][1]];
 		tile.highlight = true;
@@ -493,13 +480,16 @@ function updateScores(type, points) {
 	$("#overall_score").text(totalScore);
 }
 
-function calculateScrabbleScore(tiles) {
+function calculateScrabbleScore(tiles, length) {
 	var score = 0;
 	var extraMultiplier = 1;
+	var currentWordPoints = 0;
+	var j = 1
 
 	for (var i = 0; i < tiles.length; i++) {
 		tile = gameData[tiles[i][0]][tiles[i][1]];
 		console.log(tile)
+		// console.log("coords:" + tiles[i][0] + ", " + tiles[i][1])
 		//tileScore = tiles[i].score
 
 		currentLetterPoints = tile.score;
@@ -512,20 +502,33 @@ function calculateScrabbleScore(tiles) {
 			case "LX3": currentLetterPoints *=3;	break;
 		}
 
-		score += currentLetterPoints;
-		console.log("LETTER and POINTS")
-		console.log(tile.letter + ":" + currentLetterPoints)
+		currentWordPoints += currentLetterPoints;
+
+		// console.log("j")
+		// console.log(j)
+		//end of word
+		if (j % length === 0) {
+			currentWordPoints *= extraMultiplier
+			if (j >= 7) 
+				currentWordPoints *= 2;
+			score += currentWordPoints;
+			//console.log("score added: " + currentWordPoints)
+			extraMultiplier = 1;
+			currentWordPoints = 0;
+		}
+		// else 
+		// 	console.log('not at end of word')
+		
+		//console.log(score)
+		if (j >= length)
+			j = 1;
+		else
+			j++ 
 	}
 
-	console.log("SCORE so far");
-	console.log(score)
-	score *= extraMultiplier;
-	console.log("Final Score");
-	console.log(score)
-
-	if (tiles.length >= 7) {
-		score *= 2;
-	}
+	//score *= extraMultiplier;
+	// console.log("Final Score");
+	// console.log(score)
 
 	return score;
 }
@@ -551,10 +554,11 @@ function findWord() {
 		}
 
 		if (tilesOnBoard.length > 0) {
-			wordScore = calculateScrabbleScore(tilesOnBoard);
-			updateScores('word', wordScore);
-			statTracker.trackCommonWords(letters);
+			wordScore = calculateScrabbleScore(tilesOnBoard, currentLetters.length)
+			updateScores('word', wordScore)
 			makeTilesFall(tilesOnBoard);
+			updateWordScores(letters, wordScore);
+			statTracker.trackCommonWords(letters);
 			statTracker.runStats(letters, wordScore);
 		}
 		else {
@@ -565,5 +569,14 @@ function findWord() {
 
 function toggleGamePause() {
 	gameIsPaused = !(gameIsPaused);
+}
+
+
+function updateWordScores(word, score) {
+	console.log("update word score");
+	console.log(word);
+	console.log(score)
+	var wordHTML = "<li>" + word + ": " + score + "</li>";
+	$("#word_scores ul").prepend(wordHTML)
 }
 
