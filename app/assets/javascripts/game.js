@@ -556,7 +556,7 @@ function findWord() {
 			updateWordScores(letters, wordScore);
 		}
 		else {
-			$('#wordNotFound').show().fadeOut(2000);
+			$('#wordNotFound').show().fadeOut(3000);
 		}
 	}
 }
