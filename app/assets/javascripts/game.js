@@ -247,9 +247,10 @@ function getKeyCode(e) {
 			break;
 		}
 	}
-	else {
-		startGame();
-	}
+	// restart game by pressing one of the main keys
+	// else {
+	// 	startGame();
+	// }
 }
 
 function letBlockFall() {
