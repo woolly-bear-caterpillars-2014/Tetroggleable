@@ -99,6 +99,7 @@ function startGame() {
 		gameData[row] = new Array();
 		for(col = 0; col < COLS; col++) {
 			gameData[row][col] = 0;
+
 		}
 	}
 
