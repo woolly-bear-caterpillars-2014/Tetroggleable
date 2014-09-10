@@ -1,12 +1,10 @@
-<% sorted_games = @games.sort_by{ |id,score| score }.reverse %>
-<% i = 0 %>
 <table class="score_table">
   <tr>
   <th>Rank</th>
   <th>Name</th>
   <th>Score</th>
   </tr>
-<% sorted_games.each_with_index do |game, index| %>
+<% @games.each_with_index do |game, index| %>
 
 <tr>
   <td><%= index + 1%></td>
