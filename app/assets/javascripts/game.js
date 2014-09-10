@@ -486,8 +486,6 @@ function calculateScrabbleScore(tiles, length) {
 	for (var i = 0; i < tiles.length; i++) {
 		tile = gameData[tiles[i][0]][tiles[i][1]];
 		console.log(tile)
-		// console.log("coords:" + tiles[i][0] + ", " + tiles[i][1])
-		//tileScore = tiles[i].score
 
 		currentLetterPoints = tile.score;
 
@@ -509,14 +507,14 @@ function calculateScrabbleScore(tiles, length) {
 			if (j >= 7) 
 				currentWordPoints *= 2;
 			score += currentWordPoints;
-			//console.log("score added: " + currentWordPoints)
+			console.log("score added: " + currentWordPoints)
 			extraMultiplier = 1;
 			currentWordPoints = 0;
 		}
 		// else 
 		// 	console.log('not at end of word')
 		
-		//console.log(score)
+		console.log(score)
 		if (j >= length)
 			j = 1;
 		else
