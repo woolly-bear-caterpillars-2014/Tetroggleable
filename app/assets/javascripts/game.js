@@ -300,7 +300,6 @@ function updateGame() {
   currentTime = new Date().getTime();
 
   if (currentTime - previousTime > currentSpeed && !(gameIsPaused)) {
-    // drop currentBlock every half-second
     if (validateMove(currentBlock.gridX, currentBlock.gridY + 1, currentBlock.currentRotation)) {
       currentBlock.gridY += 1;
     }
@@ -311,7 +310,6 @@ function updateGame() {
       drawPreview();
     }
 
-    // update time
     previousTime = currentTime;
   }
 
@@ -323,14 +321,12 @@ function updateGame() {
     requestAnimationFrame(updateGame);
   }
   else {
-  	statTracker.saveGame();
-    $("#right-bar h3").fadeIn(500).fadeOut(500).fadeIn(500).fadeOut(500).fadeIn(500);
   	gameOver();
   }
 }
 
 function gameOver() {
-	saveGame();
+	statTracker.saveGame();
 	$("#boggle_letters").prop("disabled", true)
   $("#right-bar h3").fadeIn(500).fadeOut(500).fadeIn(500).fadeOut(500).fadeIn(500);
 }
@@ -351,21 +347,21 @@ function checkForCompleteLines() {
 		}
 
 		if(fullRow == true) {
-			console.log("fullRow == true, line 225");
 			clearCompletedRow(row);
 
 			row++;
 			lineFound = true;
 			currentLines++;
+
 			advanceLevelIfNeeded();
 		}
 		fullRow = true;
 		col = COLS - 1;
 		row--;
 	}
-	if(lineFound) {
+
+	if(lineFound)
 		$("#lines").text(currentLines.toString());
-	}
 }
 
 function landBlock(block) {
@@ -384,6 +380,7 @@ function landBlock(block) {
 		xpos = block.gridX;
 		ypos += 1;
 	}
+
 	checkForCompleteLines();
 
 	if(block.gridY < 0) {
@@ -396,8 +393,6 @@ function landBlock(block) {
 function clearTile(coords) {
 	var row = coords[0];
 	var col = coords[1];
-	console.log('tile to remove coordinate');
-	console.log(coords)
 
 	for (var i = row; i > 0; i--) {
 		gameData[i][col] = gameData[i-1][col];
@@ -405,11 +400,10 @@ function clearTile(coords) {
 }
 
 function clearTiles(array) {
-
 	for(var i = 0; i < array.length; i++) {
 		clearTile(array[i]);
 	}
-};
+}
 
 function cleanTilesArray(tilesArray) {
 	//Remove duplicate coordinates
@@ -422,7 +416,7 @@ function cleanTilesArray(tilesArray) {
     }
 	}
 
-	//sort coordinates
+	//sort coordinates for removal of tiles
 	CoordinateComparer = function(a, b) {
 		return b[0] - a[0] ;
 	}
@@ -431,13 +425,7 @@ function cleanTilesArray(tilesArray) {
 }
 
 function makeTilesFall(tilesArray) {
-	console.log("Here are the tile coords to fall sent back from boggle.js:");
-	console.log(tilesArray);
-
 	newTilesArray = cleanTilesArray(tilesArray)
-
-	console.log('new tile array');
-	console.log(newTilesArray);
 	highlightTiles(newTilesArray);
 	setTimeout(function(){clearTiles(newTilesArray)}, 800);
 }
@@ -501,40 +489,32 @@ function calculateScrabbleScore(tiles, length) {
 		currentLetterPoints = tile.score;
 
 		switch(tile.scrabbleExtras) {
-			case "NA": extraMultiplier *= 1;		break;
-			case "WX2": extraMultiplier *= 2;		break;
-			case "WX3": extraMultiplier *= 3;		break;
+			case "NA": extraMultiplier *= 1;			break;
+			case "WX2": extraMultiplier *= 2;			break;
+			case "WX3": extraMultiplier *= 3;			break;
 			case "LX2": currentLetterPoints *=2;	break;
 			case "LX3": currentLetterPoints *=3;	break;
 		}
 
 		currentWordPoints += currentLetterPoints;
 
-		// console.log("j")
-		// console.log(j)
 		//end of word
 		if (j % length === 0) {
 			currentWordPoints *= extraMultiplier
+
 			if (j >= 7) 
 				currentWordPoints *= 2;
+
 			score += currentWordPoints;
-			console.log("score added: " + currentWordPoints)
 			extraMultiplier = 1;
 			currentWordPoints = 0;
 		}
-		// else 
-		// 	console.log('not at end of word')
 		
-		console.log(score)
 		if (j >= length)
 			j = 1;
 		else
 			j++ 
 	}
-
-	//score *= extraMultiplier;
-	// console.log("Final Score");
-	// console.log(score)
 
 	return score;
 }
@@ -542,22 +522,22 @@ function calculateScrabbleScore(tiles, length) {
 function loadDictionary() {
   $.get( "/assets/dictionary.txt", function( text ) {
     dicts = text.split( "\n" );
-  } );
+  });
 }
 
 function findWord() {
-	if (gameIsPaused && INPRODUCTION) {
-		return
-	};
+	if (gameIsPaused && INPRODUCTION) 
+		return;
+	
 	var letters = $("#boggle_letters").val();
 	$("#boggle_letters").val("");
 	var currentLetters = letters.split( "" );
 	var tilesOnBoard = [];
 	if( currentLetters.length >= 3 ) {
 		word = currentLetters.join("");
-		if( dicts.indexOf(word.toUpperCase())  != -1 ) {
+
+		if( dicts.indexOf(word.toUpperCase())  != -1 ) 
 			tilesOnBoard = wordCoordsOnBoggleBoard(word, gameData);
-		}
 
 		if (tilesOnBoard.length > 0) {
 			wordScore = calculateScrabbleScore(tilesOnBoard, currentLetters.length)
@@ -566,9 +546,8 @@ function findWord() {
 			updateWordScores(letters, wordScore);
 			statTracker.runStats(letters, wordScore);
 		}
-		else {
+		else 
 			$('#wordNotFound').show().fadeOut(3000);
-		}
 	}
 }
 
@@ -578,9 +557,6 @@ function toggleGamePause() {
 
 
 function updateWordScores(word, score) {
-	console.log("update word score");
-	console.log(word);
-	console.log(score)
 	var wordHTML = "<li>" + word + ": " + score + "</li>";
 	$("#word_scores ul").prepend(wordHTML)
 }
