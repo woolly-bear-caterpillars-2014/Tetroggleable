@@ -38,9 +38,9 @@ describe UsersController do
 		end
 		context "when invalid params are passed" do 
 		 	it "does not save user" do 
-		 		expect {
+		 		expect do
 		 			post :create, user: FactoryGirl.attributes_for(:invalid_user)
-		 			}.to_not change(User, :count)
+		 			end.to_not change(User, :count)
 		 		end
 		 	end
 
