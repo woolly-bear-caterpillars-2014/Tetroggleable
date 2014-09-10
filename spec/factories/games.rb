@@ -6,13 +6,5 @@ FactoryGirl.define do
 		lines 5
 		user_id 1
 	end
-
-	factory :invalid_game do 
-		score nil
-		scrabble_score nil
-		level nil
-		lines nil
-		user_id nil
-	end
 end
 
