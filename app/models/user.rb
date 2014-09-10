@@ -10,12 +10,12 @@ class User < ActiveRecord::Base
   include ActiveModel::SecurePassword::InstanceMethodsOnActivation
 
       
-  def name
-    guest ? "Guest" : username
-  end
+  # def name
+  #   guest ? "Guest" : username
+  # end
 
-  def self.new_guest
-    new { |u| u.guest = true }
-  end
+  # def self.new_guest
+  #   new { |u| u.guest = true }
+  # end
 
 end

@@ -5,10 +5,7 @@ class GamesController < ApplicationController
 	end
 
 	def show
-		@games = Game.all
-		@game = Game.where(current_user)
-		# @game = Game.find(params[:id])
-		# @game.current_user
+		@game = Game.find(params[:id])
 	end
 
 	def new
@@ -16,14 +13,14 @@ class GamesController < ApplicationController
 	end
 
 	def create
-	     if request.xhr?
-               if current_user
-                 @game = current_user.games.create(game_params)
-                 render :json => @game
-               end
-           else
-               render :new
-           end
+   if request.xhr?
+      if current_user
+        @game = current_user.games.create(game_params)
+        render :json => @game
+        end
+    else
+      render :new
+    end
 	end
 
 	private
