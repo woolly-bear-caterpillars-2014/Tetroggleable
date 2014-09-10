@@ -2,17 +2,12 @@ require 'rails_helper'
 
 describe UsersController do 
 	let!(:user) { User.create!(username: "stephen", email:"stephen@gmail.com", password:"password") }
+	let!(:game) { Game.create(score: 10, scrabble_score: 150, level: 2, lines: 5, user_id: 1) }
 
 		describe "GET #show" do 
 			it "assigns user to current user" do 
 				get :show, id: user 
 				controller.stub(:current_user).and_return(:user)
-				# expect(assigns(:user)).to eq(current_user)
-			end
-
-			it "Game sessions id equals current_user" do 
-				get :show, id: user
-				controller.stub(:current_user).and_return(:game)
 			end
 		end
 

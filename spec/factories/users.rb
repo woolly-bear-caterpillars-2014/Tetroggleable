@@ -9,5 +9,9 @@ FactoryGirl.define do
 			email nil
 			password nil
 		end
+
+		factory :current_user do 
+			user_id 1
+		end
 	end
 end
