@@ -167,7 +167,6 @@ function drawNumber(drawX, drawY, score) {
 
 
 function drawBoard() {
-	// context.drawImage(bgImg, 0, 0, 320, 640, 0, 0, 320, 640);
 	context.beginPath();
 	context.rect(0, 0, 320, 640);
 	context.fillStyle="black";
@@ -182,15 +181,6 @@ function drawBoard() {
 				drawLetter(col, row, tile.letter);
 				drawNumber(col, row, tile.score);
 			}
-			// else {
-			// 	letterPosX = col * SIZE + 7;
-			// 	letterPosY = row * SIZE + 27;
-
-			// 	context.fillStyle = "#fff";
-			//  	context.font = '14pt Arial';
-			//  	coord = row + "," + col;
-			// 	context.fillText(coord, letterPosX, letterPosY, 22);
-			// }
 		}
 	}
 }
@@ -219,7 +209,6 @@ function drawBlock(block) {
 }
 
 function getKeyCode(e) {
-	// if(!e) { var e = window.event; }
 	e.preventDefault();
 
 	if(isGameOver != true) {
@@ -289,7 +278,6 @@ function validateMove(xpos, ypos, newRotation) {
 				col = length2;
 				row = length1;
 			}
-
 			newx += 1;
 		}
 
@@ -444,7 +432,6 @@ function makeTilesFall(tilesArray) {
 }
 
 function highlightTiles(tiles) {
-	console.log('highlight tiles');
 	for(var i = 0; i < tiles.length; i++) {
 		tile = gameData[tiles[i][0]][tiles[i][1]];
 		tile.highlight = true;
