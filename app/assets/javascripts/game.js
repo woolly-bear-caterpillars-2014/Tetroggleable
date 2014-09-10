@@ -578,7 +578,6 @@ function findWord() {
 			updateScores('word', wordScore)
 			makeTilesFall(tilesOnBoard);
 			updateWordScores(letters, wordScore);
-			statTracker.trackCommonWords(letters);
 			statTracker.runStats(letters, wordScore);
 		}
 		else {
