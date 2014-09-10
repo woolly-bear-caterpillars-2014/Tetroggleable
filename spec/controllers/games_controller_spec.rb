@@ -11,4 +11,11 @@ describe GamesController do
 			expect(assigns(:games)).to eq(Game.all) 
 		end
 	end
+
+	describe "GET #show" do 
+		it "assigns game to a current user" do 
+			get :show, id: game
+			controller.stub(:current_user).and_return(:game)
+		end
+	end
 end
