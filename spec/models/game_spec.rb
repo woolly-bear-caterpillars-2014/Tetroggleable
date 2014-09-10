@@ -26,4 +26,10 @@ describe Game do
 			expect(game.lines).to eq(3)
 		end
 	end
+
+	context "user" do 
+		it "should return user rid" do 
+			expect(game.user_id).to eq(1)
+		end
+	end
 end
