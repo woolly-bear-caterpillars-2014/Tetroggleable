@@ -84,7 +84,6 @@ function startGame() {
 		for(row= 0; row < ROWS; row++) {
 			gameData[row] = new Array();
 			for(col = 0; col < COLS; col++) {
-				// gameData[r].push(0);
 				gameData[row][col] = 0;
 			}
 		}
@@ -506,21 +505,21 @@ function calculateScrabbleScore(tiles, length) {
 		//end of word
 		if (j % length === 0) {
 			currentWordPoints *= extraMultiplier
-			if (j >= 7) 
+			if (j >= 7)
 				currentWordPoints *= 2;
 			score += currentWordPoints;
 			//console.log("score added: " + currentWordPoints)
 			extraMultiplier = 1;
 			currentWordPoints = 0;
 		}
-		// else 
+		// else
 		// 	console.log('not at end of word')
-		
+
 		//console.log(score)
 		if (j >= length)
 			j = 1;
 		else
-			j++ 
+			j++
 	}
 
 	//score *= extraMultiplier;
