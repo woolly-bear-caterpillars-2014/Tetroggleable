@@ -5,8 +5,8 @@ describe ("tile", function(){
   });
 
      it("set tile to a letter", function() {
-      tile.letter = "A"
-      expect(tile.letter).toBe("A");
+      tile.letter = "F"
+      expect(tile.letter).toBe("F");
       });
 
      it("set tile to a score value", function() {
@@ -22,34 +22,44 @@ describe ("tile", function(){
 
 describe ("LBlock", function () {
   beforeEach(function () {
-    lBlock = new LBlock(tile);
-    lblock.tile[0].letter = 'A';
-    lblock.tile[1].letter = 'B';
-    lblock.tile[2].letter = 'C';
-    lblock.tile[3].letter = 'D';
+
+    tile1 = new Tile();
+    tile1.letter = "A";
+    tile2 = new Tile();
+    tile2.letter = "B";
+    tile3 = new Tile();
+    tile3.letter = "C";
+    tile4 = new Tile();
+    tile4.letter = "D";
+    var tileArray = [tile1, tile2, tile3, tile4];
+    lBlock = new LBlock(tileArray);
     });
 
-     it("should return an LBlock rotation object", function() {
+     it("should return an LBlock rotation1", function() {
 
       expect(lBlock.rotation1).toBeDefined();
-      expect(lBlock.rotation1[0].tile.letter).toEq('A') 
+      expect(lBlock.rotation1[0][0].letter).toEqual('D')
      });
 
-     it("should return an LBlock rotation object", function() {
+     it("should return an LBlock rotation2", function() {
 
       expect(lBlock.rotation2).toBeDefined();
+      expect(lBlock.rotation2[0][2].letter).toEqual('A')
 
      });
 
-     it("should return an LBlock rotation object", function() {
+     it("should return an LBlock rotation3", function() {
 
       expect(lBlock.rotation3).toBeDefined();
+      expect(lBlock.rotation3[0][1].letter).toEqual('B')
 
      });
 
-     it("should return an LBlock rotation object", function() {
+     it("should return an LBlock rotation4", function() {
 
       expect(lBlock.rotation4).toBeDefined();
+      expect(lBlock.rotation4[0][1].letter).toEqual('C')
+
 
     });
 });
@@ -140,3 +150,13 @@ describe ("TBlock", function () {
 
      });
   });
+
+// describe("startGame", function () {
+//   beforeEach(function () {
+//     var start = new startGame();
+//   });
+
+//     it("should be defined", function () {
+//       expect(drawPreview()).toHaveBeenCalled();
+//     })
+// })
