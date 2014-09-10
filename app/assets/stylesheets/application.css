@@ -303,6 +303,13 @@ img {
 	color:#ffffff;
 }
 
+#browser_notice {
+	color:#ffffff;
+	font-weight:bold;
+	margin:50px 25px;
+	font-size:20px;
+
+}
 #browser_notice p{
 	display:none;
 }

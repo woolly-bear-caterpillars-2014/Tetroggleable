@@ -75,7 +75,7 @@ $(window).load(function(){
 function browserTest() {
 	if (Modernizr.touch) {
 		$("#game_main").hide();
-		$("#browser_notice .no_browser").show();
+		$("#browser_notice .not_mobile").show();
 		return;
 	}
 	else {
