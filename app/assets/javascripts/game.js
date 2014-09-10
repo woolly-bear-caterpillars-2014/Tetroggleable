@@ -74,11 +74,13 @@ $(window).load(function(){
 function browserTest() {
 	if (Modernizr.touch) {
 		$("#game_main").hide();
+		$("#browser_notice").show();
 		$("#browser_notice .not_mobile").show();
 		return;
 	}
 	if (!Modernizr.canvas) {
 		$("#game_main").hide();
+		$("#browser_notice").show();
 		$("#browser_notice .upgrade").show();
 		return;
 	}
