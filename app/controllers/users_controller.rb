@@ -18,7 +18,7 @@ class UsersController < ApplicationController
    		session[:user_id] = @user.id
 			# @game = @user.games.create()
 
-		redirect_to new_game_path
+			redirect_to new_game_path
 		else
 			render :new
 		end
