@@ -1,3 +1,13 @@
 // Place all the styles related to the games controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.new:hover {
+	text-decoration: none;
+	background-color: #3C00FB;
+	-webkit-transition: all 1.25s ease-out 0s;
+  -moz-transition: all 1.25s ease-out 0s;
+  -ms-transition: all 1.25s ease-out 0s;
+  -o-transition: all 1.25s ease-out 0s;
+  transition: all 1.25s ease-out 0s;
+}
