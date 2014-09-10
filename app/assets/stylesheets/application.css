@@ -54,6 +54,7 @@ h2 {
 h4 {
 	color:#E60484;
 	font-family: 'Orbitron', sans-serif;
+	letter-spacing: 1px
 }
 
 .tetrog {
@@ -100,9 +101,9 @@ h4 {
 }
 
 #score_box span {
-	padding-top:5px;
+	padding-top:6px;
 	color: #E60484;
-	font-size:20px;
+	font-size:24px;
 	display:block;
 	font-family: 'Orbitron', sans-serif;
 }
@@ -301,7 +302,7 @@ img {
 }
 
 #word_scores {
-	margin-bottom:35px;
+	margin-bottom:32px;
 	color:#C7BFE0;
 	height:;
 }
