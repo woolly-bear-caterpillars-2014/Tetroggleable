@@ -237,7 +237,6 @@ h4 {
 	border: 2px solid #555;
 }
 
-<<<<<<< HEAD
 .nav-nav-pills li {
 	border: 3px solid #3C00FB;
 	border-radius: 3px;
@@ -290,7 +289,7 @@ img {
 #word_scores ul {
 	list-style:none;
 	padding-left:0;
-	height:250px;
+	height:190px;
 	overflow-y:scroll;
 	color:#ffffff;
 }
