@@ -132,17 +132,22 @@ function cleanTilesArray(tilesArray) {
   return newTilesArray;
 }
 
-function makeTilesFall(tilesArray) {
-  newTilesArray = cleanTilesArray(tilesArray)
-  highlightTiles(newTilesArray);
-  setTimeout(function(){clearTiles(newTilesArray)}, 800);
-}
-
 function highlightTiles(tiles) {
   for(var i = 0; i < tiles.length; i++) {
     tile = gameData[tiles[i][0]][tiles[i][1]];
     tile.highlight = true;
   }
+}
+
+function Highlight(newTilesArray) {
+  highlightTiles(newTilesArray);
+  setTimeout(function(){clearTiles(newTilesArray)}, 500);
+}
+
+function makeTilesFall(tilesArray) {
+  newTilesArray = cleanTilesArray(tilesArray)
+
+  new Highlight(newTilesArray);
 }
 
 function clearCompletedRow(row) {
