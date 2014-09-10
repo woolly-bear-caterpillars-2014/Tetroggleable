@@ -303,3 +303,7 @@ img {
 	color:#ffffff;
 }
 
+#browser_notice p{
+	display:none;
+}
+

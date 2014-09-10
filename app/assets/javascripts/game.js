@@ -42,6 +42,7 @@ $(window).load(function(){
 
 	canvas = document.getElementById('gameCanvas');
 	context = canvas.getContext('2d');
+	browserTest();
 	preview = document.getElementById('gamePreview');
 	prevctx = preview.getContext('2d');
 	lineScore = $('#lines');
@@ -70,6 +71,22 @@ $(window).load(function(){
 		// drawBlock(block);
 		loadDictionary();
 });
+
+function browserTest() {
+	if (Modernizr.touch) {
+		$("#game_main").hide();
+		$("#browser_notice .no_browser").show();
+		return;
+	}
+	else {
+		console.log('not touch')
+	}
+	if (!Modernizr.canvas) {
+		$("#game_main").hide();
+		$("#browser_notice .upgrade").show();
+		return;
+	}
+}
 
 function startGame() {
 	var row, col;
