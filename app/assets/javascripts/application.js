@@ -15,7 +15,10 @@
 //= require utilityFunctions
 //= require stats
 //= require modernizr
+//= require tiles
 //= require blocks
 //= require boggle
+//= require canvas
+//= require tetris
+//= require scrabbleAndWords
 //= require game
-
