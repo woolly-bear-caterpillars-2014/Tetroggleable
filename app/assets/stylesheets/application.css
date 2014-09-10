@@ -270,5 +270,14 @@ h4 {
   transition: all 1.25s ease-out 0s;
 }
 
+img {
+	width: 250px;
+	height: 150px;
+}
+
+#pic {
+	float: right;
+	width:200;
+}
 
 
