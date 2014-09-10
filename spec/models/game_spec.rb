@@ -20,4 +20,10 @@ describe Game do
 			expect(game.level).to eq(1)
 		end
 	end
+
+	context "lines" do 
+		it "should return lines" do 
+			expect(game.lines).to eq(3)
+		end
+	end
 end
