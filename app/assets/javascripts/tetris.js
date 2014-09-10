@@ -146,7 +146,6 @@ function Highlight(newTilesArray) {
 
 function makeTilesFall(tilesArray) {
   newTilesArray = cleanTilesArray(tilesArray)
-
   new Highlight(newTilesArray);
 }
 
