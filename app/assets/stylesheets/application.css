@@ -30,6 +30,10 @@ header ul {
 	float:right;
 }
 
+.logo a:hover {
+	text-decoration:none;
+}
+
 h1 {
 	text-align: center;
 	color: #E60484;
@@ -113,7 +117,7 @@ h4 {
 #right-bar {
 	float: right;
 	margin: 30px 30px 0 0;
-	width: 180px;
+	width: 200px;
 	height: 640px;
 }
 
@@ -121,6 +125,8 @@ h4 {
 	display: none;
 	color: #E60484;
 	font-family: 'Orbitron', sans-serif;
+	margin:0 0 10px 0;
+	padding-top:;
 }
 
 #colorkey {
@@ -159,12 +165,13 @@ h4 {
 }
 
 #right-bar a {
-	border: 3px solid #3C00FB;
-	border-radius: 8px;
-	padding: 5px;
+	border: 3px solid #E60484;
+	border-radius: 3px;
+	padding: 5px 10px;
 	color: #C7BFE0;
 	text-transform: uppercase;
 	font-weight: bold;
+	background-color: #3C00FB;
 }
 
 #boggle_letters {
@@ -172,12 +179,14 @@ h4 {
 	color:#000000;
 }
 
+#game_notice {
+	height:40px;
+}
+
 #wordNotFound {
 	color: #FFF866;
 	display: none;
 	font-family: 'Orbitron', sans-serif;
-	position: fixed;
-	margin-left: 300px;
 	margin-top: 0;
 }
 
@@ -237,14 +246,19 @@ h4 {
 	border: 2px solid #555;
 }
 
-<<<<<<< HEAD
+
+.nav-nav-pills {
+	padding-left:0;
+}
+
+
 .nav-nav-pills li {
 	border: 3px solid #3C00FB;
 	border-radius: 3px;
 	list-style-type: none;
 	float: right;
-	margin-right: 10px;
-	padding: 2px;
+	margin:15px 15px 0 0;
+	padding: 5px;
 	-webkit-transition: all 1.25s ease-out 0s;
   -moz-transition: all 1.25s ease-out 0s;
   -ms-transition: all 1.25s ease-out 0s;
@@ -282,7 +296,7 @@ img {
 }
 
 #word_scores {
-	margin-top:40px;
+	margin-bottom:35px;
 	color:#C7BFE0;
 	height:;
 }
@@ -290,8 +304,19 @@ img {
 #word_scores ul {
 	list-style:none;
 	padding-left:0;
-	height:250px;
+	height:195px;
 	overflow-y:scroll;
 	color:#ffffff;
+}
+
+#browser_notice {
+	color:#ffffff;
+	font-weight:bold;
+	margin:50px 25px;
+	font-size:20px;
+
+}
+#browser_notice p{
+	display:none;
 }
 
