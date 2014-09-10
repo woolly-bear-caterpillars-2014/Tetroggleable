@@ -6,7 +6,6 @@ var BOARDHEIGHT = 640;
 var BOARDWIDTH = 320;
 var INPRODUCTION = false;
 
-var txt;
 var canvas;
 var context;
 var preview;
@@ -21,30 +20,32 @@ var currentSpeed = SPEEDS[currentLevel-1];
 var dicts;
 var gameIsPaused = false;
 var linePoints = 10;
-var tileColor = "#E4C390"
-var lX2 = "#95B8D3"
-var lX3 = "#095E9F"
-var wX2 = "#DD9ABD"
-var wX3 = "#89223A"
+var tileColor = "#E4C390";
+var lX2 = "#95B8D3";
+var lX3 = "#237CBF";
+var wX2 = "#DD9ABD";
+var wX3 = "#A63952";
+var tileTextColor = "#000";
 var statTracker;
+var gameCanvas;
 
 function setRowsCols() {
 	width = $(window).width();
 	height = $(window).height();
 
-	if (height < 1160) {
+	if (height < 760) {
 		ROWS = 17;
 		BOARDHEIGHT = 544;
-		$("#gameCanvas").attr("height", 544);
+		$("#game_canvas").attr("height", 544);
 	}
 }
 
 $(window).load(function(){
 
-	canvas = document.getElementById('gameCanvas');
+	canvas = document.getElementById('game_canvas');
 	context = canvas.getContext('2d');
 	browserTest();
-	preview = document.getElementById('gamePreview');
+	preview = document.getElementById('game_preview');
 	prevctx = preview.getContext('2d');
 	lineScore = $('#lines');
 	previousTime = 0;
@@ -65,12 +66,9 @@ $(window).load(function(){
 			else
 				$('boggle_letters').focus();
 	})
-	$('input:text:first').focus();
 
-		// drawBoard();
-		// block = getRandomBlock()
-		// drawBlock(block);
-		loadDictionary();
+	$('input:text:first').focus();
+	loadDictionary();
 });
 
 function browserTest() {
@@ -92,135 +90,36 @@ function startGame() {
 	isGameOver = false;
 	currentLevel = 1;
 	currentSpeed = SPEEDS[currentLevel - 1];
-	$("#levels").text(1)
+	$("#levels").text(1);
+	gameCanvas = new Canvas();
 
 	gameData = new Array();
 
+<<<<<<< HEAD
 		for(row= 0; row < ROWS; row++) {
 			gameData[row] = new Array();
 			for(col = 0; col < COLS; col++) {
 				gameData[row][col] = 0;
 			}
+=======
+	for(row= 0; row < ROWS; row++) {
+		gameData[row] = new Array();
+		for(col = 0; col < COLS; col++) {
+			gameData[row][col] = 0;
+>>>>>>> bd8055fb997bec15f5366c356bc7f185edcba3e0
 		}
+	}
 
 	currentBlock = getRandomBlock();
 	nextBlock = getRandomBlock();
 
-
 	var requestAnimFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
 			window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-
 	window.requestAnimationFrame = requestAnimFrame;
-
 	requestAnimationFrame(updateGame);
+
 	drawPreview();
 	statTracker = new StatsTracker;
-}
-
-function drawTile(drawX, drawY) {
-	context.strokeStyle = tileTextColor;
-  context.beginPath();
- 	// context.fillStyle = "#3c0";
- 	context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
- 	context.fill();
- 	context.stroke();
-}
-
-function tileColors(contextName, scrabbleExtras, highlight) {
-	if (scrabbleExtras == "NA") {
-	  contextName.fillStyle = tileColor;
- 	};
- 	if (scrabbleExtras == "WX2"){
- 		contextName.fillStyle = wX2;
- 	};
-	if (scrabbleExtras == "WX3"){
- 		contextName.fillStyle = wX3;
-
- 	};
- 	if (scrabbleExtras == "LX2"){
- 		contextName.fillStyle = lX2;
- 	};
- 	if (scrabbleExtras == "LX3"){
-		contextName.fillStyle = lX3;
- 	};
- 	if (highlight)
-		contextName.fillStyle = "#3C00FB";
-
- 	contextName.fill();
-	contextName.stroke();
-}
-
-function drawTileBackground(drawX, drawY, scrabbleExtras, highlight) {
-	numberPosX = drawX * SIZE;
-	numberPosY = drawY * SIZE;
-	context.strokeStyle = tileTextColor;
-  context.beginPath();
-	context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
-
-	tileColors(context, scrabbleExtras, highlight);
- 	context.fillRect(numberPosX, numberPosY, SIZE, SIZE);
-};
-
-function drawLetter(drawX, drawY, letter) {
-	letterPosX = drawX * SIZE + 7;
-	letterPosY = drawY * SIZE + 27;
-
-	context.fillStyle = tileTextColor;
- 	context.font = '20pt Arial';
-	context.fillText(letter, letterPosX, letterPosY, 22);
-
-}
-
-function drawNumber(drawX, drawY, score) {
-	numberPosX = drawX * SIZE + 2;
-	numberPosY = drawY * SIZE + 10;
-
-	context.fillStyle = tileTextColor;
- 	context.font = 'bolder 8pt Arial';
- 	context.fillText(score, numberPosX, numberPosY, SIZE);
-}
-
-
-function drawBoard() {
-	context.beginPath();
-	context.rect(0, 0, 320, 640);
-	context.fillStyle="black";
-	context.fill();
-
-	for(var row = 0; row < ROWS; row++) {
-		for(var col = 0; col < COLS; col++) {
-			if(gameData[row][col] != 0) {
-				tile = gameData[row][col]
-				drawTileBackground(col, row, tile.scrabbleExtras, tile.highlight);
-				drawTile(col, row);
-				drawLetter(col, row, tile.letter);
-				drawNumber(col, row, tile.score);
-			}
-		}
-	}
-}
-
-function drawBlock(block) {
-	var drawX = block.gridX;
-	var drawY = block.gridY;
-	var rotation = block.currentRotation;
-
-	for(var row = 0, len = block.rotations[rotation].length; row < len; row++) {
-		for(var col = 0, len2 = block.rotations[rotation][row].length; col < len2; col++) {
-			if(block.rotations[rotation][row][col] != 0 && drawY >= 0) {
-				tile = block.rotations[rotation][row][col]
-				drawTileBackground(drawX, drawY, tile.scrabbleExtras, tile.highlight);
-				drawTile(drawX, drawY);
-				drawLetter(drawX, drawY, tile.letter);
-				drawNumber(drawX, drawY, tile.score);
-			}
-			drawX += 1;
-		}
-
-		drawX = block.gridX;
-		drawY += 1;
-	}
-
 }
 
 function getKeyCode(e) {
@@ -262,58 +161,12 @@ function getKeyCode(e) {
 			break;
 		}
 	}
-	// restart game by pressing one of the main keys
-	// else {
-	// 	startGame();
-	// }
-}
-
-function letBlockFall() {
-	for (var i=0; i<ROWS; i++) {
-		if (validateMove(currentBlock.gridX, currentBlock.gridY + 1, currentBlock.currentRotation))
-			currentBlock.gridY++;
-	}
-}
-
-function validateMove(xpos, ypos, newRotation) {
-	var result = true;
-	var newx = xpos;
-	var newy = ypos;
-
-	for(var row = 0, length1 = currentBlock.rotations[newRotation].length; row < length1; row++) {
-		for(var col = 0, length2 = currentBlock.rotations[newRotation][row].length; col < length2; col++) {
-			if(newx < 0 || newx >= COLS) {
-				result = false;
-				col = length2;
-				row = length1;
-			}
-
-			if(gameData[newy] != undefined && gameData[newy][newx] != 0
-				&& currentBlock.rotations[newRotation][row] != undefined && currentBlock.rotations[newRotation][row][col] != 0) {
-				result = false;
-				col = length2;
-				row = length1;
-			}
-			newx += 1;
-		}
-
-		newx = xpos;
-		newy += 1;
-
-		if(newy > ROWS) {
-			row = length1;
-			result = false;
-		}
-	}
-
-	return result;
 }
 
 function updateGame() {
   currentTime = new Date().getTime();
 
   if (currentTime - previousTime > currentSpeed && !(gameIsPaused)) {
-    // drop currentBlock every half-second
     if (validateMove(currentBlock.gridX, currentBlock.gridY + 1, currentBlock.currentRotation)) {
       currentBlock.gridY += 1;
     }
@@ -324,168 +177,25 @@ function updateGame() {
       drawPreview();
     }
 
-    // update time
     previousTime = currentTime;
   }
 
   context.clearRect(0, 0, BOARDWIDTH, BOARDHEIGHT);
-  drawBoard();
-  drawBlock(currentBlock);
+  gameCanvas.drawBoard();
+  gameCanvas.drawBlock(currentBlock);
 
   if (isGameOver == false) {
     requestAnimationFrame(updateGame);
   }
   else {
-  	statTracker.saveGame();
-    $("#right-bar h3").fadeIn(500).fadeOut(500).fadeIn(500).fadeOut(500).fadeIn(500);
   	gameOver();
   }
 }
 
 function gameOver() {
-	saveGame();
+	statTracker.saveGame();
 	$("#boggle_letters").prop("disabled", true)
   $("#right-bar h3").fadeIn(500).fadeOut(500).fadeIn(500).fadeOut(500).fadeIn(500);
-}
-
-function checkForCompleteLines() {
-	var lineFound = false;
-	var fullRow = true;
-	var row = ROWS - 1;
-	var col = COLS - 1;
-
-	while(row >= 0) {
-		while(col >= 0) {
-			if(gameData[row][col] == 0) {
-				fullRow = false;
-				col = -1;
-			}
-			col--;
-		}
-
-		if(fullRow == true) {
-			console.log("fullRow == true, line 225");
-			clearCompletedRow(row);
-
-			row++;
-			lineFound = true;
-			currentLines++;
-			advanceLevelIfNeeded();
-		}
-		fullRow = true;
-		col = COLS - 1;
-		row--;
-	}
-	if(lineFound) {
-		$("#lines").text(currentLines.toString());
-	}
-}
-
-function landBlock(block) {
-	var xpos = block.gridX;
-	var ypos = block.gridY;
-	var rotation = block.currentRotation;
-
-	for(var row = 0, len = block.rotations[rotation].length; row < len; row++) {
-		for(var col = 0, len2 = block.rotations[rotation][row].length; col < len2; col++) {
-			if(block.rotations[rotation][row][col] != 0 && ypos >= 0) {
-				tile = block.rotations[rotation][row][col]
-				gameData[ypos][xpos] = tile;
-			}
-			xpos += 1;
-		}
-		xpos = block.gridX;
-		ypos += 1;
-	}
-	checkForCompleteLines();
-
-	if(block.gridY < 0) {
-		isGameOver = true;
-		
-
-	}
-}
-
-function clearTile(coords) {
-	var row = coords[0];
-	var col = coords[1];
-	console.log('tile to remove coordinate');
-	console.log(coords)
-
-	for (var i = row; i > 0; i--) {
-		gameData[i][col] = gameData[i-1][col];
-	}
-}
-
-function clearTiles(array) {
-
-	for(var i = 0; i < array.length; i++) {
-		clearTile(array[i]);
-	}
-};
-
-function cleanTilesArray(tilesArray) {
-	//Remove duplicate coordinates
-	for(var i = 0; i < tilesArray.length; i++) {
-    for(var j = i + 1; j < tilesArray.length; ) {
-      if(tilesArray[i][0] == tilesArray[j][0] && tilesArray[i][1] == tilesArray[j][1])
-          tilesArray.splice(j, 1);
-      else
-        j++;
-    }
-	}
-
-	//sort coordinates
-	CoordinateComparer = function(a, b) {
-		return b[0] - a[0] ;
-	}
-	newTilesArray =  tilesArray.sort(CoordinateComparer).reverse();
-	return newTilesArray;
-}
-
-function makeTilesFall(tilesArray) {
-	console.log("Here are the tile coords to fall sent back from boggle.js:");
-	console.log(tilesArray);
-
-	newTilesArray = cleanTilesArray(tilesArray)
-
-	console.log('new tile array');
-	console.log(newTilesArray);
-	highlightTiles(newTilesArray);
-	setTimeout(function(){clearTiles(newTilesArray)}, 800);
-}
-
-function highlightTiles(tiles) {
-	for(var i = 0; i < tiles.length; i++) {
-		tile = gameData[tiles[i][0]][tiles[i][1]];
-		tile.highlight = true;
-	}
-}
-
-function clearCompletedRow(row) {
-	var row = row;
-	var col = 0;
-
-	while(row >= 0) {
-		while(col < COLS) {
-			if(row > 0)
-				gameData[row][col] = gameData[row-1][col];
-			else
-				gameData[row][col] = 0;
-			col++;
-		}
-		col = 0;
-		row --;
-	}
-	updateScores('line', linePoints)
-}
-
-function advanceLevelIfNeeded() {
-	if (currentLines % 10 === 0 && currentLevel < SPEEDS.length){
-		currentLevel += 1;
-		currentSpeed = SPEEDS[currentLevel - 1];
-		$("#levels").text(currentLevel.toString());
-	};
 }
 
 function updateScores(type, points) {
@@ -501,100 +211,12 @@ function updateScores(type, points) {
 	$("#overall_score").text(totalScore);
 }
 
-function calculateScrabbleScore(tiles, length) {
-	var score = 0;
-	var extraMultiplier = 1;
-	var currentWordPoints = 0;
-	var j = 1
-
-	for (var i = 0; i < tiles.length; i++) {
-		tile = gameData[tiles[i][0]][tiles[i][1]];
-		console.log(tile)
-
-		currentLetterPoints = tile.score;
-
-		switch(tile.scrabbleExtras) {
-			case "NA": extraMultiplier *= 1;		break;
-			case "WX2": extraMultiplier *= 2;		break;
-			case "WX3": extraMultiplier *= 3;		break;
-			case "LX2": currentLetterPoints *=2;	break;
-			case "LX3": currentLetterPoints *=3;	break;
-		}
-
-		currentWordPoints += currentLetterPoints;
-
-		// console.log("j")
-		// console.log(j)
-		//end of word
-		if (j % length === 0) {
-			currentWordPoints *= extraMultiplier
-			if (j >= 7)
-				currentWordPoints *= 2;
-			score += currentWordPoints;
-			console.log("score added: " + currentWordPoints)
-			extraMultiplier = 1;
-			currentWordPoints = 0;
-		}
-		// else
-		// 	console.log('not at end of word')
-
-		console.log(score)
-
-		if (j >= length)
-			j = 1;
-		else
-			j++
-	}
-
-	//score *= extraMultiplier;
-	// console.log("Final Score");
-	// console.log(score)
-
-	return score;
-}
-
-function loadDictionary() {
-  $.get( "/assets/dictionary.txt", function( text ) {
-    dicts = text.split( "\n" );
-  } );
-}
-
-function findWord() {
-	if (gameIsPaused && INPRODUCTION) {
-		return
-	};
-	var letters = $("#boggle_letters").val();
-	$("#boggle_letters").val("");
-	var currentLetters = letters.split( "" );
-	var tilesOnBoard = [];
-	if( currentLetters.length >= 3 ) {
-		word = currentLetters.join("");
-		if( dicts.indexOf(word.toUpperCase())  != -1 ) {
-			tilesOnBoard = wordCoordsOnBoggleBoard(word, gameData);
-		}
-
-		if (tilesOnBoard.length > 0) {
-			wordScore = calculateScrabbleScore(tilesOnBoard, currentLetters.length)
-			updateScores('word', wordScore)
-			makeTilesFall(tilesOnBoard);
-			updateWordScores(letters, wordScore);
-			statTracker.runStats(letters, wordScore);
-		}
-		else {
-			$('#wordNotFound').show().fadeOut(3000);
-		}
-	}
-}
-
 function toggleGamePause() {
 	gameIsPaused = !(gameIsPaused);
 }
 
 
 function updateWordScores(word, score) {
-	console.log("update word score");
-	console.log(word);
-	console.log(score)
 	var wordHTML = "<li>" + word + ": " + score + "</li>";
 	$("#word_scores ul").prepend(wordHTML)
 }
