@@ -26,12 +26,14 @@ describe UsersController do
 		describe "POST #create" do 
 			context "when valids params are passed" do 
 				it "creates a new user" do 
-					post :create, user: FactoryGirl.attributes_for(:user)
+					expect do 
+						post :create, user: FactoryGirl.attributes_for(:user)
+						end.to change(User, :count).by(1)
 				end
 
 			it "redirects to new game route" do 
 				post :create, user: FactoryGirl.attributes_for(:user)
-				expect(response.status).to eq(200)
+				expect(response.status).to redirect_to(new_game_path)
 			end
 		end
 		context "when invalid params are passed" do 
