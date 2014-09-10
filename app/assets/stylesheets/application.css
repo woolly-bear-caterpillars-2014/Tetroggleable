@@ -62,7 +62,7 @@ h4 {
 	clear:both;
 }
 
-#gameCanvas {
+#game_canvas {
 	margin: 0 auto;
 	background-color: black;
 	border: 10px #E60484 solid;
@@ -106,7 +106,7 @@ h4 {
 	height: 130px;
 }
 
-#gamePreview {
+#game_preview {
 	margin-left: 50px;
 }
 

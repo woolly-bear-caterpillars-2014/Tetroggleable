@@ -26,6 +26,7 @@ var lX3 = "#095E9F";
 var wX2 = "#DD9ABD";
 var wX3 = "#89223A";
 var statTracker;
+var gameCanvas;
 
 function setRowsCols() {
 	width = $(window).width();
@@ -34,16 +35,16 @@ function setRowsCols() {
 	if (height < 760) {
 		ROWS = 17;
 		BOARDHEIGHT = 544;
-		$("#gameCanvas").attr("height", 544);
+		$("#game_canvas").attr("height", 544);
 	}
 }
 
 $(window).load(function(){
 
-	canvas = document.getElementById('gameCanvas');
+	canvas = document.getElementById('game_canvas');
 	context = canvas.getContext('2d');
 	browserTest();
-	preview = document.getElementById('gamePreview');
+	preview = document.getElementById('game_preview');
 	prevctx = preview.getContext('2d');
 	lineScore = $('#lines');
 	previousTime = 0;
@@ -88,7 +89,8 @@ function startGame() {
 	isGameOver = false;
 	currentLevel = 1;
 	currentSpeed = SPEEDS[currentLevel - 1];
-	$("#levels").text(1)
+	$("#levels").text(1);
+	gameCanvas = new Canvas();
 
 	gameData = new Array();
 
@@ -170,8 +172,8 @@ function updateGame() {
   }
 
   context.clearRect(0, 0, BOARDWIDTH, BOARDHEIGHT);
-  drawBoard();
-  drawBlock(currentBlock);
+  gameCanvas.drawBoard();
+  gameCanvas.drawBlock(currentBlock);
 
   if (isGameOver == false) {
     requestAnimationFrame(updateGame);
