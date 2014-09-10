@@ -501,20 +501,22 @@ function calculateScrabbleScore(tiles, length) {
 
 		currentWordPoints += currentLetterPoints;
 
-		console.log("j")
-		console.log(j)
+		// console.log("j")
+		// console.log(j)
 		//end of word
 		if (j % length === 0) {
 			currentWordPoints *= extraMultiplier
+			if (j >= 7) 
+				currentWordPoints *= 2;
 			score += currentWordPoints;
-			console.log("score added: " + currentWordPoints)
+			//console.log("score added: " + currentWordPoints)
 			extraMultiplier = 1;
 			currentWordPoints = 0;
 		}
-		else 
-			console.log('not at end of word')
+		// else 
+		// 	console.log('not at end of word')
 		
-		console.log(score)
+		//console.log(score)
 		if (j >= length)
 			j = 1;
 		else
@@ -522,12 +524,8 @@ function calculateScrabbleScore(tiles, length) {
 	}
 
 	//score *= extraMultiplier;
-	console.log("Final Score");
-	console.log(score)
-
-	if (length >= 7) {
-		score *= 2;
-	}
+	// console.log("Final Score");
+	// console.log(score)
 
 	return score;
 }
