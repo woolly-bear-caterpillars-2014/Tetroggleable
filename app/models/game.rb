@@ -6,4 +6,7 @@ class Game < ActiveRecord::Base
 	validates :level, presence: true
 	validates :lines, presence: true
 
+	def game_username
+		self.user.username.to_s.upcase
+	end
 end

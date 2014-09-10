@@ -17,7 +17,7 @@ class GamesController < ApplicationController
    if request.xhr?
       if current_user
         @game = current_user.games.create(game_params)
-        render :json => @game
+        render json: @game
         end
     else
       render :new
