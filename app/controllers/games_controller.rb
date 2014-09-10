@@ -32,7 +32,7 @@ class GamesController < ApplicationController
 	private
 
 	def game_params
-		params.require(:game).permit(:score, :scrabble_score, :level, :lines, :user_id)
+		params.require(:game).permit(:score, :scrabble_score, :level, :lines, :user_id, :longest_word, :longest_word_score, :highest_word, :highest_word_score, :most_common_word)
 	end
 end
 
