@@ -224,3 +224,34 @@ describe ("ZBlock", function () {
 
     });
 });
+
+describe ("SBlock", function () {
+  beforeEach(function () {
+
+    tile1 = new Tile();
+    tile1.letter = "A";
+    tile2 = new Tile();
+    tile2.letter = "B";
+    tile3 = new Tile();
+    tile3.letter = "C";
+    tile4 = new Tile();
+    tile4.letter = "D";
+    var tileArray = [tile1, tile2, tile3, tile4];
+    sBlock = new SBlock(tileArray);
+    });
+
+     it("should return the correct tile letter for SBlock rotation1", function() {
+
+      expect(sBlock.rotation1).toBeDefined();
+      expect(sBlock.rotation1[0][2].letter).toEqual('A')
+     });
+
+     it("should return the correct tile letter for SBlock rotation2", function() {
+
+      expect(sBlock.rotation2).toBeDefined();
+      expect(sBlock.rotation2[1][1].letter).toEqual('B')
+
+    });
+});
+
+
