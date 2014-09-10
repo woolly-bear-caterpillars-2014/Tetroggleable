@@ -34,7 +34,17 @@ describe Game do
 		end
 	end
 
-	describe "validation" do 
+	context "validate presence" do 
 		it { should validate_presence_of(:score) }
 	end
+
+	context "validate presence" do
+		it { should validate_presence_of(:scrabble_score) }
+	end
 end
+
+
+
+
+
+
