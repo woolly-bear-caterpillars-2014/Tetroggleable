@@ -8,4 +8,10 @@ describe Game do
 			expect(game.score).to eq(10)
 		end
 	end
+
+	context "scrabble_score" do 
+		it "should return scrabble score" do 
+			expect(game.scrabble_score).to eq(10)
+		end
+	end
 end
