@@ -321,9 +321,14 @@ function updateGame() {
     requestAnimationFrame(updateGame);
   }
   else {
-  	saveGame();
-    $("#right-bar h3").fadeIn(500).fadeOut(500).fadeIn(500).fadeOut(500).fadeIn(500);
+  	gameOver();
   }
+}
+
+function gameOver() {
+	saveGame();
+	$("#boggle_letters").prop("disabled", true)
+  $("#right-bar h3").fadeIn(500).fadeOut(500).fadeIn(500).fadeOut(500).fadeIn(500);
 }
 
 function checkForCompleteLines() {
