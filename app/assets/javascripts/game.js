@@ -42,6 +42,7 @@ $(window).load(function(){
 
 	canvas = document.getElementById('gameCanvas');
 	context = canvas.getContext('2d');
+	browserTest();
 	preview = document.getElementById('gamePreview');
 	prevctx = preview.getContext('2d');
 	lineScore = $('#lines');
@@ -71,6 +72,19 @@ $(window).load(function(){
 		loadDictionary();
 });
 
+function browserTest() {
+	if (Modernizr.touch) {
+		$("#game_main").hide();
+		$("#browser_notice .not_mobile").show();
+		return;
+	}
+	if (!Modernizr.canvas) {
+		$("#game_main").hide();
+		$("#browser_notice .upgrade").show();
+		return;
+	}
+}
+
 function startGame() {
 	var row, col;
 	currentLines = 0;
@@ -84,7 +98,6 @@ function startGame() {
 		for(row= 0; row < ROWS; row++) {
 			gameData[row] = new Array();
 			for(col = 0; col < COLS; col++) {
-				// gameData[r].push(0);
 				gameData[row][col] = 0;
 			}
 		}
@@ -103,7 +116,7 @@ function startGame() {
 }
 
 function drawTile(drawX, drawY) {
-	context.strokeStyle = "#000";
+	context.strokeStyle = tileTextColor;
   context.beginPath();
  	// context.fillStyle = "#3c0";
  	context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
@@ -111,7 +124,7 @@ function drawTile(drawX, drawY) {
  	context.stroke();
 }
 
-function tileColors(contextName, scrabbleExtras) {
+function tileColors(contextName, scrabbleExtras, highlight) {
 	if (scrabbleExtras == "NA") {
 	  contextName.fillStyle = tileColor;
  	};
@@ -128,19 +141,21 @@ function tileColors(contextName, scrabbleExtras) {
  	if (scrabbleExtras == "LX3"){
 		contextName.fillStyle = lX3;
  	};
+ 	if (highlight)
+		contextName.fillStyle = "#3C00FB";
 
  	contextName.fill();
 	contextName.stroke();
 }
 
-function drawTileBackground(drawX, drawY, scrabbleExtras) {
+function drawTileBackground(drawX, drawY, scrabbleExtras, highlight) {
 	numberPosX = drawX * SIZE;
 	numberPosY = drawY * SIZE;
-	context.strokeStyle = "#000";
+	context.strokeStyle = tileTextColor;
   context.beginPath();
 	context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
 
-	tileColors(context, scrabbleExtras);
+	tileColors(context, scrabbleExtras, highlight);
  	context.fillRect(numberPosX, numberPosY, SIZE, SIZE);
 };
 
@@ -148,7 +163,7 @@ function drawLetter(drawX, drawY, letter) {
 	letterPosX = drawX * SIZE + 7;
 	letterPosY = drawY * SIZE + 27;
 
-	context.fillStyle = "#000";
+	context.fillStyle = tileTextColor;
  	context.font = '20pt Arial';
 	context.fillText(letter, letterPosX, letterPosY, 22);
 
@@ -158,14 +173,13 @@ function drawNumber(drawX, drawY, score) {
 	numberPosX = drawX * SIZE + 2;
 	numberPosY = drawY * SIZE + 10;
 
-	context.fillStyle = "#000";
+	context.fillStyle = tileTextColor;
  	context.font = 'bolder 8pt Arial';
  	context.fillText(score, numberPosX, numberPosY, SIZE);
 }
 
 
 function drawBoard() {
-	// context.drawImage(bgImg, 0, 0, 320, 640, 0, 0, 320, 640);
 	context.beginPath();
 	context.rect(0, 0, 320, 640);
 	context.fillStyle="black";
@@ -175,20 +189,11 @@ function drawBoard() {
 		for(var col = 0; col < COLS; col++) {
 			if(gameData[row][col] != 0) {
 				tile = gameData[row][col]
-				drawTileBackground(col, row, tile.scrabbleExtras);
+				drawTileBackground(col, row, tile.scrabbleExtras, tile.highlight);
 				drawTile(col, row);
 				drawLetter(col, row, tile.letter);
 				drawNumber(col, row, tile.score);
 			}
-			// else {
-			// 	letterPosX = col * SIZE + 7;
-			// 	letterPosY = row * SIZE + 27;
-
-			// 	context.fillStyle = "#fff";
-			//  	context.font = '14pt Arial';
-			//  	coord = row + "," + col;
-			// 	context.fillText(coord, letterPosX, letterPosY, 22);
-			// }
 		}
 	}
 }
@@ -202,7 +207,7 @@ function drawBlock(block) {
 		for(var col = 0, len2 = block.rotations[rotation][row].length; col < len2; col++) {
 			if(block.rotations[rotation][row][col] != 0 && drawY >= 0) {
 				tile = block.rotations[rotation][row][col]
-				drawTileBackground(drawX, drawY, tile.scrabbleExtras);
+				drawTileBackground(drawX, drawY, tile.scrabbleExtras, tile.highlight);
 				drawTile(drawX, drawY);
 				drawLetter(drawX, drawY, tile.letter);
 				drawNumber(drawX, drawY, tile.score);
@@ -217,7 +222,6 @@ function drawBlock(block) {
 }
 
 function getKeyCode(e) {
-	// if(!e) { var e = window.event; }
 	e.preventDefault();
 
 	if(isGameOver != true) {
@@ -256,9 +260,10 @@ function getKeyCode(e) {
 			break;
 		}
 	}
-	else {
-		startGame();
-	}
+	// restart game by pressing one of the main keys
+	// else {
+	// 	startGame();
+	// }
 }
 
 function letBlockFall() {
@@ -287,7 +292,6 @@ function validateMove(xpos, ypos, newRotation) {
 				col = length2;
 				row = length1;
 			}
-
 			newx += 1;
 		}
 
@@ -330,9 +334,14 @@ function updateGame() {
     requestAnimationFrame(updateGame);
   }
   else {
-  	saveGame();
-    $("#right-bar h3").fadeIn(500).fadeOut(500).fadeIn(500).fadeOut(500).fadeIn(500);
+  	gameOver();
   }
+}
+
+function gameOver() {
+	saveGame();
+	$("#boggle_letters").prop("disabled", true)
+  $("#right-bar h3").fadeIn(500).fadeOut(500).fadeIn(500).fadeOut(500).fadeIn(500);
 }
 
 function checkForCompleteLines() {
@@ -404,15 +413,13 @@ function clearTile(coords) {
 }
 
 function clearTiles(array) {
+
 	for(var i = 0; i < array.length; i++) {
 		clearTile(array[i]);
 	}
 };
 
-function makeTilesFall(tilesArray) {
-	console.log("Here are the tile coords to fall sent back from boggle.js:");
-	console.log(tilesArray);
-
+function cleanTilesArray(tilesArray) {
 	//Remove duplicate coordinates
 	for(var i = 0; i < tilesArray.length; i++) {
     for(var j = i + 1; j < tilesArray.length; ) {
@@ -428,10 +435,26 @@ function makeTilesFall(tilesArray) {
 		return b[0] - a[0] ;
 	}
 	newTilesArray =  tilesArray.sort(CoordinateComparer).reverse();
+	return newTilesArray;
+}
+
+function makeTilesFall(tilesArray) {
+	console.log("Here are the tile coords to fall sent back from boggle.js:");
+	console.log(tilesArray);
+
+	newTilesArray = cleanTilesArray(tilesArray)
 
 	console.log('new tile array');
 	console.log(newTilesArray);
-	clearTiles(newTilesArray)
+	highlightTiles(newTilesArray);
+	setTimeout(function(){clearTiles(newTilesArray)}, 800);
+}
+
+function highlightTiles(tiles) {
+	for(var i = 0; i < tiles.length; i++) {
+		tile = gameData[tiles[i][0]][tiles[i][1]];
+		tile.highlight = true;
+	}
 }
 
 function clearCompletedRow(row) {
@@ -444,8 +467,6 @@ function clearCompletedRow(row) {
 				gameData[row][col] = gameData[row-1][col];
 			else
 				gameData[row][col] = 0;
-
-
 			col++;
 		}
 		col = 0;
@@ -475,14 +496,15 @@ function updateScores(type, points) {
 	$("#overall_score").text(totalScore);
 }
 
-function calculateScrabbleScore(tiles) {
+function calculateScrabbleScore(tiles, length) {
 	var score = 0;
 	var extraMultiplier = 1;
+	var currentWordPoints = 0;
+	var j = 1
 
 	for (var i = 0; i < tiles.length; i++) {
 		tile = gameData[tiles[i][0]][tiles[i][1]];
 		console.log(tile)
-		//tileScore = tiles[i].score
 
 		currentLetterPoints = tile.score;
 
@@ -494,20 +516,34 @@ function calculateScrabbleScore(tiles) {
 			case "LX3": currentLetterPoints *=3;	break;
 		}
 
-		score += currentLetterPoints;
-		console.log("LETTER and POINTS")
-		console.log(tile.letter + ":" + currentLetterPoints)
+		currentWordPoints += currentLetterPoints;
+
+		// console.log("j")
+		// console.log(j)
+		//end of word
+		if (j % length === 0) {
+			currentWordPoints *= extraMultiplier
+			if (j >= 7)
+				currentWordPoints *= 2;
+			score += currentWordPoints;
+			console.log("score added: " + currentWordPoints)
+			extraMultiplier = 1;
+			currentWordPoints = 0;
+		}
+		// else
+		// 	console.log('not at end of word')
+
+		console.log(score)
+
+		if (j >= length)
+			j = 1;
+		else
+			j++
 	}
 
-	console.log("SCORE so far");
-	console.log(score)
-	score *= extraMultiplier;
-	console.log("Final Score");
-	console.log(score)
-
-	if (tiles.length >= 7) {
-		score *= 2;
-	}
+	//score *= extraMultiplier;
+	// console.log("Final Score");
+	// console.log(score)
 
 	return score;
 }
@@ -533,12 +569,13 @@ function findWord() {
 		}
 
 		if (tilesOnBoard.length > 0) {
-			wordScore = calculateScrabbleScore(tilesOnBoard)
+			wordScore = calculateScrabbleScore(tilesOnBoard, currentLetters.length)
 			updateScores('word', wordScore)
 			makeTilesFall(tilesOnBoard);
+			updateWordScores(letters, wordScore);
 		}
 		else {
-			$('#wordNotFound').show().fadeOut(2000);
+			$('#wordNotFound').show().fadeOut(3000);
 		}
 	}
 }
@@ -575,3 +612,12 @@ function saveGame(){
 	});
 
 }
+
+function updateWordScores(word, score) {
+	console.log("update word score");
+	console.log(word);
+	console.log(score)
+	var wordHTML = "<li>" + word + ": " + score + "</li>";
+	$("#word_scores ul").prepend(wordHTML)
+}
+

@@ -5,8 +5,7 @@ class UsersController < ApplicationController
 	end
 
 	def show
-		@user = current_user
-		@game = Game.where(:user_id == session[:user_id])
+		@game = Game.where(current_user)
 	end
 
 	def new
@@ -30,5 +29,4 @@ class UsersController < ApplicationController
 	def user_params
 		params.require(:user).permit(:username, :email, :password)
 	end
-
 end

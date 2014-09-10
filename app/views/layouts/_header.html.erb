@@ -1,5 +1,5 @@
 <header class="clearfix">
-	<ul class="nav nav-pills">
+	<ul class="nav-nav-pills">
 	  <li> <%= link_to 'Home', root_path, class: "active" %></li>
 	  <li> <%= link_to 'Scores', games_path %> </li>
 	  <% if current_user %>
@@ -9,9 +9,9 @@
 	   <li><%= link_to 'Sign Up',signup_path , class: "active" %></li>
 	   <li><%= link_to 'Log In', login_path, class: "active" %></li>
 	 <% end %>
-	 	<li><%= link_to 'Play Game', new_game_path, 'data-no-turbolink' => true %></li>
+	 	<li><%= link_to 'Play Game', new_game_path %></li>
 	</ul>
 	<div class="logo">
-		<h2>Tetroggleable</h2>
+		<a href="/"><h2>Tetroggleable</h2></a>
 	</div>
 </header>

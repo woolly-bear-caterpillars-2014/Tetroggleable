@@ -12,10 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require utilityFunctions
-//= require_tree .
+//= require modernizr
 //= require blocks
-//= require boggle_oo
+//= require boggle
 //= require game
 
