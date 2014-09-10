@@ -25,4 +25,13 @@ describe GamesController do
 			expect(assigns(:game)).to be_a Game
 		end
 	end
+
+	describe "POST #create" do 
+		context "When valid params are pass" do 
+			it "has a 200 status code" do 
+				xhr :post, :create, game: FactoryGirl.attributes_for(:game)
+				expect(response.status).to eq(200)
+			end
+		end
+	end
 end
