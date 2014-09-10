@@ -26,6 +26,7 @@ var lX2 = "#95B8D3"
 var lX3 = "#095E9F"
 var wX2 = "#DD9ABD"
 var wX3 = "#89223A"
+var statTracker;
 
 function setRowsCols() {
 	width = $(window).width();
@@ -100,6 +101,7 @@ function startGame() {
 
 	requestAnimationFrame(updateGame);
 	drawPreview();
+	statTracker = new StatsTracker;
 }
 
 function drawTile(drawX, drawY) {
@@ -390,6 +392,7 @@ function landBlock(block) {
 
 	if(block.gridY < 0) {
 		isGameOver = true;
+		
 
 	}
 }
@@ -548,9 +551,11 @@ function findWord() {
 		}
 
 		if (tilesOnBoard.length > 0) {
-			wordScore = calculateScrabbleScore(tilesOnBoard)
-			updateScores('word', wordScore)
+			wordScore = calculateScrabbleScore(tilesOnBoard);
+			updateScores('word', wordScore);
+			statTracker.trackCommonWords(letters);
 			makeTilesFall(tilesOnBoard);
+			statTracker.runStats(letters, wordScore);
 		}
 		else {
 			$('#wordNotFound').show().fadeOut(2000);
@@ -562,31 +567,3 @@ function toggleGamePause() {
 	gameIsPaused = !(gameIsPaused);
 }
 
-function saveGame(){
-	var level = $("#levels").text();
-	var scrabble_score = $("#scrabble_score").text();
-	var lines = $("#lines").text();
-	var score = $("#overall_score").text();
-	$.ajaxSetup({
-	headers: {
-		'X-CSRF-Token':$('meta[name="csrf-token"]').attr("content")
-		}
-	});
-	$.ajax({
-		url: '/games',
-		type: 'POST',
-		dataType: 'json',
-		data: {game: { score: score, scrabble_score: scrabble_score, level: level,  lines: lines,}}
-	})
-	.done(function(response) {
-		console.log("success");
-		console.log(response)
-	})
-	.fail(function() {
-		console.log("error");
-	})
-	.always(function() {
-		console.log("complete");
-	});
-
-}

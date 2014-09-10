@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20140909230451) do
     t.integer  "longest_word_score"
     t.string   "highest_word"
     t.integer  "highest_word_score"
+    t.string   "most_common_word"
   end
 
   create_table "users", force: true do |t|
