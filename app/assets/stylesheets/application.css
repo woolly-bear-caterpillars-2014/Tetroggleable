@@ -19,7 +19,7 @@ body {
 }
 
 header {
-	margin-bottom:10px;
+	margin-bottom:30px;
 }
 
 header ul {
@@ -290,6 +290,10 @@ h4 {
   transition: all 1.25s ease-out 0s;
 }
 
+#home {
+	padding-top:30px;
+}
+
 img {
 	width: 250px;
 	height: 150px;
@@ -298,6 +302,7 @@ img {
 #pic {
 	float: right;
 	width:200;
+	margin-top:22px;
 }
 
 #word_scores {
@@ -319,7 +324,7 @@ img {
 	font-weight:bold;
 	margin:50px 25px;
 	font-size:20px;
-
+	display:none;
 }
 #browser_notice p{
 	display:none;
