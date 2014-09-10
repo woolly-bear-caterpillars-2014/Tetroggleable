@@ -42,6 +42,7 @@ $(window).load(function(){
 
 	canvas = document.getElementById('gameCanvas');
 	context = canvas.getContext('2d');
+	browserTest();
 	preview = document.getElementById('gamePreview');
 	prevctx = preview.getContext('2d');
 	lineScore = $('#lines');
@@ -70,6 +71,19 @@ $(window).load(function(){
 		// drawBlock(block);
 		loadDictionary();
 });
+
+function browserTest() {
+	if (Modernizr.touch) {
+		$("#game_main").hide();
+		$("#browser_notice .not_mobile").show();
+		return;
+	}
+	if (!Modernizr.canvas) {
+		$("#game_main").hide();
+		$("#browser_notice .upgrade").show();
+		return;
+	}
+}
 
 function startGame() {
 	var row, col;
@@ -246,9 +260,10 @@ function getKeyCode(e) {
 			break;
 		}
 	}
-	else {
-		startGame();
-	}
+	// restart game by pressing one of the main keys
+	// else {
+	// 	startGame();
+	// }
 }
 
 function letBlockFall() {
@@ -319,9 +334,14 @@ function updateGame() {
     requestAnimationFrame(updateGame);
   }
   else {
-  	saveGame();
-    $("#right-bar h3").fadeIn(500).fadeOut(500).fadeIn(500).fadeOut(500).fadeIn(500);
+  	gameOver();
   }
+}
+
+function gameOver() {
+	saveGame();
+	$("#boggle_letters").prop("disabled", true)
+  $("#right-bar h3").fadeIn(500).fadeOut(500).fadeIn(500).fadeOut(500).fadeIn(500);
 }
 
 function checkForCompleteLines() {
@@ -485,8 +505,6 @@ function calculateScrabbleScore(tiles, length) {
 	for (var i = 0; i < tiles.length; i++) {
 		tile = gameData[tiles[i][0]][tiles[i][1]];
 		console.log(tile)
-		// console.log("coords:" + tiles[i][0] + ", " + tiles[i][1])
-		//tileScore = tiles[i].score
 
 		currentLetterPoints = tile.score;
 
@@ -508,14 +526,15 @@ function calculateScrabbleScore(tiles, length) {
 			if (j >= 7)
 				currentWordPoints *= 2;
 			score += currentWordPoints;
-			//console.log("score added: " + currentWordPoints)
+			console.log("score added: " + currentWordPoints)
 			extraMultiplier = 1;
 			currentWordPoints = 0;
 		}
 		// else
 		// 	console.log('not at end of word')
 
-		//console.log(score)
+		console.log(score)
+
 		if (j >= length)
 			j = 1;
 		else
@@ -556,7 +575,7 @@ function findWord() {
 			updateWordScores(letters, wordScore);
 		}
 		else {
-			$('#wordNotFound').show().fadeOut(2000);
+			$('#wordNotFound').show().fadeOut(3000);
 		}
 	}
 }
