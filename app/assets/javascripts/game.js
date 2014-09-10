@@ -95,18 +95,11 @@ function startGame() {
 
 	gameData = new Array();
 
-<<<<<<< HEAD
-		for(row= 0; row < ROWS; row++) {
-			gameData[row] = new Array();
-			for(col = 0; col < COLS; col++) {
-				gameData[row][col] = 0;
-			}
-=======
 	for(row= 0; row < ROWS; row++) {
 		gameData[row] = new Array();
 		for(col = 0; col < COLS; col++) {
 			gameData[row][col] = 0;
->>>>>>> bd8055fb997bec15f5366c356bc7f185edcba3e0
+
 		}
 	}
 
