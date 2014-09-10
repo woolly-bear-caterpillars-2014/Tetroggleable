@@ -34,6 +34,11 @@ header ul {
 	text-decoration:none;
 }
 
+.logo h1{
+	font-size: 2.9em;
+	margin-top: 15px;
+}
+
 h1 {
 	text-align: center;
 	color: #E60484;
@@ -62,7 +67,7 @@ h4 {
 	clear:both;
 }
 
-#gameCanvas {
+#game_canvas {
 	margin: 0 auto;
 	background-color: black;
 	border: 10px #E60484 solid;
@@ -106,7 +111,7 @@ h4 {
 	height: 130px;
 }
 
-#gamePreview {
+#game_preview {
 	margin-left: 50px;
 }
 
@@ -144,7 +149,7 @@ h4 {
 }
 
 #keybox2 {
-	background-color: #095E9F;
+	background-color: #237CBF;
 }
 
 #keybox3 {
@@ -152,7 +157,7 @@ h4 {
 }
 
 #keybox4 {
-	background-color: #89223A;
+	background-color: #A63952;
 }
 
 .pkey {

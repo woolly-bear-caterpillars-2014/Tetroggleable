@@ -1,4 +1,3 @@
-
 // BOGGLE FUNCTIONS
 
 function Coord(x, y, board){
