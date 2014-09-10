@@ -5,8 +5,7 @@ class UsersController < ApplicationController
 	end
 
 	def show
-		current_user
-		@game = Game.where(@user)
+		@game = Game.where(current_user)
 	end
 
 	def new
