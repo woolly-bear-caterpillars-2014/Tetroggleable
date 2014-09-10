@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require utilityFunctions
+//= require modernizr
 //= require blocks
 //= require boggle
 //= require game
