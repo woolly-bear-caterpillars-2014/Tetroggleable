@@ -1,9 +1,9 @@
 FactoryGirl.define do
 	factory :game do  
 		score 10
-		scrabble_score 10
-		level 1
-		lines 3
+		scrabble_score 1250
+		level 3
+		lines 5
 		user_id 1
 	end
 
@@ -15,3 +15,4 @@ FactoryGirl.define do
 		user_id nil
 	end
 end
+
