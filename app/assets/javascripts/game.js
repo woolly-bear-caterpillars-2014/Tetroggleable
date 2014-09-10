@@ -105,10 +105,9 @@ function startGame() {
 
 	var requestAnimFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
 			window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-
 	window.requestAnimationFrame = requestAnimFrame;
-
 	requestAnimationFrame(updateGame);
+	
 	drawPreview();
 	statTracker = new StatsTracker;
 }
@@ -528,7 +527,7 @@ function loadDictionary() {
 function findWord() {
 	if (gameIsPaused && INPRODUCTION) 
 		return;
-	
+
 	var letters = $("#boggle_letters").val();
 	$("#boggle_letters").val("");
 	var currentLetters = letters.split( "" );
