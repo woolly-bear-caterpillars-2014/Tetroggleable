@@ -477,13 +477,16 @@ function updateScores(type, points) {
 	$("#overall_score").text(totalScore);
 }
 
-function calculateScrabbleScore(tiles) {
+function calculateScrabbleScore(tiles, length) {
 	var score = 0;
 	var extraMultiplier = 1;
+	var currentWordPoints = 0;
+	var j = 1
 
 	for (var i = 0; i < tiles.length; i++) {
 		tile = gameData[tiles[i][0]][tiles[i][1]];
 		console.log(tile)
+		// console.log("coords:" + tiles[i][0] + ", " + tiles[i][1])
 		//tileScore = tiles[i].score
 
 		currentLetterPoints = tile.score;
@@ -496,18 +499,33 @@ function calculateScrabbleScore(tiles) {
 			case "LX3": currentLetterPoints *=3;	break;
 		}
 
-		score += currentLetterPoints;
-		console.log("LETTER and POINTS")
-		console.log(tile.letter + ":" + currentLetterPoints)
+		currentWordPoints += currentLetterPoints;
+
+		console.log("j")
+		console.log(j)
+		//end of word
+		if (j % length === 0) {
+			currentWordPoints *= extraMultiplier
+			score += currentWordPoints;
+			console.log("score added: " + currentWordPoints)
+			extraMultiplier = 1;
+			currentWordPoints = 0;
+		}
+		else 
+			console.log('not at end of word')
+		
+		console.log(score)
+		if (j >= length)
+			j = 1;
+		else
+			j++ 
 	}
 
-	console.log("SCORE so far");
-	console.log(score)
-	score *= extraMultiplier;
+	//score *= extraMultiplier;
 	console.log("Final Score");
 	console.log(score)
 
-	if (tiles.length >= 7) {
+	if (length >= 7) {
 		score *= 2;
 	}
 
@@ -535,7 +553,7 @@ function findWord() {
 		}
 
 		if (tilesOnBoard.length > 0) {
-			wordScore = calculateScrabbleScore(tilesOnBoard)
+			wordScore = calculateScrabbleScore(tilesOnBoard, currentLetters.length)
 			updateScores('word', wordScore)
 			makeTilesFall(tilesOnBoard);
 			updateWordScores(letters, wordScore);
