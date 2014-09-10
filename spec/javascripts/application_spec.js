@@ -20,9 +20,6 @@ describe ("tile", function(){
     });
 });
 
-describe ("LBlock", function () {
-  beforeEach(function () {
-
     tile1 = new Tile();
     tile1.letter = "A";
     tile2 = new Tile();
@@ -31,7 +28,12 @@ describe ("LBlock", function () {
     tile3.letter = "C";
     tile4 = new Tile();
     tile4.letter = "D";
+
     var tileArray = [tile1, tile2, tile3, tile4];
+
+describe ("LBlock", function () {
+  beforeEach(function () {
+
     lBlock = new LBlock(tileArray);
     });
 
@@ -67,15 +69,6 @@ describe ("LBlock", function () {
 describe ("JBlock", function () {
   beforeEach(function () {
 
-    tile1 = new Tile();
-    tile1.letter = "A";
-    tile2 = new Tile();
-    tile2.letter = "B";
-    tile3 = new Tile();
-    tile3.letter = "C";
-    tile4 = new Tile();
-    tile4.letter = "D";
-    var tileArray = [tile1, tile2, tile3, tile4];
     jBlock = new JBlock(tileArray);
     });
 
@@ -111,15 +104,6 @@ describe ("JBlock", function () {
 describe ("IBlock", function () {
   beforeEach(function () {
 
-    tile1 = new Tile();
-    tile1.letter = "A";
-    tile2 = new Tile();
-    tile2.letter = "B";
-    tile3 = new Tile();
-    tile3.letter = "C";
-    tile4 = new Tile();
-    tile4.letter = "D";
-    var tileArray = [tile1, tile2, tile3, tile4];
     iBlock = new IBlock(tileArray);
     });
 
@@ -155,15 +139,6 @@ describe ("IBlock", function () {
 describe ("TBlock", function () {
   beforeEach(function () {
 
-    tile1 = new Tile();
-    tile1.letter = "A";
-    tile2 = new Tile();
-    tile2.letter = "B";
-    tile3 = new Tile();
-    tile3.letter = "C";
-    tile4 = new Tile();
-    tile4.letter = "D";
-    var tileArray = [tile1, tile2, tile3, tile4];
     tBlock = new TBlock(tileArray);
     });
 
@@ -196,18 +171,45 @@ describe ("TBlock", function () {
     });
 });
 
+describe ("OBlock", function () {
+  beforeEach(function () {
+
+    oBlock = new OBlock(tileArray);
+    });
+
+     it("should return the correct tile letter for OBlock rotation1", function() {
+
+      expect(oBlock.rotation1).toBeDefined();
+      expect(oBlock.rotation1[0][0].letter).toEqual('A')
+     });
+
+     it("should return the correct tile letter for OBlock rotation2", function() {
+
+      expect(oBlock.rotation2).toBeDefined();
+      expect(oBlock.rotation2[1][0].letter).toEqual('C')
+
+     });
+
+     it("should return the correct tile letter for OBlock rotation3", function() {
+
+      expect(oBlock.rotation3).toBeDefined();
+      expect(oBlock.rotation3[0][1].letter).toEqual('D')
+
+     });
+
+     it("should return the correct tile letter for OBlock rotation4", function() {
+
+      expect(oBlock.rotation4).toBeDefined();
+      expect(oBlock.rotation4[0][0].letter).toEqual('B')
+
+
+    });
+});
+
+
 describe ("ZBlock", function () {
   beforeEach(function () {
 
-    tile1 = new Tile();
-    tile1.letter = "A";
-    tile2 = new Tile();
-    tile2.letter = "B";
-    tile3 = new Tile();
-    tile3.letter = "C";
-    tile4 = new Tile();
-    tile4.letter = "D";
-    var tileArray = [tile1, tile2, tile3, tile4];
     zBlock = new ZBlock(tileArray);
     });
 
@@ -228,15 +230,6 @@ describe ("ZBlock", function () {
 describe ("SBlock", function () {
   beforeEach(function () {
 
-    tile1 = new Tile();
-    tile1.letter = "A";
-    tile2 = new Tile();
-    tile2.letter = "B";
-    tile3 = new Tile();
-    tile3.letter = "C";
-    tile4 = new Tile();
-    tile4.letter = "D";
-    var tileArray = [tile1, tile2, tile3, tile4];
     sBlock = new SBlock(tileArray);
     });
 
@@ -253,5 +246,6 @@ describe ("SBlock", function () {
 
     });
 });
+
 
 
