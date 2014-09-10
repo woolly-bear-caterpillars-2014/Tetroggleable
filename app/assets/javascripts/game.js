@@ -601,3 +601,4 @@ function updateWordScores(word, score) {
 	var wordHTML = "<li>" + word + ": " + score + "</li>";
 	$("#word_scores ul").prepend(wordHTML)
 }
+
