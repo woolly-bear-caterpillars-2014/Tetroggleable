@@ -18,4 +18,11 @@ describe GamesController do
 			controller.stub(:current_user).and_return(:game)
 		end
 	end
+
+	describe "GET #new" do 
+		it "initializes instance of a game" do 
+			get :new
+			expect(assigns(:game)).to be_a Game
+		end
+	end
 end
