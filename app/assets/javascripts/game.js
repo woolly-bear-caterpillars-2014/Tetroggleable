@@ -584,5 +584,5 @@ function updateWordScores(word, score) {
 	console.log(word);
 	console.log(score)
 	var wordHTML = "<li>" + word + ": " + score + "</li>";
-	$("#word_scores ul").append(wordHTML)
+	$("#word_scores ul").prepend(wordHTML)
 }

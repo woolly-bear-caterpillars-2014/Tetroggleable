@@ -122,7 +122,7 @@ function wordCoordsOnBoggleBoard(word, board) {
     for (var j=0; j<x; j++) {
       var coordArray = [allCoordObjs[i][j].x, allCoordObjs[i][j].y];
       allCoordCoords.push(coordArray);
-  }
+    }
   }
       return allCoordCoords;
 }
