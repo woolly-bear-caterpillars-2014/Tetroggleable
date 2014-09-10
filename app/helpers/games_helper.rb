@@ -3,7 +3,7 @@ module GamesHelper
 		render partial: 'games/score'
 	end
 
-	def self.high_scores
+	def high_scores
 		render partial: 'games/high_scores'
 	end
 end
