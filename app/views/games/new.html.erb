@@ -1,69 +1,59 @@
-<div id="info_panel">
-	<h2>Welcome!</h2>
-	<div class="info_boxes" id="boggle_box">
-		<p>BoggleWord</p>
-		<%= text_field_tag "boggle_letters"  %>
-	</div>
-
-	<div class="info_boxes" id="preview_box">
-		<p>Preview <span id="preview"></span></p>
-		<canvas id="gamePreview" width="100" height="85"></canvas>
-	</div>
-
-	<!-- <div class="info_boxes" id="levels_box">
-		<p>Level: <span id="levels">1</span></p>
-	</div>
-
-	<div class="info_boxes" id="scrabble_score_box">
-		<p>Scrabble Score: <span id="scrabble_score">0</span></p>
-	</div>
-
-	<div class="info_boxes" id="lines_box">
-		<p>Lines: <span id="lines">0</span></p>
-	</div>
-
-	<div class="info_boxes" id="overall_score_box">
-		<p>Score: <span id="overall_score">0</span></p>
-	</div> -->
-
-	<div class="info_boxes" id="score_box">
-		<p>Level <span id="levels">1</span></p>
-		<p>Scrabble Score <span id="scrabble_score">0</span></p>
-		<p>Lines <span id="lines">0</span></p>
-		<p>Score <span id="overall_score">0</span></p>
-	</div>
-
+<div id="browser_notice">
+	<p class="upgrade">Upgrade your browser <a href="https://www.google.com/chrome/browser/">HERE</a> to play!</p>
+	<p class="not_mobile">Tetroggleable is not yet mobile compatible.  Please play on a computer!</p>
 </div>
-
-<h4 id="wordNotFound"> No Matching Words, Keep Trying !!!</h4>
-
-<div id="gameboard">
-	<canvas id="gameCanvas" width="320" height="640"></canvas>
-</div>
-
-<div id="right-bar">
-
-		<h3> GAME OVER </h3>
-
-		<div id="colorkey">
-
-		<div class="key"><div id="keybox1"></div> <p class="pkey">Double Letter Score</p></div>
-
-		<div class="key"><div id="keybox2"></div> <p class="pkey">Triple Letter Score</p></div>
-
-		<div class="key"><div id="keybox3"></div> <p class="pkey">Double Word Score</p></div>
-
-		<div class="key"><div id="keybox4"></div> <p class="pkey">Triple Word Score</p></div>
-
+<div id="game_main">
+	<div id="info_panel">
+		<h2>Welcome!</h2>
+		<div class="info_boxes" id="boggle_box">
+			<p>BoggleWord</p>
+			<%= text_field_tag "boggle_letters"  %>
 		</div>
 
-		<%= link_to 'New Game', new_game_path, class: "new" %>
-
-		<div id="word_scores">
-			<h4>Word scores:</h4>
-			<ul>
-
-			</ul>
+		<div class="info_boxes" id="preview_box">
+			<p>Preview <span id="preview"></span></p>
+			<canvas id="gamePreview" width="100" height="85"></canvas>
 		</div>
 
+		<div class="info_boxes" id="score_box">
+			<p>Level <span id="levels">1</span></p>
+			<p>Scrabble Score <span id="scrabble_score">0</span></p>
+			<p>Lines <span id="lines">0</span></p>
+			<p>Score <span id="overall_score">0</span></p>
+		</div>
+
+	</div>
+
+	<div id="gameboard">
+		<canvas id="gameCanvas" width="320" height="640"></canvas>
+	</div>
+
+	<div id="right-bar">
+			<div id="game_notice">
+				<h3> GAME OVER </h3>
+				<h4 id="wordNotFound"> No Matching Words, Keep Trying !!!</h4>
+			</div>
+
+			<div id="colorkey">
+
+			<div class="key"><div id="keybox1"></div> <p class="pkey">Double Letter Score</p></div>
+
+			<div class="key"><div id="keybox2"></div> <p class="pkey">Triple Letter Score</p></div>
+
+			<div class="key"><div id="keybox3"></div> <p class="pkey">Double Word Score</p></div>
+
+			<div class="key"><div id="keybox4"></div> <p class="pkey">Triple Word Score</p></div>
+
+			</div>
+
+			<div id="word_scores" class="info_boxes">
+				<h4>Word scores:</h4>
+				<ul>
+
+				</ul>
+			</div>
+
+			<%= link_to 'New Game', new_game_path, class: "new" %>
+
+	</div>
 </div>
