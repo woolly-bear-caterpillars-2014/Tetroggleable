@@ -49,6 +49,10 @@ describe Game do
 	context "validate presence" do
 		it { should validate_presence_of(:lines) }
 	end
+
+	describe "assocations" do 
+		it { should belong_to(:user) }
+	end
 end
 
 
