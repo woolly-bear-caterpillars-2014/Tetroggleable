@@ -11,8 +11,12 @@ function StatsTracker() {
 	this.trackCommonWords = function (word) {
 		if (this.wordsUsed[word]) {
 			this.wordsUsed[word] += 1;
+			console.log("added " + word + " as existing word");
+		} 
+		else {
+			this.wordsUsed[word] = 1;
+			console.log("added " + word + " as new word");
 		}
-		this.wordsUsed[word] = 1;
 	}
 
 	this.updateMostCommonWord = function() {
@@ -21,9 +25,9 @@ function StatsTracker() {
 		var obj = this.wordsUsed;
 		for (var prop in obj) {
 			if (obj[prop] > numTimesUsed) {
-				numTimesUsed = prop;
-				this.most_common_word_times = prop;
-				this.most_common_word = obj[prop];
+				numTimesUsed = obj[prop];
+				this.most_common_word_times = numTimesUsed;
+				this.most_common_word = prop;
 			}
 		}
 	}
