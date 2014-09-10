@@ -32,7 +32,7 @@ function setRowsCols() {
 	width = $(window).width();
 	height = $(window).height();
 
-	if (height < 1160) {
+	if (height < 760) {
 		ROWS = 17;
 		BOARDHEIGHT = 544;
 		$("#gameCanvas").attr("height", 544);
@@ -65,12 +65,9 @@ $(window).load(function(){
 			else
 				$('boggle_letters').focus();
 	})
+	
 	$('input:text:first').focus();
-
-		// drawBoard();
-		// block = getRandomBlock()
-		// drawBlock(block);
-		loadDictionary();
+	loadDictionary();
 });
 
 function browserTest() {
@@ -96,17 +93,15 @@ function startGame() {
 
 	gameData = new Array();
 
-		for(row= 0; row < ROWS; row++) {
-			gameData[row] = new Array();
-			for(col = 0; col < COLS; col++) {
-				// gameData[r].push(0);
-				gameData[row][col] = 0;
-			}
+	for(row= 0; row < ROWS; row++) {
+		gameData[row] = new Array();
+		for(col = 0; col < COLS; col++) {
+			gameData[row][col] = 0;
 		}
+	}
 
 	currentBlock = getRandomBlock();
 	nextBlock = getRandomBlock();
-
 
 	var requestAnimFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
 			window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
@@ -121,29 +116,27 @@ function startGame() {
 function drawTile(drawX, drawY) {
 	context.strokeStyle = tileTextColor;
   context.beginPath();
- 	// context.fillStyle = "#3c0";
  	context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
  	context.fill();
  	context.stroke();
 }
 
 function tileColors(contextName, scrabbleExtras, highlight) {
-	if (scrabbleExtras == "NA") {
+	if (scrabbleExtras == "NA") 
 	  contextName.fillStyle = tileColor;
- 	};
- 	if (scrabbleExtras == "WX2"){
+
+ 	if (scrabbleExtras == "WX2")
  		contextName.fillStyle = wX2;
- 	};
-	if (scrabbleExtras == "WX3"){
+
+	if (scrabbleExtras == "WX3")
  		contextName.fillStyle = wX3;
 
- 	};
- 	if (scrabbleExtras == "LX2"){
+ 	if (scrabbleExtras == "LX2")
  		contextName.fillStyle = lX2;
- 	};
- 	if (scrabbleExtras == "LX3"){
+
+ 	if (scrabbleExtras == "LX3")
 		contextName.fillStyle = lX3;
- 	};
+
  	if (highlight)
 		contextName.fillStyle = "#3C00FB";
 
@@ -154,6 +147,7 @@ function tileColors(contextName, scrabbleExtras, highlight) {
 function drawTileBackground(drawX, drawY, scrabbleExtras, highlight) {
 	numberPosX = drawX * SIZE;
 	numberPosY = drawY * SIZE;
+	
 	context.strokeStyle = tileTextColor;
   context.beginPath();
 	context.rect(drawX * SIZE, drawY * SIZE , SIZE, SIZE);
@@ -169,7 +163,6 @@ function drawLetter(drawX, drawY, letter) {
 	context.fillStyle = tileTextColor;
  	context.font = '20pt Arial';
 	context.fillText(letter, letterPosX, letterPosY, 22);
-
 }
 
 function drawNumber(drawX, drawY, score) {
@@ -180,7 +173,6 @@ function drawNumber(drawX, drawY, score) {
  	context.font = 'bolder 8pt Arial';
  	context.fillText(score, numberPosX, numberPosY, SIZE);
 }
-
 
 function drawBoard() {
 	context.beginPath();
@@ -217,11 +209,9 @@ function drawBlock(block) {
 			}
 			drawX += 1;
 		}
-
 		drawX = block.gridX;
 		drawY += 1;
 	}
-
 }
 
 function getKeyCode(e) {
@@ -263,10 +253,6 @@ function getKeyCode(e) {
 			break;
 		}
 	}
-	// restart game by pressing one of the main keys
-	// else {
-	// 	startGame();
-	// }
 }
 
 function letBlockFall() {
