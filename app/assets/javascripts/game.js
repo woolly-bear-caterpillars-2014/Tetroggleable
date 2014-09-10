@@ -551,6 +551,7 @@ function findWord() {
 			wordScore = calculateScrabbleScore(tilesOnBoard)
 			updateScores('word', wordScore)
 			makeTilesFall(tilesOnBoard);
+			updateWordScores(letters, wordScore);
 		}
 		else {
 			$('#wordNotFound').show().fadeOut(2000);
@@ -589,4 +590,12 @@ function saveGame(){
 		console.log("complete");
 	});
 
+}
+
+function updateWordScores(word, score) {
+	console.log("update word score");
+	console.log(word);
+	console.log(score)
+	var wordHTML = "<li>" + word + ": " + score + "</li>";
+	$("#word_scores ul").append(wordHTML)
 }
