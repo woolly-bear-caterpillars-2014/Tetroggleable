@@ -154,30 +154,45 @@ describe ("IBlock", function () {
 
 describe ("TBlock", function () {
   beforeEach(function () {
-    tBlock = new TBlock([]);
+
+    tile1 = new Tile();
+    tile1.letter = "A";
+    tile2 = new Tile();
+    tile2.letter = "B";
+    tile3 = new Tile();
+    tile3.letter = "C";
+    tile4 = new Tile();
+    tile4.letter = "D";
+    var tileArray = [tile1, tile2, tile3, tile4];
+    tBlock = new TBlock(tileArray);
     });
 
-     it("should return an TBlock rotation object", function() {
+     it("should return an TBlock rotation1", function() {
 
       expect(tBlock.rotation1).toBeDefined();
+      expect(tBlock.rotation1[1][1].letter).toEqual('A')
      });
 
-     it("should return an TBlock rotation object", function() {
+     it("should return an TBlock rotation2", function() {
 
       expect(tBlock.rotation2).toBeDefined();
+      expect(tBlock.rotation2[0][0].letter).toEqual('B')
 
      });
 
-     it("should return an TBlock rotation object", function() {
+     it("should return an TBlock rotation3", function() {
 
       expect(tBlock.rotation3).toBeDefined();
+      expect(tBlock.rotation3[1][1].letter).toEqual('C')
 
      });
 
-     it("should return an TBlock rotation object", function() {
+     it("should return an TBlock rotation4", function() {
 
       expect(tBlock.rotation4).toBeDefined();
+      expect(tBlock.rotation4[0][1].letter).toEqual('D')
 
-     });
-  });
+
+    });
+});
 
