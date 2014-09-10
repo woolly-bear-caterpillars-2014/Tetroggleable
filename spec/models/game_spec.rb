@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe Game do 
 	let!(:game) { Game.create(score: 10, scrabble_score: 10, level: 1, lines: 3, user_id: 1) }
+	let!(:user) { User.create(username:"stephen", email:"stephen@gmail.com", password:"password")}
 
 	context "score" do 
 		it "should return score" do 
