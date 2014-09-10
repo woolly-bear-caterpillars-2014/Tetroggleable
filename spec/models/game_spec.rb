@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Game do 
-	let!(:game) { Game.create(score: 10, scrabble_score: 10, level: 4, lines: 3, user_id: 1) }
+	let!(:game) { Game.create(score: 10, scrabble_score: 10, level: 1, lines: 3, user_id: 1) }
 
 	context "score" do 
 		it "should return score" do 
@@ -12,6 +12,12 @@ describe Game do
 	context "scrabble_score" do 
 		it "should return scrabble score" do 
 			expect(game.scrabble_score).to eq(10)
+		end
+	end
+
+	context "level" do 
+		it "should return level" do 
+			expect(game.level).to eq(1)
 		end
 	end
 end
