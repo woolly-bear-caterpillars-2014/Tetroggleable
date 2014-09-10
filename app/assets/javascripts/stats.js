@@ -15,17 +15,17 @@ function StatsTracker() {
 		this.wordsUsed[word] = 1;
 	}
 
-	this.mostWordsUsed = function() {
-		var numTimesUsed = 0;
+	this.updateMostCommonWord = function() {
+		var numTimesUsed = 1;
 		var mostUsedWord = "";
 		var obj = this.wordsUsed;
 		for (var prop in obj) {
-			if (obj[prop] >= numTimesUsed) {
-				mostUsedWord = prop;
-				numTimesUsed = obj[prop];
+			if (obj[prop] > numTimesUsed) {
+				numTimesUsed = prop;
+				this.most_common_word_times = prop;
+				this.most_common_word = obj[prop];
 			}
 		}
-		return prop;
 	}
 
 
@@ -40,7 +40,7 @@ function StatsTracker() {
 			this.highest_word_score = score;
 		}
 
-		this.most_common_word = this.mostWordsUsed();
+		this.trackCommonWords(word);
 
 		// console.log(longest_word + " " + highest_word + " " + most_used_word)
 
@@ -51,6 +51,7 @@ function StatsTracker() {
 	var scrabble_score = $("#scrabble_score").text();
 	var lines = $("#lines").text();
 	var score = $("#overall_score").text();
+	this.updateMostCommonWord();
 	$.ajaxSetup({
 	headers: {
 		'X-CSRF-Token':$('meta[name="csrf-token"]').attr("content")
