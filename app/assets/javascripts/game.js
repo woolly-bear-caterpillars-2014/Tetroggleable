@@ -104,10 +104,9 @@ function startGame() {
 
 	var requestAnimFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
 			window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-
 	window.requestAnimationFrame = requestAnimFrame;
-
 	requestAnimationFrame(updateGame);
+
 	drawPreview();
 	statTracker = new StatsTracker;
 }

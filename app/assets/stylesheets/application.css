@@ -307,6 +307,7 @@ img {
 	height:195px;
 	overflow-y:scroll;
 	color:#ffffff;
+	text-transform:uppercase;
 }
 
 #browser_notice {
