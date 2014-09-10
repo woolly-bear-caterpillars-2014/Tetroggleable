@@ -33,4 +33,8 @@ describe Game do
 			expect(game.user_id).to eq(1)
 		end
 	end
+
+	describe "validation" do 
+		it { should validate_presence_of(:score) }
+	end
 end
