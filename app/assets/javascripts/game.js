@@ -25,6 +25,7 @@ var lX2 = "#95B8D3";
 var lX3 = "#095E9F";
 var wX2 = "#DD9ABD";
 var wX3 = "#89223A";
+var tileTextColor = "#000";
 var statTracker;
 var gameCanvas;
 

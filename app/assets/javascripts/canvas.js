@@ -107,12 +107,10 @@ function drawPreview() {
   prevDrawX = 0;
   prevDrawY = 0;
 
-
   prevctx.beginPath();
   prevctx.rect(0, 0, 150, 100);
   prevctx.fillStyle="black";
   prevctx.fill();
-
 
   for(var row = 0, len = nextBlock.rotations[0].length; row < len; row++) {
     for(var col = 0, len2 = nextBlock.rotations[0][row].length; col < len2; col++) {
