@@ -43,7 +43,7 @@ function WordFinder(word, board) {
   this.firstLetterCoords = function() {
     for (var r=0; r<board.length; r++) {
       for (var c=0; c<board[0].length; c++) {
-        if (board[r][c].letter === word[0]) {
+        if (board[r][c].letter === word[0] || board[r][c].letter === "_") {
           this.validStemsOfWords.push([new Coord(r,c,board)]);
         }
       }
@@ -70,7 +70,7 @@ function WordFinder(word, board) {
       for (var nI=0; nI<numNeighbors; nI++) {  // go thru each neighbor
         var x = neighbors[nI][0];
         var y = neighbors[nI][1];
-        if (board[x][y] != 0 && board[x][y] != undefined && board[x][y].letter === charNeeded) { // save potential matches--what we do depends on how many there are, so let's store them in an array
+        if (board[x][y] != 0 && board[x][y] != undefined && (board[x][y].letter === charNeeded || board[x][y].letter === "_")) { // save potential matches--what we do depends on how many there are, so let's store them in an array
           var c = new Coord(x,y,board);
           matchesInNeighbors.push(c);
         }
