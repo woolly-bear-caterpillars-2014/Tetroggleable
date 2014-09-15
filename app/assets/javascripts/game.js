@@ -4,7 +4,7 @@ var SIZE = 32;
 var SPEEDS = [500, 450, 400, 350, 300, 250, 200, 150, 100, 50, 25, 10, 5, 1];
 var BOARDHEIGHT = 640;
 var BOARDWIDTH = 320;
-var INPRODUCTION = false;
+var INPRODUCTION = true;
 
 var canvas;
 var context;
