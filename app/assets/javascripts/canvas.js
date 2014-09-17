@@ -49,7 +49,9 @@ function Canvas() {
 
     context.fillStyle = tileTextColor;
     context.font = '20pt Arial';
-    context.fillText(letter, letterPosX, letterPosY, 22);
+    if (!INPRODUCTION || !gameIsPaused) {
+      context.fillText(letter, letterPosX, letterPosY, 22);
+    }
   }
 
   this.drawNumber = function(drawX, drawY, score) {
@@ -58,7 +60,9 @@ function Canvas() {
 
     context.fillStyle = tileTextColor;
     context.font = 'bolder 8pt Arial';
-    context.fillText(score, numberPosX, numberPosY, SIZE);
+    if (!INPRODUCTION || !gameIsPaused) {
+      context.fillText(score, numberPosX, numberPosY, SIZE);
+    }
   }
 
   this.drawBoard = function() {
